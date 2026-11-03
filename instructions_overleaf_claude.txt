@@ -1,0 +1,78 @@
+FLUJO DE TRABAJO: OVERLEAF + GITHUB + CLAUDE
+=============================================
+
+1. Cómo está organizado
+-----------------------
+- Los documentos LaTeX (temario.tex, recursos.tex, garyc.sty) viven en el
+  proyecto de Overleaf. Overleaf es la fuente de verdad de esos documentos.
+- En este repositorio de GitHub, la carpeta documents_overleaf/ es un
+  submódulo de git que apunta al repositorio git del proyecto de Overleaf:
+  https://git.overleaf.com/6aea290e4e6f943c41d0cc54
+- GitHub no guarda una copia de los archivos de Overleaf: solo guarda un
+  "puntero" (el hash de un commit de Overleaf). Por eso el puntero puede ir
+  un poco atrasado respecto de Overleaf; eso es normal.
+
+2. Flujo acordado
+-----------------
+a) Claude trabaja directamente en Overleaf: hace pull, edita los .tex,
+   compila y revisa el PDF, y hace commit y push al proyecto de Overleaf.
+   No hay pull requests de por medio; los cambios aparecen de inmediato en el
+   editor web de Overleaf.
+b) Tú revisas en Overleaf y pides ajustes.
+c) De vez en cuando (por ejemplo, al cerrar una ronda de cambios), actualizas
+   el puntero en GitHub desde tu computadora con los comandos de la sección 3.
+d) Para evitar conflictos, no edites en el editor de Overleaf el mismo
+   archivo mientras Claude trabaja en él. Si ocurre, el push de Claude será
+   rechazado y Claude integrará tus cambios en lugar de sobrescribirlos.
+
+3. Actualizar el puntero de Overleaf en GitHub (en tu computadora)
+------------------------------------------------------------------
+Desde la raíz del repositorio talleres_garyc:
+
+    git pull
+    git submodule update --remote documents_overleaf
+    git add documents_overleaf
+    git commit -m "Actualiza puntero de Overleaf"
+    git push
+
+Notas:
+- "git submodule update --remote" trae el último commit de la rama main de
+  Overleaf y mueve el submódulo a ese commit.
+- Si "git status" no muestra cambios en documents_overleaf, el puntero ya
+  estaba al día y no hay nada que commitear.
+- Si git pide credenciales para Overleaf: usuario "git" y como contraseña el
+  token de Git de Overleaf (Account Settings > Git integration).
+
+4. Otros comandos útiles
+------------------------
+Clonar el repositorio con el submódulo incluido:
+
+    git clone --recurse-submodules https://github.com/RaulAbCastro/talleres_garyc.git
+
+Si ya tienes el repositorio pero la carpeta documents_overleaf está vacía:
+
+    git submodule update --init
+
+Ver a qué commit de Overleaf apunta GitHub:
+
+    git submodule status
+
+Editar localmente dentro del submódulo (opcional):
+
+    cd documents_overleaf
+    git checkout main
+    git pull
+    # ... editar, luego:
+    git commit -am "Descripción del cambio"
+    git push
+    cd ..
+    # y después actualizar el puntero (sección 3, desde "git add").
+
+5. Compilación
+--------------
+- Compilador: pdfLaTeX (Overleaf: Menú > Compilador > pdfLaTeX).
+- Documento principal: elegir temario.tex o recursos.tex en
+  Menú > Documento principal. Overleaf compila un documento principal a la
+  vez.
+- Ambos documentos usan el estilo común garyc.sty (tipografía, colores,
+  encabezados y listas); un cambio en garyc.sty afecta a los dos.
