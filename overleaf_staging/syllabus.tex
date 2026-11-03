@@ -1,0 +1,415 @@
+%% =====================================================================
+%%  Talleres GARyC -- Análisis Económico y Computacional
+%%  Syllabus
+%%  Compilar con pdfLaTeX (Overleaf: Menú > Compilador > pdfLaTeX).
+%% =====================================================================
+\documentclass[11pt]{article}
+\usepackage{garyc}
+
+\documento{Syllabus}
+\title{Talleres GARyC: Análisis Económico y Computacional. Syllabus}
+\author{Talleres GARyC}
+\date{}
+
+% Abreviaturas de uso frecuente en la bibliografía
+\newcommand{\PUP}{Princeton University Press}
+\newcommand{\CUP}{Cambridge University Press}
+\newcommand{\CRC}{Chapman \& Hall/CRC}
+\newcommand{\JoE}{\textit{Journal of Econometrics}}
+\newcommand{\AngristMIT}[1]{\obra{Angrist}{2021}{Econometric Data Science, notas de clase 14.320}{MIT. #1}}
+
+\begin{document}
+
+\portada{Syllabus}
+
+%% ---------------------------------------------------------------------
+\begin{presentacion}
+Los talleres tienen un formato principalmente práctico: una breve
+introducción conceptual y el grueso de la sesión dedicado a implementar
+cada método en vivo sobre datos o problemas reales de la gerencia. El
+hilo conductor es una sola idea:
+\[
+  \text{diferencia observada} \;=\; \text{efecto causal} \;+\; \text{sesgo de selección}.
+\]
+Cada diseño de evaluación es una manera distinta de enfrentar ese sesgo.
+
+Las herramientas de IA generativa se incorporan como eje transversal en
+todos los módulos, integradas al flujo de trabajo: explicación de
+conceptos, generación y depuración de código, interpretación de
+resultados y apoyo en la documentación. Cada módulo incluye su
+bibliografía de referencia, basada en las respuestas a la encuesta
+diagnóstica y en las recomendaciones del equipo.
+
+El contenido se organiza en tres talleres: los dos primeros de 20 horas
+cada uno y el tercero de 13 horas, a razón de una hora por sesión. El
+Taller~1 reúne lo sustantivo para evaluar el impacto de una política;
+los Talleres~2 y~3 profundizan y complementan. Cada tema se presenta en
+tres capas: intuición para todos, formalización opcional y práctica con
+código, apoyadas en datos (sintéticos) de temática bancaria y
+aplicaciones equivalentes en R, Python y Stata.
+\end{presentacion}
+
+%% ---------------------------------------------------------------------
+\clearpage
+\section*{Estructura del programa}
+\addcontentsline{toc}{section}{Estructura del programa}
+
+\begin{table}[ht]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\caption{Talleres, carga horaria y módulos.}
+\label{tab:estructura}
+\begin{tabularx}{\linewidth}{@{}P{1.55cm} P{1.0cm} P{3.6cm} L@{}}
+\toprule
+\sffamily\bfseries Taller & \sffamily\bfseries Horas & \sffamily\bfseries Enfoque & \sffamily\bfseries Módulos (horas) \\
+\midrule
+\textbf{Taller 1} & 20 h &
+Evaluación de impacto: fundamentos y diseños principales (núcleo) &
+M1~Repaso exprés de estadística inferencial (1)\newline
+M2~Marco causal y experimentos aleatorizados (5)\newline
+M3~Regresión como descripción de la función de esperanza condicional (CEF) (3)\newline
+M4~Regresión causal: OVB y CIA (2)\newline
+M5~Inferencia aplicada (1)\newline
+M6~Datos panel y diferencias en diferencias (4)\newline
+M7~Variables instrumentales y regresión discontinua (2)\newline
+M8~Síntesis y taller de proyectos (2) \\
+\midrule
+\textbf{Taller 2} & 20 h &
+Econometría aplicada y diseños complementarios &
+M1~Modelos de elección y variables limitadas (3)\newline
+M2~Selección, matching y sensibilidad (3)\newline
+M3~Econometría de panel avanzada (2)\newline
+M4~Diferencias en diferencias avanzado y control sintético (4)\newline
+M5~Experimentos avanzados (3)\newline
+M6~Variables instrumentales y regresión discontinua avanzados (3)\newline
+M7~Aprendizaje automático causal (2) \\
+\midrule
+\textbf{Taller 3} & 13 h &
+Análisis geoespacial y actividad de aplicación &
+M1~Análisis geoespacial (7)\newline
+M2~Evaluación con dimensión espacial (3)\newline
+M3~Actividad con aplicación a temas de la gerencia (3) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%% =====================================================================
+\taller{1}{Evaluación de impacto: fundamentos y diseños principales}
+  {20 horas \textperiodcentered{} 20 sesiones de aproximadamente 1 hora \textperiodcentered{} núcleo del programa}
+
+%% ---------------------------------------------------------------------
+\modulo{1}{Repaso exprés de estadística inferencial}{1 h}
+\begin{sesiones}
+\sesion{1} De la muestra a la inferencia: pruebas de hipótesis,
+  comparación de medias y proporciones, correlación y regresión lineal simple.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Casella y Berger}{2002}{Statistical Inference}{2.ª ed., Duxbury.} \recomendado
+\obra{Kleiber y Zeileis}{2008}{Applied Econometrics with R}{Springer.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{2}{Marco causal y experimentos aleatorizados}{5 h}
+\begin{sesiones}
+\sesion{2} De la pregunta de política al estimando: unidad, tratamiento,
+  resultado, horizonte y contrafactual; ATE, ATT, ITT y LATE; validez interna
+  y externa. Lienzo de diseño de evaluación.
+\sesion{3} Resultados potenciales y sesgo de selección: diferencia observada
+  = efecto sobre los tratados + sesgo de selección; por qué la aleatorización
+  lo elimina. Simulación con $Y_{1}$ y $Y_{0}$ conocidos.
+\sesion{4} Grafos causales o grafos acíclicos dirigidos (DAGs): confusores,
+  mediadores y colisionadores; qué controlar y qué no.
+\sesion{5} Experimentos aleatorizados I: tablas de balance, estimación con
+  diferencia de medias y con regresión, aleatorización estratificada. Caso:
+  estado de cuenta estandarizado de tarjetas de crédito (datos sintéticos o
+  públicos).
+\sesion{6} Experimentos aleatorizados II: poder y efecto mínimo detectable,
+  cumplimiento imperfecto (ITT), atrición, efectos indirectos, ética y
+  pre-registro.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Angrist y Pischke}{2015}{Mastering 'Metrics}{\PUP.}
+\obra{Angrist y Pischke}{2009}{Mostly Harmless Econometrics}{\PUP.}
+\obra{Huntington-Klein}{2022}{The Effect}{\CRC.}
+\obra{Cunningham}{2021}{Causal Inference: The Mixtape}{Yale University Press.}
+\obra{List}{próx.}{Experimental Economics: Theory and Practice}{Aplicado a experimentos aleatorizados.}
+\AngristMIT{Lecture Note 4.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{3}{Regresión como descripción de la función de esperanza condicional (CEF)}{3 h}
+\begin{sesiones}
+\sesion{7} La CEF y la regresión: ley de esperanzas iteradas; regresión como
+  mejor aproximación lineal a la CEF; regresión lineal simple y múltiple;
+  condicionar = comparar manzanas con manzanas.
+\sesion{8} Modelos saturados e interacciones: binarias como diferencias de
+  medias; efectos principales e interacciones; residuos, valores ajustados
+  y~$R^{2}$.
+\sesion{9} Anatomía de la regresión (Frisch--Waugh--Lovell): \enquote{controlar
+  por} como limpiar la variación; verificación numérica con regresiones
+  auxiliares.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Greene}{2018}{Econometric Analysis}{8.ª ed., Pearson.} \recomendado
+\obra{Cameron y Trivedi}{2005}{Microeconometrics: Methods and Applications}{\CUP.}
+\obra{Wooldridge}{2010}{Econometric Analysis of Cross Section and Panel Data}{2.ª ed., MIT Press.}
+\obra{Kleiber y Zeileis}{2008}{Applied Econometrics with R}{Springer.}
+\AngristMIT{Lecture Notes 1, 5, 8 y 9.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{4}{Regresión causal: OVB y CIA}{2 h}
+\begin{sesiones}
+\sesion{10} Sesgo por variable omitida (OVB): corta = larga + (efecto de la
+  omitida) $\times$ (regresión de la omitida sobre la incluida); signo del
+  sesgo y cuándo corta = larga.
+\sesion{11} Supuesto de independencia condicional (CIA) y controles buenos y
+  malos: lectura de tablas con controles crecientes; variables posteriores al
+  tratamiento; primera mirada a la sensibilidad ante variables omitidas.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Angrist y Pischke}{2009}{Mostly Harmless Econometrics}{\PUP.}
+\AngristMIT{Lecture Note 6.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{5}{Inferencia aplicada}{1 h}
+\begin{sesiones}
+\sesion{12} Errores estándar que sí importan: errores robustos, dependencia
+  entre observaciones y clustering (factor de Moulton), pocos clusters.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Angrist y Pischke}{2009}{Mostly Harmless Econometrics}{\PUP{} (cap.~8).}
+\obra{Abadie, Athey, Imbens y Wooldridge}{2023}{When Should You Adjust Standard Errors for Clustering?}{\textit{Quarterly Journal of Economics}.}
+\AngristMIT{Lecture Notes 7 y 10.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{6}{Datos panel y diferencias en diferencias}{4 h}
+\begin{sesiones}
+\sesion{13} Estructura de datos panel, pooled OLS y efectos fijos
+  (variación within e interpretación vía FWL).
+\sesion{14} Diferencias en diferencias clásico ($2\times2$): tendencias
+  paralelas en resultados potenciales, forma de regresión y sensibilidad a la
+  escala. Caso: liquidez bancaria en la Gran Depresión.
+\sesion{15} Por qué falla el TWFE con tratamiento escalonado: efectos
+  heterogéneos en el tiempo y descomposición de Goodman-Bacon.
+\sesion{16} Diferencias en diferencias moderno y estudios de evento:
+  estimadores robustos (Callaway--Sant'Anna, Sun--Abraham, de
+  Chaisemartin--D'Haultf{\oe}uille, imputación); lectura de pre-tendencias.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Wooldridge}{2010}{Econometric Analysis of Cross Section and Panel Data}{2.ª ed., MIT Press.}
+\obra{Cameron y Trivedi}{2005}{Microeconometrics: Methods and Applications}{\CUP.}
+\obra{Greene}{2018}{Econometric Analysis}{8.ª ed., Pearson.} \recomendado
+\obra{Cunningham}{2021}{Causal Inference: The Mixtape}{Yale University Press.}
+\obra{Goodman-Bacon}{2021}{Difference-in-Differences with Variation in Treatment Timing}{\JoE.}
+\obra{Callaway y Sant'Anna}{2021}{Difference-in-Differences with Multiple Time Periods}{\JoE.}
+\obra{Sun y Abraham}{2021}{Estimating Dynamic Treatment Effects in Event Studies with Heterogeneous Treatment Effects}{\JoE.}
+\obra{de Chaisemartin y D'Haultf{\oe}uille}{2020}{Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects}{\textit{American Economic Review}.}
+\obra{Roth, Sant'Anna, Bilinski y Poe}{2023}{What's Trending in Difference-in-Differences?}{\JoE.}
+\obra{Richardson y Troost}{2009}{Monetary Intervention Mitigated Banking Panics during the Great Depression}{\textit{Journal of Political Economy}.}
+\AngristMIT{Lecture Notes 12 y 13.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{7}{Variables instrumentales y regresión discontinua}{2 h}
+\begin{sesiones}
+\sesion{17} Variables instrumentales y LATE: primera etapa, forma reducida y
+  razón de Wald; complacientes (\textit{compliers}); diseños de aliento.
+\sesion{18} Regresión discontinua: RD nítida; umbrales de scoring, tamaño de
+  institución o regulatorios; pruebas de balance y de manipulación (primera
+  mirada).
+\end{sesiones}
+\begin{bibliografia}
+\obra{Angrist y Pischke}{2009}{Mostly Harmless Econometrics}{\PUP.}
+\obra{Angrist y Pischke}{2015}{Mastering 'Metrics}{\PUP.}
+\obra{Huntington-Klein}{2022}{The Effect}{\CRC.}
+\obra{Cunningham}{2021}{Causal Inference: The Mixtape}{Yale University Press.}
+\obra{Imbens y Angrist}{1994}{Identification and Estimation of Local Average Treatment Effects}{\textit{Econometrica}.}
+\obra{Imbens y Lemieux}{2008}{Regression Discontinuity Designs: A Guide to Practice}{\JoE.}
+\AngristMIT{Lecture Notes 11 y 14.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{8}{Síntesis y taller de proyectos}{2 h}
+\begin{sesiones}
+\sesion{19} ¿Qué diseño uso? Árbol de decisión (qué variación tengo
+  $\rightarrow$ qué diseño); lectura crítica de una evaluación;
+  reproducibilidad y reporte para tomadores de decisión.
+\sesion{20} Taller de proyectos: presentación y retroalimentación de los
+  lienzos de diseño de la sesión~2, ya refinados.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Huntington-Klein}{2022}{The Effect}{\CRC.}
+\obra{Cunningham}{2021}{Causal Inference: The Mixtape}{Yale University Press.}
+\obra{List}{2022}{The Voltage Effect}{Currency.}
+\end{bibliografia}
+
+%% =====================================================================
+\taller{2}{Econometría aplicada y diseños complementarios}
+  {20 horas \textperiodcentered{} 20 sesiones de aproximadamente 1 hora \textperiodcentered{} requiere haber tomado el Taller~1}
+
+%% ---------------------------------------------------------------------
+\modulo{1}{Modelos de elección y variables limitadas}{3 h}
+\begin{sesiones}
+\sesion{1} Modelo de probabilidad lineal: ventajas, límites e interpretación
+  como aproximación a la CEF de una binaria.
+\sesion{2} Modelos Probit y Logit: estimación, efectos marginales y cuándo
+  importa elegir entre ellos.
+\sesion{3} Modelo Tobit: resultados censurados e interpretación de sus efectos.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Greene}{2018}{Econometric Analysis}{8.ª ed., Pearson.} \recomendado
+\obra{Maddala}{1983}{Limited-Dependent and Qualitative Variables in Econometrics}{\CUP.} \recomendado
+\obra{Cameron y Trivedi}{2005}{Microeconometrics: Methods and Applications}{\CUP.}
+\obra{Wooldridge}{2010}{Econometric Analysis of Cross Section and Panel Data}{2.ª ed., MIT Press.}
+\obra{Kleiber y Zeileis}{2008}{Applied Econometrics with R}{Springer.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{2}{Selección, matching y sensibilidad}{3 h}
+\begin{sesiones}
+\sesion{4} Matching y ponderación por \textit{propensity score}; relación con
+  la regresión y con la CIA.
+\sesion{5} Selección sobre no observables: modelo de selección de Heckman;
+  restricción de exclusión y cuándo es creíble.
+\sesion{6} Sensibilidad ante variables omitidas: estabilidad de coeficientes
+  (Oster) y valores de robustez (Cinelli--Hazlett).
+\end{sesiones}
+\begin{bibliografia}
+\obra{Imbens y Rubin}{2015}{Causal Inference for Statistics, Social, and Biomedical Sciences}{\CUP.}
+\obra{Greene}{2018}{Econometric Analysis}{8.ª ed., Pearson.} \recomendado
+\obra{Heckman}{1979}{Sample Selection Bias as a Specification Error}{\textit{Econometrica}.}
+\obra{Rosenbaum y Rubin}{1983}{The Central Role of the Propensity Score in Observational Studies for Causal Effects}{\textit{Biometrika}.}
+\obra{Cinelli y Hazlett}{2020}{Making Sense of Sensitivity: Extending Omitted Variable Bias}{\textit{Journal of the Royal Statistical Society B}.}
+\obra{Oster}{2019}{Unobservable Selection and Coefficient Stability}{\textit{Journal of Business \& Economic Statistics}.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{3}{Econometría de panel avanzada}{2 h}
+\begin{sesiones}
+\sesion{7} Modelo de efectos aleatorios; evaluación y selección de modelos
+  (Hausman, Mundlak).
+\sesion{8} Error de medición y efectos fijos; paneles desbalanceados y
+  atrición.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Wooldridge}{2010}{Econometric Analysis of Cross Section and Panel Data}{2.ª ed., MIT Press.}
+\obra{Cameron y Trivedi}{2005}{Microeconometrics: Methods and Applications}{\CUP.}
+\obra{Greene}{2018}{Econometric Analysis}{8.ª ed., Pearson.} \recomendado
+\AngristMIT{Lecture Note 12.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{4}{Diferencias en diferencias avanzado y control sintético}{4 h}
+\begin{sesiones}
+\sesion{9} DiD con covariables y con tratamientos continuos o de intensidad
+  variable.
+\sesion{10} Sensibilidad a pre-tendencias (Rambachan--Roth) y laboratorio
+  comparativo de estimadores.
+\sesion{11} Control sintético: pocas unidades tratadas, construcción del
+  contrafactual y pruebas de placebo.
+\sesion{12} DiD sintético: cuándo combina lo mejor de ambos enfoques.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Cunningham}{2021}{Causal Inference: The Mixtape}{Yale University Press.}
+\obra{Rambachan y Roth}{2023}{A More Credible Approach to Parallel Trends}{\textit{Review of Economic Studies}.}
+\obra{Borusyak, Jaravel y Spiess}{2024}{Revisiting Event-Study Designs: Robust and Efficient Estimation}{\textit{Review of Economic Studies}.}
+\obra{Abadie, Diamond y Hainmueller}{2010}{Synthetic Control Methods for Comparative Case Studies}{\textit{Journal of the American Statistical Association}.}
+\obra{Arkhangelsky, Athey, Hirshberg, Imbens y Wager}{2021}{Synthetic Difference-in-Differences}{\textit{American Economic Review}.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{5}{Experimentos avanzados}{3 h}
+\begin{sesiones}
+\sesion{13} Poder y tamaño de muestra: laboratorio de simulación para diseñar
+  un experimento.
+\sesion{14} Experimentos con clusters y estratificación; inferencia por
+  aleatorización.
+\sesion{15} Heterogeneidad de efectos, múltiples pruebas y pre-registro.
+\end{sesiones}
+\begin{bibliografia}
+\obra{List}{próx.}{Experimental Economics: Theory and Practice}{Aplicado a experimentos aleatorizados.}
+\obra{List}{2022}{The Voltage Effect}{Currency.}
+\obra{Abadie, Athey, Imbens y Wooldridge}{2023}{When Should You Adjust Standard Errors for Clustering?}{\textit{Quarterly Journal of Economics}.}
+\obra{Angrist y Pischke}{2009}{Mostly Harmless Econometrics}{\PUP.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{6}{Variables instrumentales y regresión discontinua avanzados}{3 h}
+\begin{sesiones}
+\sesion{16} IV avanzado: instrumentos débiles, diseños de jueces y
+  \textit{shift-share}.
+\sesion{17} RD difusa: ancho de banda, pruebas de manipulación y validez.
+\sesion{18} Taller de RD con umbrales de scoring o regulatorios (datos
+  sintéticos).
+\end{sesiones}
+\begin{bibliografia}
+\obra{Angrist y Pischke}{2009}{Mostly Harmless Econometrics}{\PUP.}
+\obra{Cunningham}{2021}{Causal Inference: The Mixtape}{Yale University Press.}
+\obra{Imbens y Angrist}{1994}{Identification and Estimation of Local Average Treatment Effects}{\textit{Econometrica}.}
+\obra{Imbens y Lemieux}{2008}{Regression Discontinuity Designs: A Guide to Practice}{\JoE.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{7}{Aprendizaje automático causal}{2 h}
+\begin{sesiones}
+\sesion{19} \textit{Double/Debiased Machine Learning}: controles de alta
+  dimensión y sobreajuste.
+\sesion{20} Efectos heterogéneos con métodos de aprendizaje automático (por
+  ejemplo, bosques causales).
+\end{sesiones}
+\begin{bibliografia}
+\obra{Chernozhukov et al.}{2024}{Causal ML / Double Machine Learning}{\CUP.}
+\end{bibliografia}
+
+%% =====================================================================
+\taller{3}{Análisis geoespacial y actividad de aplicación}
+  {13 horas \textperiodcentered{} 13 sesiones de aproximadamente 1 hora \textperiodcentered{} requiere haber tomado los Talleres~1 y~2}
+
+%% ---------------------------------------------------------------------
+\modulo{1}{Análisis geoespacial}{7 h}
+\begin{sesiones}
+\sesion{1} Introducción conceptual: qué es y para qué sirve en el análisis
+  económico (breve).
+\sesion{2} Datos espaciales: puntos, líneas, polígonos y ráster.
+\sesion{3} Sistemas de coordenadas y proyecciones.
+\sesion{4} Distancia, proximidad y accesibilidad (p.~ej., sucursales y cajeros).
+\sesion{5} Autocorrelación espacial.
+\sesion{6} \textit{Hot spots} y análisis local.
+\sesion{7} Modelos de regresión espacial.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Lovelace, Nowosad y Muenchow}{2025}{Geocomputation with R}{2.ª ed., \CRC.}
+\obra{Pebesma y Bivand}{2023}{Spatial Data Science}{\CRC.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{2}{Evaluación con dimensión espacial}{3 h}
+\begin{sesiones}
+\sesion{8} Efectos indirectos y exposición por distancia.
+\sesion{9} Regresión discontinua geográfica y DiD con unidades espaciales.
+\sesion{10} Caso práctico de acceso a servicios financieros con datos
+  espaciales (sintéticos o públicos).
+\end{sesiones}
+\begin{bibliografia}
+\obra{Pebesma y Bivand}{2023}{Spatial Data Science}{\CRC.}
+\obra{Cunningham}{2021}{Causal Inference: The Mixtape}{Yale University Press.}
+\end{bibliografia}
+
+%% ---------------------------------------------------------------------
+\modulo{3}{Actividad con aplicación a temas de la gerencia}{3 h}
+\begin{sesiones}
+\item[Sesiones 11 y 12] Actividad guiada: cada equipo aplica un diseño del
+  Taller~1 o~2 a una pregunta de la gerencia, con uso de IA generativa en el
+  flujo de trabajo.
+\sesion{13} Presentaciones de resultados y retroalimentación.
+\end{sesiones}
+\begin{bibliografia}
+\obra{Huntington-Klein}{2022}{The Effect}{\CRC.}
+\obra{Cunningham}{2021}{Causal Inference: The Mixtape}{Yale University Press.}
+\end{bibliografia}
+
+\end{document}
