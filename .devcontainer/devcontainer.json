@@ -1,0 +1,31 @@
+{
+  "name": "Talleres: R, Python, Quarto y LaTeX",
+  "image": "mcr.microsoft.com/devcontainers/universal:6.1.12-noble",
+  "remoteUser": "codespace",
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "waitFor": "postCreateCommand",
+  "forwardPorts": [4200, 8000, 8888],
+  "portsAttributes": {
+    "4200": {"label": "Quarto", "onAutoForward": "notify"},
+    "8000": {"label": "HTML", "onAutoForward": "notify"},
+    "8888": {"label": "JupyterLab", "onAutoForward": "notify"}
+  },
+  "remoteEnv": {
+    "QUARTO_PYTHON": "${containerWorkspaceFolder}/.venv/bin/python",
+    "RETICULATE_PYTHON": "${containerWorkspaceFolder}/.venv/bin/python",
+    "R_LIBS_USER": "${containerWorkspaceFolder}/.local/R/library"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "REditorSupport.r",
+        "quarto.quarto",
+        "James-Yu.latex-workshop",
+        "mdob2k.stata-language"
+      ]
+    }
+  }
+}

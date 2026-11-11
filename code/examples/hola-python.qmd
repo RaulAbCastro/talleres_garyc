@@ -1,0 +1,27 @@
+---
+title: "Primer documento con Python"
+lang: es
+jupyter: talleres-python
+format:
+  html:
+    embed-resources: true
+  pdf:
+    pdf-engine: xelatex
+---
+
+Este documento ejecuta Python y combina texto, resultados y una ecuación:
+
+$$y_i = \alpha + \beta x_i + \varepsilon_i.$$
+
+```{python}
+import pandas as pd
+import matplotlib.pyplot as plt
+
+datos = pd.DataFrame({"x": [1, 2, 3, 4, 5], "y": [2, 4, 5, 4, 6]})
+datos.describe()
+```
+
+```{python}
+datos.plot.scatter(x="x", y="y")
+plt.show()
+```

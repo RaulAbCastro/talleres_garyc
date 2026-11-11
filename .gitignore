@@ -1,0 +1,43 @@
+# Entornos, paquetes locales y cachés
+.venv/
+.local/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.jupyter/
+.quarto/
+*_cache/
+*_files/
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# Credenciales y configuración privada
+.env
+.env.*
+!.env.example
+.Renviron
+.Renviron.*
+*.pem
+*.key
+stata.lic
+*.stcodes
+.stata/
+
+# Resultados locales (los originales del proyecto siguen versionados)
+outputs/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+**/build/
+
+.DS_Store

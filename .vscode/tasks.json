@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Entorno: comprobar instalación",
+      "type": "process",
+      "command": "bash",
+      "args": ["scripts/check-environment.sh"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Jupyter: abrir JupyterLab",
+      "type": "process",
+      "command": "${workspaceFolder}/.venv/bin/jupyter",
+      "args": ["lab", "--no-browser", "--ip=0.0.0.0", "--port=8888"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
+      "label": "HTML: vista previa",
+      "type": "process",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": ["-m", "http.server", "8000", "--bind", "0.0.0.0", "--directory", "website"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Quarto: ejemplo Python a HTML",
+      "type": "process",
+      "command": "bash",
+      "args": ["scripts/render-example.sh", "python", "html"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Quarto: ejemplo R a PDF",
+      "type": "process",
+      "command": "bash",
+      "args": ["scripts/render-example.sh", "r", "pdf"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    }
+  ]
+}

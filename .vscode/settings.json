@@ -1,0 +1,24 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python-envs.defaultEnvManager": "ms-python.python:venv",
+  "python-envs.workspaceSearchPaths": ["./.venv"],
+  "python.terminal.activateEnvironment": true,
+  "r.rterm.linux": "/usr/bin/R",
+  "r.rpath.linux": "/usr/bin/R",
+  "r.libPaths": ["${workspaceFolder}/.local/R/library"],
+  "r.plot.backend": "httpgd",
+  "r.sessionWatcher": true,
+  "latex-workshop.latex.autoBuild.run": "never",
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.latex.outDir": "%DIR%/build",
+  "files.associations": {
+    "*.qmd": "quarto",
+    "*.do": "stata",
+    "*.ado": "stata"
+  },
+  "files.watcherExclude": {
+    "**/.venv/**": true,
+    "**/.local/**": true
+  },
+  "python.envFile": "${workspaceFolder}/.env"
+}
