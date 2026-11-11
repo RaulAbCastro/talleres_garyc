@@ -37,3 +37,5 @@ if ! command -v quarto >/dev/null || [[ "$(quarto --version)" != "$QUARTO_VERSIO
   printf '%s  %s\n' "$expected_sha" "$installer" | sha256sum --check
   "${task_sudo[@]}" env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "$installer"
 fi
+
+bash .devcontainer/install-tex.sh

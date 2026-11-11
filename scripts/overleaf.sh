@@ -38,11 +38,28 @@ chmod 700 "$askpass_dir/askpass.sh"
 export GIT_ASKPASS="$askpass_dir/askpass.sh"
 export GIT_TERMINAL_PROMPT=0
 export LC_ALL=C
+
+report_revision() {
+  local latest="$1"
+  if [[ -f documents_overleaf/.git ]]; then
+    local current
+    current="$(git -C documents_overleaf rev-parse HEAD)"
+    printf 'Revisión de la copia local: %s.\n' "${current:0:12}"
+    if [[ "$current" != "$latest" ]]; then
+      printf 'AVISO: la copia local difiere de Overleaf (%s).\n' "${latest:0:12}"
+      printf 'Para traer sus archivos actuales: bash scripts/overleaf.sh pull\n'
+    fi
+  else
+    printf 'Los documentos todavía no están descargados. Usa bash scripts/overleaf.sh init.\n'
+  fi
+}
+
 if [[ "$action" == check ]]; then
   url="$(git config -f .gitmodules --get submodule.documents_overleaf.url)"
   git -c credential.helper= ls-remote "$url" HEAD > "$askpass_dir/remote-head"
   read -r remote_head _ < "$askpass_dir/remote-head"
   printf 'Conexión autenticada con Overleaf: OK (HEAD %s).\n' "${remote_head:0:12}"
+  report_revision "$remote_head"
 elif [[ "$action" == init ]]; then
   git -c credential.helper= submodule update --init --checkout -- documents_overleaf
 else
@@ -56,4 +73,5 @@ if [[ "$action" != check ]]; then
     exclude_path="$(git -C documents_overleaf rev-parse --git-path info/exclude)"
     printf '\n# Compilación local de LaTeX\n/build/\n' >> "$exclude_path"
   fi
+  report_revision "$(git -C documents_overleaf rev-parse origin/HEAD)"
 fi

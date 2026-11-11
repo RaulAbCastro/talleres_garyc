@@ -3,6 +3,8 @@ curl
 git
 make
 ripgrep
+perl
+xz-utils
 build-essential
 pkg-config
 python3
@@ -32,14 +34,4 @@ r-cran-reticulate
 r-cran-roxygen2
 r-cran-xmlparsedata
 r-cran-lintr
-texlive-latex-recommended
-texlive-latex-extra
-texlive-plain-generic
-texlive-fonts-recommended
-texlive-fonts-extra
-texlive-lang-spanish
-texlive-xetex
-latexmk
-lmodern
-biber
 poppler-utils

@@ -10,6 +10,12 @@ Rscript -e 'cat(R.version.string, "\n"); packages <- c("tidyverse", "readxl", "h
 printf 'Quarto: '
 quarto --version
 pdflatex --version | head -n 1
+source .devcontainer/texlive-version.env
+tex_version="$(pdflatex --version)"
+if [[ "$tex_version" != *"TeX Live $TEXLIVE_YEAR"* ]]; then
+  printf 'Se esperaba TeX Live %s. Ejecuta bash .devcontainer/install-tex.sh.\n' "$TEXLIVE_YEAR" >&2
+  exit 1
+fi
 xelatex --version | head -n 1
 latexmk -v
 .venv/bin/python - <<'PY'

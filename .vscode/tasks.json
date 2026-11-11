@@ -2,6 +2,22 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Overleaf: compilar recursos (TeX Live 2026)",
+      "type": "process",
+      "command": "bash",
+      "args": ["scripts/render-overleaf.sh", "recursos"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Overleaf: compilar todos los documentos (TeX Live 2026)",
+      "type": "process",
+      "command": "bash",
+      "args": ["scripts/render-overleaf.sh", "all"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
       "label": "Entorno: comprobar instalación",
       "type": "process",
       "command": "bash",

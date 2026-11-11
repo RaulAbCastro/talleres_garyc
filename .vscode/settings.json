@@ -11,6 +11,26 @@
   "latex-workshop.latex.autoBuild.run": "never",
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.latex.outDir": "%DIR%/build",
+  "latex-workshop.latex.recipes": [
+    {"name": "pdfLaTeX (TeX Live 2026)", "tools": ["latexmk-pdflatex"]}
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk-pdflatex",
+      "command": "/usr/local/bin/latexmk",
+      "args": [
+        "-g",
+        "-pdf",
+        "-pdflatex=/usr/local/bin/pdflatex %O %S",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-halt-on-error",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ]
+    }
+  ],
   "files.associations": {
     "*.qmd": "quarto",
     "*.do": "stata",

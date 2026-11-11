@@ -33,6 +33,8 @@ Puede tardar varios minutos la primera vez. La configuración se puede repetir;
 las versiones de paquetes de Ubuntu siguen sus repositorios y los paquetes R de
 CRAN pueden cambiar. `requirements.lock.txt` fija las dependencias de Python y
 Quarto tiene versión y suma SHA-256 fijadas en `.devcontainer/quarto-version.env`.
+TeX Live 2026 se instala mediante TinyTeX 2026.11; la versión y las sumas del
+archivo oficial están fijadas en `.devcontainer/texlive-version.env`.
 
 ## Qué se instala
 
@@ -42,7 +44,7 @@ Quarto tiene versión y suma SHA-256 fijadas en `.devcontainer/quarto-version.en
 | R de Ubuntu 24.04 | tidyverse, readxl, haven, broom, knitr, rmarkdown, reticulate y soporte de VS Code |
 | JupyterLab y Notebook | Kernels `Python (talleres)` y `R (talleres)` |
 | Quarto | Documentos y presentaciones; generación de HTML y PDF |
-| TeX Live | pdfLaTeX, XeLaTeX, latexmk, bibliografías con Biber y español |
+| TeX Live 2026 (TinyTeX 2026.11) | pdfLaTeX, XeLaTeX, latexmk, bibliografías con Biber y español |
 | HTML | Edición en VS Code y servidor de vista previa en el puerto 8000 |
 | Stata | Sintaxis de `.do` y `.ado`; ejecución en el servidor Windows del banco |
 
@@ -125,6 +127,11 @@ El submódulo `documents_overleaf/` ya apunta al proyecto correcto. GitHub guard
 el identificador de un commit; los documentos viven en Overleaf, que sigue
 siendo su fuente de verdad. La instalación general no intenta autenticarlo.
 
+El puntero guarda una revisión concreta; no se sincroniza automáticamente con
+Overleaf. `init` descarga esa revisión guardada en GitHub. `pull` trae la versión
+actual de Overleaf, con sus archivos e imágenes nuevos. `check` muestra tanto la
+revisión de Overleaf como la copia local y avisa si difieren.
+
 1. Abre tu proyecto en Overleaf y busca **Integrations > Git**. Según el diseño,
    también puede aparecer en **Menu > Git**.
 2. Si puedes ver una dirección que empieza por `https://git.overleaf.com/`, tienes
@@ -146,7 +153,7 @@ siendo su fuente de verdad. La instalación general no intenta autenticarlo.
    bash scripts/overleaf.sh init
    ```
 
-   `check` verifica la autenticación sin cambiar archivos ni el puntero. `init`
+   `check` verifica la autenticación y compara revisiones sin cambiar archivos ni el puntero. `init`
    descarga exactamente la revisión a la que apunta este repositorio. El script
    usa el secret sin mostrarlo ni guardarlo. Si no hay ningún secret disponible,
    puede pedir el token de forma oculta en una terminal interactiva.
@@ -170,17 +177,25 @@ al reiniciar en su [guía de secrets de Codespaces](https://docs.github.com/en/c
 Después de descargar el submódulo puedes compilar los documentos existentes:
 
 ```bash
-cd documents_overleaf
-mkdir -p ../outputs/overleaf
-latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=../outputs/overleaf temario.tex
-latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=../outputs/overleaf recursos.tex
+# Desde la raíz del repositorio: traer primero los cambios de Overleaf
+bash scripts/overleaf.sh pull
+
+# Compilar un documento o los tres con pdfLaTeX y TeX Live 2026
+bash scripts/render-overleaf.sh recursos
+bash scripts/render-overleaf.sh caso
+bash scripts/render-overleaf.sh all
 ```
 
-Estos dos documentos utilizan pdfLaTeX y `garyc.sty`, según
-`instructions_overleaf_claude.txt`. La instalación incluye XCharter, newtxmath,
-Source Sans Pro y los paquetes necesarios para compilar ambos documentos en el
-Codespace. Los PDF se guardan en `outputs/overleaf/`. La versión de TeX Live de
-Ubuntu puede diferir de la seleccionada en Overleaf.
+`temario.tex`, `recursos.tex` y `caso.tex` utilizan pdfLaTeX, el estilo compartido
+`garyc.sty` y el logo en `img/`. Los PDF se generan en `documents_overleaf/build/`,
+que usa el visor del editor, y se copian también a `outputs/overleaf/`.
+LaTeX Workshop tiene seleccionada la receta **pdfLaTeX (TeX Live 2026)**. En
+**Terminal > Run Task** también puedes compilar recursos o los tres documentos.
+
+Si faltan `caso.tex`, el logo o la portada, comprueba las revisiones con
+`bash scripts/overleaf.sh check`: una copia antigua puede compilar correctamente
+y aun así producir un diseño anterior. Después de `pull`, el cambio del puntero
+se guarda en GitHub con un commit del repositorio principal.
 
 La [integración Git de Overleaf](https://docs.overleaf.com/integrations-and-add-ons/git-integration-and-github-synchronization/git-integration)
 requiere una suscripción que incluya esa función y utiliza tokens. Si tu cuenta

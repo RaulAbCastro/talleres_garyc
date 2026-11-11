@@ -3,7 +3,8 @@ FLUJO DE TRABAJO: OVERLEAF + GITHUB + CLAUDE
 
 1. Cómo está organizado
 -----------------------
-- Los documentos LaTeX (temario.tex, recursos.tex, garyc.sty) viven en el
+- Los documentos LaTeX (temario.tex, recursos.tex, caso.tex, garyc.sty) y las
+  imágenes de img/ viven en el
   proyecto de Overleaf. Overleaf es la fuente de verdad de esos documentos.
 - En este repositorio de GitHub, la carpeta documents_overleaf/ es un
   submódulo de git que apunta al repositorio git del proyecto de Overleaf:
@@ -11,6 +12,9 @@ FLUJO DE TRABAJO: OVERLEAF + GITHUB + CLAUDE
 - GitHub no guarda una copia de los archivos de Overleaf: solo guarda un
   "puntero" (el hash de un commit de Overleaf). Por eso el puntero puede ir
   un poco atrasado respecto de Overleaf; eso es normal.
+- Una revisión antigua puede compilar sin errores y no contener los documentos,
+  portadas o imágenes más recientes. En Codespaces, scripts/overleaf.sh check
+  compara revisiones y scripts/overleaf.sh pull trae la versión actual.
 
 2. Flujo acordado
 -----------------
@@ -71,8 +75,11 @@ Editar localmente dentro del submódulo (opcional):
 5. Compilación
 --------------
 - Compilador: pdfLaTeX (Overleaf: Menú > Compilador > pdfLaTeX).
-- Documento principal: elegir temario.tex o recursos.tex en
+- Versión de TeX Live: 2026, tanto en Overleaf como en este Codespace.
+- Documento principal: elegir temario.tex, recursos.tex o caso.tex en
   Menú > Documento principal. Overleaf compila un documento principal a la
   vez.
-- Ambos documentos usan el estilo común garyc.sty (tipografía, colores,
-  encabezados y listas); un cambio en garyc.sty afecta a los dos.
+- Los tres documentos usan el estilo común garyc.sty (tipografía, colores,
+  encabezados y listas) y el logo de img/; un cambio en garyc.sty afecta a los tres.
+- En Codespaces, ejecutar desde la raíz: bash scripts/render-overleaf.sh all
+  Los PDF se generan en documents_overleaf/build/ y outputs/overleaf/.
