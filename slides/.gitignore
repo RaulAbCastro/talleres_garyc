@@ -1,0 +1,7 @@
+# La presentación se reconstruye desde los fuentes.
+**/index.html
+**/index_files/
+**/Rplots.pdf
+
+/.quarto/
+**/*.quarto_ipynb

@@ -1,0 +1,101 @@
+{
+  "diseno": {
+    "semilla": 203101,
+    "N": 12000,
+    "n": 480,
+    "periodo": "2031 T1",
+    "regiones": [
+      "Capital",
+      "Valle"
+    ],
+    "poblacion_objetivo": "Clientes ficticios con crédito activo elegibles para el piloto en Capital y Valle",
+    "muestreo": "Aleatorio simple sin reemplazo; no representa a todo Marginalia",
+    "asignacion": "Adopción voluntaria endógena a sofisticación financiera latente",
+    "unidades_tasa": "Porcentaje anual; diferencias en puntos porcentuales",
+    "unidades_ingreso": "Miles de áureos por mes",
+    "inferencia": "Bilateral al 5%; aproximación independiente; sin corrección por población finita",
+    "origen": "Simulación pedagógica; parámetros y regiones del piloto son supuestos añadidos"
+  },
+  "poblacion": {
+    "media_tasa_observada": 21.01914515,
+    "desviacion_tasa_observada": 3.742002614145908,
+    "proporcion_uso": 0.44133333333333336,
+    "efecto_causal_tasa_pp": -1.5,
+    "diferencia_observada_tasa_pp": -3.4991797005350094,
+    "sesgo_seleccion_tasa_pp": -1.9991797005350094
+  },
+  "muestra": {
+    "media_tasa": 21.153603958333335,
+    "desviacion_tasa": 3.851400272829359,
+    "ee_media_sin_correccion_finita": 0.17579156728418258,
+    "sin_agente": {
+      "n": 264,
+      "media_tasa": 22.684127651515148,
+      "desviacion_tasa": 3.4560303315258105,
+      "cambios_banco": 23,
+      "proporcion_cambio": 0.08712121212121213,
+      "ingreso_medio_miles": 19.282742424242425
+    },
+    "con_agente": {
+      "n": 216,
+      "media_tasa": 19.282963888888887,
+      "desviacion_tasa": 3.4705166588077367,
+      "cambios_banco": 60,
+      "proporcion_cambio": 0.2777777777777778,
+      "ingreso_medio_miles": 24.46352314814815
+    }
+  },
+  "welch": {
+    "contraste": "Media con agente menos media sin agente",
+    "diferencia_pp": -3.401163762626261,
+    "ee_pp": 0.31781202723547425,
+    "gl": 458.6143319509159,
+    "t": -10.701809469615386,
+    "p_bilateral": 5.20581154214603e-24,
+    "ic95_pp": [
+      -4.025712107301554,
+      -2.7766154179509686
+    ]
+  },
+  "proporciones": {
+    "contraste": "Cambio de banco: con agente menos sin agente",
+    "p_sin_agente": 0.08712121212121213,
+    "p_con_agente": 0.2777777777777778,
+    "diferencia": 0.19065656565656566,
+    "diferencia_pp": 19.065656565656568,
+    "ee_h0_agrupado": 0.034696434026246455,
+    "z": 5.494990220388114,
+    "p_bilateral": 3.907320670205825e-08,
+    "metodo_prueba": "z de dos proporciones, H0 agrupada, sin corrección de continuidad",
+    "ee_ic_no_agrupado": 0.03507189634673696,
+    "ic95": [
+      0.12191691194743934,
+      0.259396219365692
+    ],
+    "metodo_ic": "Wald no agrupado, sin corrección de continuidad; equivale a prop.test de dos proporciones con correct=FALSE"
+  },
+  "correlacion": {
+    "variables": [
+      "ingreso_miles",
+      "tasa_anual"
+    ],
+    "r_pearson": -0.6271544252714985,
+    "p_bilateral": 7.765074250801336e-54
+  },
+  "regresion": {
+    "formula": "tasa_anual ~ ingreso_miles",
+    "intercepto": 27.162729061416567,
+    "pendiente": -0.27801883218366397,
+    "ee_pendiente": 0.015793000810407073,
+    "gl": 478,
+    "t": -17.60392692441696,
+    "p_bilateral": 7.765074250799983e-54,
+    "ic95_pendiente": [
+      -0.3090511196932745,
+      -0.24698654467405343
+    ],
+    "r2": 0.393322673137624,
+    "inferencia": "OLS convencional homocedástica; interpretación descriptiva"
+  },
+  "sha256_muestra_csv": "0b29129c78cf5c646bb57e59838c841b579c1e75e028fc2e4a74e40863bae307"
+}

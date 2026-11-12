@@ -60,6 +60,18 @@ elige por separado con **Select Kernel**.
 
 ## Primeras pruebas
 
+La presentación interactiva de la primera sesión está en
+[`slides/`](slides/README.md). Para abrir **De la muestra a la inferencia**,
+ejecuta `bash slides/render.sh preview` y abre el puerto 4200. Incluye pestañas
+con código R y Python ejecutable en el navegador sobre datos sintéticos de
+Marginalia.
+
+La carpeta [`skills/`](skills/) guarda instrucciones reutilizables para preparar
+materiales. Para crear otra sesión con el mismo enfoque, pide al agente:
+“Lee y aplica [`skills/crear-presentaciones-quarto/SKILL.md`](skills/crear-presentaciones-quarto/SKILL.md)
+para generar la sesión N del taller M”. La skill incluye el flujo didáctico,
+los datos sintéticos, las pestañas ejecutables R/Python y su validación.
+
 Desde la raíz del repositorio:
 
 ```bash
