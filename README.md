@@ -67,10 +67,14 @@ con código R y Python ejecutable en el navegador sobre datos sintéticos de
 Marginalia.
 
 La carpeta [`skills/`](skills/) guarda instrucciones reutilizables para preparar
-materiales. Para crear otra sesión con el mismo enfoque, pide al agente:
+materiales en Markdown, independientes del modelo y del proveedor de IA.
+Para crear otra sesión con el mismo enfoque, pide a tu asistente:
 “Lee y aplica [`skills/crear-presentaciones-quarto/SKILL.md`](skills/crear-presentaciones-quarto/SKILL.md)
 para generar la sesión N del taller M”. La skill incluye el flujo didáctico,
 los datos sintéticos, las pestañas ejecutables R/Python y su validación.
+Si la herramienta no carga skills o no accede al repositorio, comparte el texto
+de la guía y los archivos que referencia. La ejecución de comandos y las pruebas
+en navegador dependerán de las herramientas disponibles en ese entorno.
 
 Desde la raíz del repositorio:
 

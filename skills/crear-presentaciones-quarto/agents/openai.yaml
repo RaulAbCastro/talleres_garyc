@@ -1,4 +1,0 @@
-interface:
-  display_name: "Presentaciones interactivas GARyC"
-  short_description: "Slides Quarto con el caso y código R/Python ejecutable"
-  default_prompt: "Usa $crear-presentaciones-quarto para crear la siguiente sesión del taller con el caso de Marginalia y laboratorios ejecutables en R y Python."

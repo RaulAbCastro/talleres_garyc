@@ -10,6 +10,25 @@ sesión 1 como implementación de referencia; adaptar la historia, los métodos,
 la duración y los lenguajes al encargo, sin fijar su número de diapositivas o
 laboratorios para todos los talleres.
 
+## Uso con cualquier asistente
+
+Esta guía es un documento Markdown independiente del modelo y del proveedor de
+IA. El encabezado `name`/`description` solo identifica la guía; no requiere una
+API, cuenta o integración de una compañía concreta.
+
+Para aplicarla, pedir al asistente que lea este archivo y siga sus referencias.
+Si la herramienta no admite cargar skills, proporcionar el texto como
+instrucciones junto con los archivos del repositorio que necesite. Las rutas
+relativas de los enlaces parten del archivo que los contiene; las rutas de los
+comandos parten de la raíz del repositorio.
+
+Usar las herramientas disponibles para leer y editar archivos, ejecutar comandos
+y revisar el navegador. Cuando alguna capacidad falte, entregar los archivos o
+cambios propuestos y los comandos para ejecutarlos, indicando qué verificaciones
+siguen pendientes. Distinguir siempre el código generado de los resultados
+efectivamente ejecutados. Las presentaciones usan Quarto, R y Python; su
+funcionamiento no depende del modelo que ayude a prepararlas.
+
 ## Fuentes y alcance
 
 Trabajar desde la raíz del repositorio. Antes de escribir el guion, leer:
