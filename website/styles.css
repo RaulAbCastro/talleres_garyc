@@ -1,7 +1,10 @@
 :root {
   color-scheme: light;
   --ink: #1b2a4a;
-  --teal: #007279;
+  /* Colores de tallerUno, tallerDos y tallerTres en documents_overleaf/garyc.sty. */
+  --taller-1: #007279;
+  --taller-2: #652f6c;
+  --taller-3: #c21832;
   --muted: #4d6070;
   --line: #cbd7dc;
   --paper: #f5f7f7;
@@ -26,7 +29,7 @@ body {
 
 .masthead {
   background: white;
-  border-top: 0.3rem solid var(--teal);
+  border-top: 0.3rem solid var(--ink);
   border-bottom: 1px solid var(--line);
 }
 
@@ -68,6 +71,7 @@ h1 {
   font-size: clamp(2.25rem, 1.5rem + 4vw, 4.65rem);
   letter-spacing: -0.045em;
   line-height: 1.08;
+  text-wrap: balance;
 }
 
 .intro p {
@@ -86,9 +90,21 @@ h1 {
   border-top: 1px solid var(--line);
 }
 
+.workshop[data-workshop="1"] {
+  --workshop-color: var(--taller-1);
+}
+
+.workshop[data-workshop="2"] {
+  --workshop-color: var(--taller-2);
+}
+
+.workshop[data-workshop="3"] {
+  --workshop-color: var(--taller-3);
+}
+
 .workshop-number,
 .session-number {
-  color: var(--teal);
+  color: var(--workshop-color);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -97,6 +113,7 @@ h1 {
 
 h2 {
   margin-top: 0.35rem;
+  color: var(--workshop-color);
   font-size: 1.3rem;
   line-height: 1.25;
 }
@@ -109,7 +126,7 @@ h2 {
   gap: 1rem 1.5rem;
   padding: 1.4rem;
   border: 1px solid var(--line);
-  border-left: 0.25rem solid var(--teal);
+  border-left: 0.25rem solid var(--workshop-color);
   border-radius: 0.45rem;
   color: var(--ink);
   background: white;
@@ -117,8 +134,8 @@ h2 {
 }
 
 .presentation:hover {
-  border-color: var(--teal);
-  background: #f0f9f8;
+  border-color: var(--workshop-color);
+  background: color-mix(in srgb, var(--workshop-color) 7%, white);
 }
 
 h3 {
@@ -135,7 +152,7 @@ h3 {
 
 .presentation-action {
   margin-inline-start: auto;
-  color: var(--teal);
+  color: var(--workshop-color);
   font-size: 0.9rem;
   font-weight: 700;
 }
@@ -159,14 +176,14 @@ h3 {
   padding: 0.85rem 1.15rem;
   border-radius: inherit;
   cursor: pointer;
-  color: var(--ink);
+  color: var(--workshop-color);
+  background: color-mix(in srgb, var(--workshop-color) 7%, white);
   font-size: 0.95rem;
   font-weight: 650;
 }
 
 .session-list summary:hover {
-  color: var(--teal);
-  background: #f0f9f8;
+  background: color-mix(in srgb, var(--workshop-color) 12%, white);
 }
 
 .session-list ol {
@@ -181,7 +198,7 @@ h3 {
 }
 
 .session-list a {
-  color: var(--teal);
+  color: var(--workshop-color);
   text-underline-offset: 0.18em;
 }
 
