@@ -31,4 +31,27 @@ plot(d$abonos_miles, d$saldo_promedio_miles, pch = 16, bty = "l",
 legend("topleft", c("No recibe nómina", "Recibe nómina"),
        col = colores, pch = 16, bty = "n", cex = .8)
 dev.off()
-cat("Figuras R: saldos-r.svg y abonos-r.svg en assets/\n")
+
+# Distribución de referencia bajo la hipótesis nula en el ejemplo bilateral.
+svg("assets/colas-r.svg", width = 11, height = 2.65, bg = "#F7F8FA", pointsize = 14)
+par(mar = c(3.1, 1, .4, 1), mgp = c(1.9, .5, 0), fg = "#253347",
+    col.axis = "#253347", col.lab = "#253347")
+z <- (-450:450) / 100
+extremo <- 2
+porcentaje_cola <- 100 * pnorm(extremo, lower.tail = FALSE)
+plot(z, dnorm(z), type = "n", axes = FALSE, xaxs = "i", yaxs = "i",
+     ylim = c(0, .42), xlab = "Valor del estadístico bajo la hipótesis nula", ylab = "")
+for (signo in c(-1, 1)) {
+  cola <- z[signo * z >= extremo]
+  polygon(c(cola[1], cola, tail(cola, 1)), c(0, dnorm(cola), 0),
+          col = "#E0A33B", border = NA)
+  segments(signo * extremo, 0, signo * extremo, dnorm(extremo), col = "#805600")
+  text(signo * 2.95, .17, sprintf("%.3f%%", porcentaje_cola),
+       col = "#805600", cex = 1.2, font = 2)
+  arrows(signo * 2.9, .14, signo * 2.2, .017, length = .08, col = "#805600")
+}
+lines(z, dnorm(z), col = "#007279", lwd = 2.5)
+abline(h = 0, col = "#253347")
+axis(1, at = c(-extremo, 0, extremo), labels = c("−2", "0", "+2"))
+dev.off()
+cat("Figuras R: saldos-r.svg, abonos-r.svg y colas-r.svg en assets/\n")

@@ -64,6 +64,8 @@ pyodide:
 
 ## De la muestra<br>a la inferencia {.portada}
 
+<div class="logo-portada"><img src="assets/logo-banxico-azul.png" alt="Banco de México" width="1827" height="368"></div>
+
 ```{ojs}
 //| echo: false
 //| output: false
@@ -367,48 +369,46 @@ histogram media, frequency xline(`mu') xscale(range(10 16)) ///
 Práctica complementaria, fuera de la ejecución en plenaria de 60 minutos. La animación anterior cubre la intuición necesaria para continuar. El código usa el marco de 12,000 clientes y mantiene el eje 10–16 para comparar dispersión. Al pasar de n = 40 a 200, la DE de medias cae aproximadamente por un factor de raíz de 5, con pequeña corrección finita. Las semillas no producen realizaciones idénticas entre lenguajes. En Stata cambiar sample 40 por sample 200 dentro del programa y ejecutar todo el bloque.
 :::
 
-## Del error estándar al estadístico y al valor p
+## ¿Qué tan lejos de cero quedó la estimación?
 
-Un **estadístico de prueba** resume qué tan lejos quedaron los datos de $H_0$. Para $H_0:\Delta=0$, medimos la distancia a cero en errores estándar y llamamos $t_{\mathrm{obs}}$ al resultado.
+Imagina una diferencia de saldo de **1,000 MXN** con un error estándar de **500 MXN**. El **estadístico de prueba** expresa la distancia a la igualdad de medias en errores estándar.
 
-El **valor p** es la probabilidad de obtener un resultado al menos tan extremo si $H_0$ y los supuestos fueran ciertos. $P_{H_0}$ indica esa probabilidad; $T$ es el estadístico al repetir muestras y las barras $|\cdot|$ miden distancia a cero:
+$$\frac{\text{diferencia estimada}-\text{diferencia bajo }H_0}{\text{error estándar de la diferencia}}
+=\frac{1{,}000-0}{500}=+2.$$
 
-::: {.equation}
-$$t_{\mathrm{obs}}=\frac{\widehat\Delta-0}{\widehat{SE}(\widehat\Delta)},
-\qquad p=P_{H_0}\!\left(|T|\geq|t_{\mathrm{obs}}|\right).$$
-:::
+¿Es frecuente quedar a esa distancia? La **distribución de referencia** describe qué valores tomaría el estadístico al repetir el muestreo bajo $H_0$.
 
-La prueba bilateral incluye resultados extremos de ambos signos. Falta elegir la distribución de referencia que permita calcular esa probabilidad.
-
-::: {.takeaway}
-Una misma diferencia produce más evidencia contra $H_0$ cuando su error estándar es menor. El valor p es una probabilidad de resultados bajo $H_0$, no la probabilidad de que $H_0$ sea cierta.
-:::
-
-::: {.notes}
-13–14 min. Explicar numerador y denominador antes de usar los números de Welch. La probabilidad está condicionada a la nula y a los supuestos. El p bilateral suma resultados extremos de ambos signos, aunque la diferencia observada sea positiva. La siguiente slide presenta las distribuciones de referencia antes de usarlas. No llamarlo probabilidad de que el resultado se deba al azar.
-:::
-
-## Qué distribución usamos para evaluar el estadístico
-
-Una **distribución de referencia** describe qué valores puede tomar el estadístico bajo $H_0$ y con qué probabilidad. Sus **colas** son las zonas de valores muy negativos o muy positivos.
-
-::: {.two-up}
+::: {.two-up .small}
 ::: {.story-card}
 **Normal estándar**
 
-Tiene forma de campana, media 0 y desviación estándar 1. Se suele escribir $Z$. Su 95% central está entre −1.96 y 1.96.
+Es una campana simétrica con media 0 y desviación estándar 1. La escribimos $Z$. Su 95% central va de −1.96 a +1.96.
 :::
 ::: {.story-card}
 **t de Student**
 
-También es simétrica, pero sus colas son más amplias: recoge incertidumbre adicional al estimar la dispersión. Su forma depende de los **grados de libertad**.
+Al estimar la dispersión, esta referencia da más peso a valores extremos. Los **grados de libertad** resumen la información que queda tras estimar parámetros y determinan la forma de la curva.
 :::
 :::
-
-Los grados de libertad resumen la información disponible después de estimar cantidades. Para una media son $n-1$: al restar la media, las $n$ desviaciones deben sumar cero y solo $n-1$ pueden variar libremente.
 
 ::: {.notes}
-14–15 min. No elegir una distribución por la forma de los saldos: se necesita una justificación para el estadístico. Para una media de observaciones normales independientes, estandarizada por s/raíz(n), la referencia t es exacta; fuera de ese caso puede ser aproximada. Welch usa grados de libertad aproximados que dependen de ambas varianzas y tamaños. La prueba de proporciones usará una aproximación normal. Al aumentar los grados de libertad, t se aproxima a la normal estándar.
+13–14 min. Las cifras son un ejemplo redondo. En la siguiente slide supondremos una referencia normal para visualizar probabilidades. Para una media de observaciones normales independientes, estandarizada por s/raíz(n), la referencia t es exacta. Sus grados de libertad son n−1: las desviaciones respecto de la media muestral suman cero. Al aumentar los grados de libertad, t se aproxima a la normal. Welch se presentará con su propia referencia y con los saldos observados.
+:::
+
+## ¿Qué cuenta como «al menos tan extremo»?
+
+Supón que bajo $H_0$ el estadístico sigue la normal estándar. Observamos **+2** y la pregunta admite diferencias en ambas direcciones. De tres posibles resultados, **−2.3, +1.8 y +2.4**, ¿cuáles quedan al menos tan lejos de cero como el observado?
+
+::: {.fragment}
+**−2.3 y +2.4.** Contamos los resultados a la izquierda de −2 y a la derecha de +2. Esas regiones se llaman **colas**. Su área conjunta da el **valor p bilateral** bajo $H_0$ y los supuestos del método.
+
+![](assets/colas-python.svg){width=70% fig-alt="Campana normal centrada en cero, con las dos colas sombreadas desde menos dos y más dos errores estándar."}
+
+Las barras miden distancia a cero. Bajo $H_0$, el área sombreada es $p=P_{H_0}(|Z|\geq 2)\approx0.0455$. Esperaríamos un resultado así de extremo o más en unas **455 de cada 10,000 repeticiones**.
+:::
+
+::: {.notes}
+14–15 min. Dar unos segundos para elegir antes de revelar. Las barras indican distancia a cero. Bajo la hipótesis y el modelo, alrededor del 4.55% de las repeticiones producirían un estadístico al menos así de extremo. El cálculo condiciona en H₀; no da una probabilidad de H₀ dados los datos. Si cambia la referencia a una t, cambian las áreas, aunque se siga comparando en los dos sentidos.
 :::
 
 ## Una regla de decisión también puede equivocarse
@@ -480,12 +480,12 @@ Una prueba bilateral da $p<0.05$. ¿Qué conclusión se sigue de ese resultado?
 
 ## 2 · Comparar medias: aplicar el contraste al saldo
 
-Cada grupo tiene su propia media y dispersión. La gráfica describe ambas medias; nuestra pregunta inferencial se refiere a **su diferencia**, $\Delta=\mu_1-\mu_0$.
+¿De cuánto es la diferencia de saldo medio entre los grupos? El equipo considera relevante que el grupo con nómina supere al otro en **más de 3,000 MXN**, un umbral hipotético para este ejercicio. Estimaremos $\Delta=\mu_1-\mu_0$ y compararemos su intervalo con cero y con ese umbral.
 
 ![Medias del saldo e intervalos individuales del 95% por recepción de nómina. Datos sintéticos.](assets/saldos-python.svg){width=80%}
 
 ::: {.small}
-El intervalo de cada media no es el intervalo de la diferencia. Para calcular este último debemos combinar la incertidumbre de los dos grupos.
+Cada barra muestra la incertidumbre de una media. Para obtener el intervalo de la diferencia combinaremos la incertidumbre de ambos grupos.
 :::
 
 ::: {.notes}
@@ -511,7 +511,7 @@ La prueba de **Welch** compara ese estadístico con una distribución t de grado
 ## Laboratorio 3 · Comparación de medias {.lab}
 
 ::: {.prompt}
-Contrasta igualdad con Welch: diferencia → error estándar → estadístico → p e intervalo.
+Ejecuta la prueba de Welch. Anota la diferencia de saldo medio (con nómina menos sin nómina) y convierte los dos extremos de su intervalo a pesos.
 :::
 
 ::: {.panel-tabset group="lenguaje"}
@@ -566,44 +566,46 @@ ttest saldo_promedio_miles, by(sin_nomina) unequal level(95)
 25–28 min. Cotejar signo y unidades antes de leer p. Diferencia: 2.54497 miles de MXN; IC [1.73552, 3.35442]; p = 1.404e−09. Los objetos prueba de R/SciPy también contienen estadístico y grados de libertad. Stata unequal usa Satterthwaite; su opción welch aplica otra fórmula de grados de libertad. La variable sin_nomina ordena la salida para conservar nómina 1 menos 0. No usar una prueba pareada.
 :::
 
-## Leer el contraste en unidades económicas
+## ¿Qué diferencias de saldo son compatibles con la muestra?
 
 ::: {.equation}
-$$\widehat\Delta=2.545,\qquad
-IC_{95\%}(\Delta)=2.5450\pm1.965(0.4119)\approx[1.736,\,3.354].$$
+$$\widehat\Delta\approx 2{,}545\ \text{MXN},\qquad
+IC_{95\%}(\Delta)\approx[1{,}736,\,3{,}354]\ \text{MXN}.$$
 :::
 
-El saldo medio es **aproximadamente 2,545 MXN mayor** entre clientes con nómina. El intervalo expresa la precisión de esa diferencia: entre unos 1,736 y 3,354 MXN, bajo el método empleado.
+::: {.prompt}
+Ubiquen **0 MXN** y **3,000 MXN** respecto del intervalo. Antes de avanzar, escriban una frase para el equipo. ¿Qué pueden afirmar sobre la dirección de la diferencia? ¿Y sobre el umbral que fijó el equipo?
+:::
 
-Como el intervalo excluye cero y $p<0.001$, rechazamos igualdad de medias. Que la diferencia sea relevante para una decisión depende además de su escala y del problema económico.
-
-::: {.takeaway}
-La conclusión describe una diferencia entre grupos observados. No estima cuánto cambiaría el saldo de una persona si empezara a recibir nómina.
+::: {.fragment}
+Todo el intervalo queda por encima de cero. Hay evidencia de un saldo medio mayor entre clientes con nómina ($p<0.001$ para la igualdad de medias). El intervalo incluye diferencias por debajo y por encima de 3,000 MXN. Superar ese umbral sigue siendo una pregunta abierta.
 :::
 
 ::: {.notes}
-28–30 min. La ecuación muestra cifras redondeadas; el software calcula con precisión completa. El IC de Welch y su prueba bilateral sí son duales. Separar importancia estadística de importancia económica: una recomendación requiere conocer el objetivo y los costos pertinentes. No convertir miles de MXN en puntos porcentuales. Recordar la estabilidad del ingreso como explicación alternativa, sin desarrollar aún identificación causal.
+28–30 min. Dar 30 segundos por pareja para decidir y conservar su frase para el memo. Revelar la lectura y pedir que cotejen grupo de referencia, moneda y alcance. El umbral de 3,000 MXN es hipotético. El valor p corresponde al contraste bilateral frente a cero. La regla de Welch para ese contraste coincide con examinar si su IC de 95% excluye cero. Los datos comparan grupos observados en el mismo mes. La estabilidad del ingreso es una posible explicación alternativa.
 :::
 
 ## Comparar proporciones: el resultado ahora es binario
 
-Conservamos los grupos y definimos $B_i=1$ si el cliente hizo algún pago con débito; $B_i=0$ si no. La suma cuenta clientes que pagaron; al dividir entre clientes del grupo obtenemos una **proporción**, $\hat p_g$. Es la media de $B$ y estima la proporción poblacional $p_g$.
+En septiembre, **220 de los 274 clientes con nómina** pagaron con débito al menos una vez. Entre los **206 clientes sin nómina**, pagaron **90**. Un cliente que hizo cinco pagos cuenta una vez.
 
-::: {.equation}
-$$\hat p_1=\frac{220}{274}=0.8029,\qquad
-\hat p_0=\frac{90}{206}=0.4369,\qquad
-\widehat\Delta_p=\hat p_1-\hat p_0=0.3660.$$
+::: {.prompt}
+Por cada 100 clientes de cada grupo, ¿cuántos pagaron? Escribe las dos fracciones y resta la tasa sin nómina de la tasa con nómina. Avanza para comprobar tu cálculo.
 :::
 
-Multiplicar la diferencia por 100 da **36.60 puntos porcentuales (pp)**. No es un incremento relativo de 36.60%. Ahora probamos $H_0:p_1-p_0=0$; estos $p_g$ son proporciones, distintos del valor p de la prueba.
+::: {.fragment .answer}
+Pagaron $220/274\approx80.29\%$ con nómina y $90/206\approx43.69\%$ sin nómina. Al restar los dos porcentajes obtenemos **36.60 puntos porcentuales (pp)** de diferencia. Dividir entre 480 respondería qué fracción de *toda* la muestra pertenece al grupo y pagó.
+
+Si asignamos $B_i=1$ a quien pagó y $B_i=0$ al resto, la media de $B$ en cada grupo es esa misma **proporción muestral**, $\hat p_g$. Con ella estimamos la proporción poblacional $p_g$.
+:::
 
 ::: {.notes}
-30–32 min. Los denominadores son clientes por grupo, no operaciones. Una Bernoulli tiene media p y varianza p(1−p); por eso podemos construir su error estándar. Un cambio relativo sería (p1−p0)/p0, distinto de la diferencia en pp. El indicador agrega pagos con débito y no mide cuota de mercado ni fracción de transacciones.
+30–32 min. Dar 20 segundos para escribir las fracciones antes de avanzar. Si alguien dice «36.60% más», pedir qué grupo usaría como base. En una diferencia relativa respecto del grupo sin nómina calcularíamos (p1−p0)/p0. La resta de las proporciones expresadas por cada cien da puntos porcentuales. Una Bernoulli tiene media p y varianza p(1−p).
 :::
 
 ## Proporciones: dos errores estándar para dos preguntas
 
-Bajo $H_0:p_1=p_0$ hay una proporción común. La estimamos agrupando clientes que pagaron: $\hat p=(220+90)/480$. El estadístico $z$ divide la diferencia por su **EE bajo igualdad**; con suficientes clientes de ambos resultados usamos la normal estándar:
+Bajo $H_0:p_1=p_0$ suponemos una proporción común. La estimamos juntando ambos grupos, $\hat p=(220+90)/480$. El estadístico $z$ divide la diferencia por su **EE bajo igualdad**. Con suficientes clientes que pagaron y que no pagaron en cada grupo usamos la normal estándar.
 
 ::: {.equation}
 $$z=\frac{\hat p_1-\hat p_0}{\sqrt{\hat p(1-\hat p)(1/n_1+1/n_0)}}
@@ -623,7 +625,7 @@ $$(\hat p_1-\hat p_0)\ \pm\ 1.96\sqrt{\frac{\hat p_1(1-\hat p_1)}{n_1}+\frac{\ha
 ## Laboratorio 4 · Comparación de proporciones {.lab}
 
 ::: {.prompt}
-Identifica la proporción agrupada de la prueba y las dos proporciones que construyen el IC.
+Calcula el IC. Para tu memo, escribe cuánto mayor o menor fue la proporción de clientes que pagaron en el grupo con nómina y qué diferencias admite el intervalo. Avanza para cotejar tu frase.
 :::
 
 ::: {.panel-tabset group="lenguaje"}
@@ -683,8 +685,8 @@ prtest pago_debito, by(sin_nomina) level(95)
 ```
 :::
 
-::: {.small}
-Diferencia **36.60 pp**; IC95 **[28.35, 44.85] pp**; $p<0.001$. Rechazamos igualdad bajo los supuestos; esto no demuestra que recibir nómina produzca el cambio.
+::: {.small .fragment}
+«La proporción que pagó con débito fue **36.60 pp mayor** en el grupo con nómina (IC del 95% **[28.35, 44.85] pp**).» El intervalo queda por encima de cero y la prueba de igualdad da $p<0.001$. Los grupos reflejan quién recibió nómina ese mes.
 :::
 
 ::: {.notes}
@@ -696,6 +698,10 @@ Diferencia **36.60 pp**; IC95 **[28.35, 44.85] pp**; $p<0.001$. Rechazamos igual
 Hasta aquí comparamos grupos definidos por nómina. Ahora preguntamos si **los clientes con más abonos también mantienen más saldo**. Usaremos los pares $(X_i,Y_i)$, donde $X$ son abonos y $Y$ es saldo.
 
 ![Abonos del mes y saldo promedio por cliente. Los colores identifican recepción de nómina; datos sintéticos.](assets/abonos-python.svg){width=80%}
+
+::: {.prompt}
+Sigue la nube de izquierda a derecha. ¿En qué dirección cambia el saldo típico? Anota qué rasgo de los puntos respalda tu respuesta.
+:::
 
 ::: {.notes}
 37–38 min. Describir dirección, dispersión y observaciones extremas antes de calcular. Un punto es un cliente. Comparamos clientes en un mes; no seguimos cambios individuales a través del tiempo. Los colores muestran nómina, pero no equivalen a controlar por ella. La nube no lleva recta todavía: primero motivamos la asociación lineal.
@@ -712,7 +718,7 @@ $$s_{XY}=\frac{1}{n-1}\sum_i(X_i-\bar X)(Y_i-\bar Y),
 \qquad r=\frac{s_{XY}}{s_Xs_Y}\in[-1,1].$$
 :::
 
-En nuestra muestra, $r=0.888$: una asociación lineal positiva marcada. Cambiar pesos por miles de pesos no altera $r$, y tampoco intercambiar $X$ y $Y$.
+Un valor cercano a +1 describe puntos alineados en sentido ascendente. Cerca de −1 se alinean en sentido descendente. Al intercambiar $X$ y $Y$ se obtiene el mismo coeficiente.
 
 ::: {.takeaway}
 $r$ no mide pesos ni un porcentaje de aumento. Valores extremos pueden modificarlo y $r=0$ no descarta una relación no lineal; por eso calculamos y graficamos juntos.
@@ -725,7 +731,7 @@ $r$ no mide pesos ni un porcentaje de aumento. Valores extremos pueden modificar
 ## Laboratorio 5 · Correlación y nube de puntos {.lab}
 
 ::: {.prompt}
-Calcula Pearson y revisa la nube: interpreta el signo, la forma y los valores extremos.
+Predice el signo de $r$ a partir de la nube. Ejecuta el código y contrasta el resultado con tu predicción. ¿Qué pasaría con $r$ si expresaras los abonos en pesos?
 :::
 
 ::: {.panel-tabset group="lenguaje"}
@@ -775,8 +781,8 @@ twoway (scatter saldo_promedio_miles abonos_miles if recibe_nomina==0) ///
 ```
 :::
 
-::: {.small}
-La correlación resume la asociación sin unidades. Ahora buscaremos cuánto saldo adicional se asocia con 1,000 MXN más de abonos.
+::: {.small .fragment}
+Obtenemos $r\approx0.888$. Al multiplicar los abonos por 1,000, su covarianza con el saldo y su DE crecen en la misma proporción. El cociente se conserva. ¿Cómo traducir la relación a pesos de saldo?
 :::
 
 ::: {.notes}
@@ -921,7 +927,7 @@ Interpretar el intercepto en abonos cero extrapola fuera del rango observado: 5.
 ## Laboratorio 6 · Estimar e interpretar la recta {.lab}
 
 ::: {.prompt}
-Comprueba los coeficientes, el IC, el p y el R² que acabamos de interpretar. Verifica: observado = ajustado + residuo.
+Compara dos cuentas con **20,000 y 22,000 MXN** de abonos. Usa la pendiente del código para calcular la diferencia entre sus saldos ajustados. ¿Permite la recta saber cuál de las dos tuvo mayor saldo observado?
 :::
 
 ::: {.panel-tabset group="lenguaje"}
@@ -977,8 +983,8 @@ list saldo_promedio_miles ajustado residuo in 1/3
 ```
 :::
 
-::: {.small}
-Desplaza la salida para revisar los residuos. Los IC son convencionales; evalúa sus supuestos.
+::: {.small .fragment}
+La recta asigna unos **770 MXN más** de saldo a la segunda cuenta ($2\times0.385$ miles de MXN). El saldo observado de cada cuenta es su valor ajustado **más su propio residuo**. Comprueba esa suma en una fila de la salida.
 :::
 
 ::: {.notes}
@@ -987,19 +993,22 @@ Desplaza la salida para revisar los residuos. Los IC son convencionales; evalúa
 
 ## Comunicar un argumento completo en cuatro frases
 
-Redacten en parejas un memo que responda la pregunta inicial. Cada frase debe conectar **qué se estimó, con qué precisión y qué permite concluir**.
+El equipo necesita saber cómo difieren los grupos en saldo y uso de débito, y cómo se relacionan los abonos con el saldo.
 
-1. **Medias:** diferencia de saldo en MXN, IC y decisión sobre igualdad.
-2. **Proporciones:** clientes que pagaron por grupo, diferencia e IC en pp.
-3. **Relación continua:** qué aportan $r$ y la pendiente, con sus unidades.
-4. **Alcance:** una conclusión defendible y una explicación alternativa que los cálculos no descartan.
+1. **Recuperen sus dos frases** sobre la diferencia de saldo y la de uso de débito. Incluyan los intervalos en pesos y en puntos porcentuales, respectivamente.
+2. **Añadan una tercera frase** sobre la dirección de la asociación ($r$) y la diferencia de saldo ajustado por cada 1,000 MXN adicionales de abonos (pendiente).
+3. **Cierren con una explicación alternativa.** ¿Qué característica de los clientes podría relacionarse tanto con sus abonos como con su saldo?
 
 ::: {.prompt}
-IA opcional: «Revisa si estas frases corresponden a mis resultados y supuestos. Explica cualquier confusión entre p y probabilidad de H₀, entre porcentaje y pp o entre asociación y causalidad». Contrasta la revisión con el código.
+Intercambien el memo con otra pareja. Subrayen los grupos y las unidades. Marquen una afirmación cuyo alcance o precisión convenga aclarar y devuelvan el texto para su revisión.
+:::
+
+::: {.small}
+Si usan IA para una segunda lectura, pídanle que señale qué cifra o supuesto respalda cada frase y cotejen la respuesta con su código.
 :::
 
 ::: {.notes}
-56–59 min. Pedir cuatro frases conectadas, no un listado de estadísticos. Se puede trabajar sin IA y sin cuenta de un proveedor. Revisar parámetro, estimación, unidades, incertidumbre y alcance. Un p aislado no es conclusión. Aquí todos los datos son sintéticos. Una persona lee y otra identifica los supuestos. La guía incluye un memo posible, no una respuesta única.
+56–59 min. Dar 90 segundos para recuperar las dos frases y añadir las dos restantes, 60 segundos para la revisión entre parejas y 30 segundos para precisar una frase. Comprobar la comparación entre clientes del mismo mes y la dirección con nómina menos sin nómina. Si sobra tiempo, una revisión opcional con IA puede cotejar las interpretaciones con la salida del código. La guía docente incluye un memo posible.
 :::
 
 ## Antes de salir: qué podemos concluir {.checkpoint}
@@ -1021,7 +1030,13 @@ La pendiente es positiva, su p es pequeño y $R^2$ es alto. ¿Qué conclusión e
 
 Descarga la [muestra de clientes](datos/muestra.csv) y el [marco de saldos](datos/poblacion_saldos.csv). Los scripts [R](codigo/sesion-1.R), [Python](codigo/sesion-1.py) y [Stata](codigo/sesion-1.do) se ejecutan desde la carpeta de esta sesión.
 
-Como práctica complementaria, cambia $n$ en el laboratorio 2 y explica por qué cambia el error estándar. Después reconstruye una conclusión usando **estimación, unidades, intervalo y supuestos**, sin depender solo del p.
+::: {.prompt}
+**Para practicar con otra operación.** ¿Difiere por nómina la proporción de clientes que retiró en ventanilla? Adapta el laboratorio 4: el indicador vale 1 cuando `n_retiros_ventanilla > 0` y 0 en los demás casos. Conserva el orden con nómina menos sin nómina. Calcula la diferencia y su IC del 95%, e interpreta el signo de los valores que admite.
+:::
+
+::: {.small .fragment}
+**Para cotejar tu conclusión.** Retiraron 25 de 274 clientes con nómina y 26 de 206 sin nómina. La diferencia estimada fue **−3.50 pp** (IC del 95% **[−9.17, +2.18] pp**). Los datos son compatibles tanto con una menor proporción en el grupo con nómina como con igualdad o una proporción ligeramente mayor.
+:::
 
 ::: {.small .muted}
 **Referencia pedagógica:** Angus Foulis, *Introduction: Econometrics With Microdata*, Centre for Central Banking Studies, Bank of England, 10 de noviembre de 2026, diapositivas 1–17. PDF en `referencias/slides-de-referencia/`. Se retoma la construcción gradual de conceptos; textos, datos y figuras son propios.

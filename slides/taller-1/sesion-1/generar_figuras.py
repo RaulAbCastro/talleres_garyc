@@ -4,6 +4,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 from scipy import stats
 
@@ -48,8 +49,32 @@ ax.grid(alpha=.12)
 fig.tight_layout()
 fig.savefig(ASSETS / "abonos-python.svg", metadata={"Date": None})
 plt.close(fig)
-for nombre in ("saldos-python.svg", "abonos-python.svg"):
+
+# Distribución de referencia bajo la hipótesis nula en el ejemplo bilateral.
+fig, ax = plt.subplots(figsize=(11, 2.65))
+z = np.arange(-450, 451) / 100
+densidad = stats.norm.pdf(z)
+extremo = 2
+porcentaje_cola = 100 * stats.norm.sf(extremo)
+for signo in (-1, 1):
+    cola = signo * z >= extremo
+    ax.fill_between(z[cola], 0, densidad[cola], color="#E0A33B")
+    ax.vlines(signo * extremo, 0, stats.norm.pdf(extremo), color="#805600")
+    ax.annotate(f"{porcentaje_cola:.3f}%", (signo * 2.2, 0.017),
+                xytext=(signo * 2.95, 0.17), ha="center", color="#805600",
+                fontsize=17, fontweight="bold",
+                arrowprops={"arrowstyle": "->", "color": "#805600"})
+ax.plot(z, densidad, color="#007279", linewidth=2.5)
+ax.set(xlim=(-4.5, 4.5), ylim=(0, 0.42), yticks=[],
+       xlabel="Valor del estadístico bajo la hipótesis nula")
+ax.set_xticks([-extremo, 0, extremo], labels=["−2", "0", "+2"])
+ax.spines["left"].set_visible(False)
+fig.tight_layout()
+fig.savefig(ASSETS / "colas-python.svg", metadata={"Date": None})
+plt.close(fig)
+
+for nombre in ("saldos-python.svg", "abonos-python.svg", "colas-python.svg"):
     archivo = ASSETS / nombre
     contenido = archivo.read_text(encoding="utf-8")
     archivo.write_text("\n".join(linea.rstrip() for linea in contenido.splitlines()) + "\n", encoding="utf-8")
-print("Figuras Python: saldos-python.svg y abonos-python.svg en assets/")
+print("Figuras Python: saldos-python.svg, abonos-python.svg y colas-python.svg en assets/")

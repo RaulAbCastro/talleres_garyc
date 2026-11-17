@@ -133,8 +133,11 @@ amplían la explicación para el docente; no son un prerrequisito oculto del gru
 El bloque de regresión conserva sus 13 minutos: ecuación (43–44), valores
 ajustados y residuos (44–46), animación (46–48), nombre y fórmula de MCO (48–49),
 supuestos sobre el error (49–51), inferencia (51–52), interpretación y R² (52–54),
-laboratorio 6 (54–56). La nueva explicación de distribuciones de referencia ocupa
-14–15, después de estadístico/p (13–14). Este es un ritmo de repaso; una introducción
+laboratorio 6 (54–56). El ejemplo de 1,000 MXN con un EE de 500 introduce el
+estadístico y su distribución de referencia (13–14). Pedir que el grupo elija
+cuáles de −2.3, +1.8 y +2.4 están al menos a dos EE del cero. Al avanzar, las
+dos colas de la normal muestran qué probabilidades suma el valor p (14–15).
+Este es un ritmo de repaso; una introducción
 desde cero o ejecutar todos los lenguajes requiere más tiempo.
 
 ## Cobertura del syllabus y conexiones que debe poder explicar el grupo
@@ -206,6 +209,13 @@ El intervalo que acompaña a cada media en la figura está calculado por separad
 el intervalo de la **diferencia** es el de Welch. No sustituir la prueba de la
 diferencia por una regla visual sobre el traslape de dos intervalos.
 
+En la práctica final con retiros en ventanilla, usar un indicador de al menos
+un retiro por cliente. Los conteos son 25/274 con nómina y 26/206 sin nómina;
+la diferencia es −3.50 pp y su IC de Wald del 95% va de −9.17 a +2.18 pp.
+Pedir una lectura de ambos extremos y de cero. Si alguien concluye que los grupos
+son iguales, invitarle a identificar una diferencia distinta de cero que siga
+dentro del intervalo.
+
 En el laboratorio de muestreo, aumentar n de 40 a 200 reduce aproximadamente la
 DE de las medias por un factor de √5. El muestreo sin reemplazo añade una pequeña
 corrección finita. R y Python no producen las mismas selecciones con una semilla
@@ -214,6 +224,13 @@ comportamiento al repetir muestras. El eje fijo 10–16 miles de MXN permite
 comparar la dispersión alrededor de la media del marco (13.1848).
 
 ## Un memo posible
+
+Pedir que cada pareja conserve su frase de saldos y su frase de uso de débito
+al terminar esos bloques. En la primera, el intervalo de la diferencia excluye
+cero e incluye el umbral hipotético de 3,000 MXN que fijó el equipo. En la
+segunda, comprobar qué denominador eligieron para cada grupo. Al cerrar,
+reservar 90 segundos para reunir las frases y completar el memo, un minuto
+para intercambiarlo y 30 segundos para revisar una afirmación con los datos.
 
 En esta muestra sintética de 480 clientes, quienes recibieron nómina tienen un
 saldo promedio mensual de aproximadamente 2,545 MXN más que quienes no la recibieron (IC95
