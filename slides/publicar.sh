@@ -9,7 +9,7 @@ bash render.sh render
 # permite servirlo tanto en / como en /talleres_garyc/ en GitHub Pages.
 site_dir="$PWD/_site"
 session_dir="taller-1/sesion-1"
-for file in index.html "$session_dir/index.html" \
+for file in ../website/index.html ../website/styles.css "$session_dir/index.html" \
     "$session_dir/datos/muestra.csv" "$session_dir/datos/poblacion_saldos.csv" \
     "$session_dir/codigo/sesion-1.R" "$session_dir/codigo/sesion-1.py" \
     "$session_dir/codigo/sesion-1.do"; do
@@ -20,7 +20,7 @@ test -d "$session_dir/index_files"
 # _site es un directorio generado por este script; se reconstruye en cada ejecución.
 rm -rf -- "$site_dir"
 mkdir -p "$site_dir/$session_dir/datos" "$site_dir/$session_dir/codigo"
-cp index.html "$site_dir/index.html"
+cp ../website/index.html ../website/styles.css "$site_dir/"
 for file in index.html interacciones.js animaciones.js animaciones.css; do
   cp "$session_dir/$file" "$site_dir/$session_dir/$file"
 done

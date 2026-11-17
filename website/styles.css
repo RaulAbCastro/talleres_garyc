@@ -1,0 +1,201 @@
+:root {
+  color-scheme: light;
+  --ink: #1b2a4a;
+  --teal: #007279;
+  --muted: #4d6070;
+  --line: #cbd7dc;
+  --paper: #f5f7f7;
+  font-family: "Aptos", "Segoe UI", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.container {
+  width: min(100% - 3rem, 68rem);
+  margin-inline: auto;
+}
+
+.masthead {
+  background: white;
+  border-top: 0.3rem solid var(--teal);
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-block: 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.brand img {
+  width: 10rem;
+  max-width: 100%;
+  height: auto;
+}
+
+main {
+  padding-bottom: 4rem;
+}
+
+.intro {
+  padding-block: clamp(2rem, 6vw, 4rem) 2.25rem;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  font-size: clamp(2.25rem, 1.5rem + 4vw, 4.65rem);
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.intro p {
+  max-width: 48ch;
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.workshop {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.35fr);
+  gap: 1rem 2rem;
+  align-items: start;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.workshop-number,
+.session-number {
+  color: var(--teal);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin-top: 0.35rem;
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+
+.presentation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding: 1.4rem;
+  border: 1px solid var(--line);
+  border-left: 0.25rem solid var(--teal);
+  border-radius: 0.45rem;
+  color: var(--ink);
+  background: white;
+  text-decoration: none;
+}
+
+.presentation:hover {
+  border-color: var(--teal);
+  background: #f0f9f8;
+}
+
+h3 {
+  margin-block: 0.35rem 0.5rem;
+  font-size: clamp(1.35rem, 1.15rem + 0.7vw, 1.8rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.presentation p {
+  max-width: 52ch;
+  color: var(--muted);
+}
+
+.presentation-action {
+  margin-inline-start: auto;
+  color: var(--teal);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.presentation-action span {
+  margin-inline-start: 0.3em;
+  font-size: 1.1em;
+}
+
+.session-list {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+}
+
+.presentation + .session-list {
+  margin-top: 0.75rem;
+}
+
+.session-list summary {
+  padding: 0.85rem 1.15rem;
+  border-radius: inherit;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.session-list summary:hover {
+  color: var(--teal);
+  background: #f0f9f8;
+}
+
+.session-list ol {
+  margin: 0 1.15rem;
+  padding: 0.5rem 0 0.75rem 2.15rem;
+  border-top: 1px solid var(--line);
+}
+
+.session-list li {
+  padding: 0.35rem 0 0.35rem 0.3rem;
+  color: var(--muted);
+}
+
+.session-list a {
+  color: var(--teal);
+  text-underline-offset: 0.18em;
+}
+
+:focus-visible {
+  outline: 3px solid #936000;
+  outline-offset: 3px;
+}
+
+@media (max-width: 42rem) {
+  .container {
+    width: calc(100% - 2rem);
+  }
+
+  .workshop {
+    grid-template-columns: 1fr;
+  }
+}

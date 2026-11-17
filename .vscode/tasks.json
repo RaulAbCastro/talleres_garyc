@@ -50,10 +50,19 @@
       "problemMatcher": []
     },
     {
+      "label": "Sitio: preparar menú y diapositivas",
+      "type": "process",
+      "command": "bash",
+      "args": ["slides/publicar.sh"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
       "label": "HTML: vista previa",
       "type": "process",
       "command": "${workspaceFolder}/.venv/bin/python",
-      "args": ["-m", "http.server", "8000", "--bind", "0.0.0.0", "--directory", "website"],
+      "args": ["-m", "http.server", "8000", "--bind", "0.0.0.0", "--directory", "slides/_site"],
+      "dependsOn": ["Sitio: preparar menú y diapositivas"],
       "options": {"cwd": "${workspaceFolder}"},
       "problemMatcher": []
     },

@@ -3,10 +3,122 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Talleres</title>
+    <meta name="description" content="Presentaciones y sesiones de los talleres GARyC.">
+    <title>Presentaciones · Talleres GARyC</title>
+    <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
-    <h1>Talleres</h1>
-    <p>La vista previa de HTML está funcionando en tu Codespace.</p>
+    <header class="masthead">
+      <div class="container brand">
+        <span>Talleres GARyC</span>
+        <img src="./taller-1/sesion-1/assets/logo-banxico-azul.png"
+             alt="Banco de México" width="1827" height="368">
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="intro">
+        <h1>Presentaciones</h1>
+        <p>Abre las diapositivas disponibles y consulta las sesiones previstas en el temario.</p>
+      </div>
+
+      <section class="workshop" aria-labelledby="taller-1">
+        <div class="workshop-heading">
+          <p class="workshop-number">Taller 1</p>
+          <h2 id="taller-1">Evaluación de impacto</h2>
+        </div>
+        <div>
+          <a class="presentation" href="./taller-1/sesion-1/" aria-labelledby="sesion-1-titulo">
+            <div>
+              <span class="session-number">Sesión 1 · 60 min</span>
+              <h3 id="sesion-1-titulo">De la muestra a la inferencia</h3>
+              <p>Pruebas de hipótesis, comparación de medias y proporciones, correlación y regresión lineal simple.</p>
+            </div>
+            <span class="presentation-action" aria-hidden="true">Abrir diapositivas <span>→</span></span>
+          </a>
+          <details class="session-list">
+            <summary>Sesiones 2–20</summary>
+            <ol start="2">
+              <li>De la pregunta de política al estimando</li>
+              <li>Resultados potenciales y sesgo de selección</li>
+              <li>Grafos causales</li>
+              <li>Experimentos aleatorizados I</li>
+              <li>Experimentos aleatorizados II</li>
+              <li>Función de esperanza condicional y regresión</li>
+              <li>Modelos saturados e interacciones</li>
+              <li>Anatomía de la regresión (Frisch–Waugh–Lovell)</li>
+              <li>Sesgo por variable omitida</li>
+              <li>Supuesto de independencia condicional y selección de controles</li>
+              <li>Errores estándar robustos y dependencia entre observaciones</li>
+              <li>Datos panel, regresión agrupada y efectos fijos</li>
+              <li>Diferencias en diferencias clásico</li>
+              <li>Efectos fijos de dos vías con tratamiento escalonado</li>
+              <li>Diferencias en diferencias moderno y estudios de evento</li>
+              <li>Variables instrumentales y LATE</li>
+              <li>Regresión discontinua nítida</li>
+              <li>¿Qué diseño uso?</li>
+              <li>Taller de proyectos</li>
+            </ol>
+          </details>
+        </div>
+      </section>
+
+      <section class="workshop" aria-labelledby="taller-2">
+        <div class="workshop-heading">
+          <p class="workshop-number">Taller 2</p>
+          <h2 id="taller-2">Econometría aplicada y diseños complementarios</h2>
+        </div>
+        <details class="session-list">
+          <summary>Sesiones 1–20</summary>
+          <ol>
+            <li>Modelo de probabilidad lineal</li>
+            <li>Modelos Probit y Logit</li>
+            <li>Modelo Tobit</li>
+            <li>Matching y ponderación por propensity score</li>
+            <li>Selección sobre no observables y modelo de Heckman</li>
+            <li>Sensibilidad ante variables omitidas</li>
+            <li>Modelo de efectos aleatorios y selección de modelos</li>
+            <li>Error de medición, efectos fijos y paneles desbalanceados</li>
+            <li>Diferencias en diferencias con covariables y tratamientos continuos</li>
+            <li>Sensibilidad a pre-tendencias</li>
+            <li>Control sintético</li>
+            <li>Diferencias en diferencias sintético</li>
+            <li>Poder y tamaño de muestra</li>
+            <li>Experimentos con clusters y estratificación</li>
+            <li>Heterogeneidad de efectos, múltiples pruebas y pre-registro</li>
+            <li>Variables instrumentales avanzadas</li>
+            <li>Regresión discontinua difusa</li>
+            <li>Taller de regresión discontinua</li>
+            <li>Double/Debiased Machine Learning</li>
+            <li>Efectos heterogéneos con aprendizaje automático</li>
+          </ol>
+        </details>
+      </section>
+
+      <section class="workshop" aria-labelledby="taller-3">
+        <div class="workshop-heading">
+          <p class="workshop-number">Taller 3</p>
+          <h2 id="taller-3">Análisis geoespacial y actividad de aplicación</h2>
+        </div>
+        <details class="session-list">
+          <summary>Sesiones 1–13</summary>
+          <ol>
+            <li>Introducción al análisis geoespacial</li>
+            <li>Datos espaciales: puntos, líneas, polígonos y ráster</li>
+            <li>Sistemas de coordenadas y proyecciones</li>
+            <li>Distancia, proximidad y accesibilidad</li>
+            <li>Autocorrelación espacial</li>
+            <li>Hot spots y análisis local</li>
+            <li>Modelos de regresión espacial</li>
+            <li>Efectos indirectos y exposición por distancia</li>
+            <li>Regresión discontinua geográfica y diferencias en diferencias espaciales</li>
+            <li>Caso práctico de acceso a servicios financieros</li>
+            <li>Actividad guiada de aplicación · Parte 1</li>
+            <li>Actividad guiada de aplicación · Parte 2</li>
+            <li>Presentación de resultados y retroalimentación</li>
+          </ol>
+        </details>
+      </section>
+    </main>
   </body>
 </html>
