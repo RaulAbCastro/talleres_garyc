@@ -1,0 +1,59 @@
+name: Publicar slides en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "slides/**"
+      - ".github/workflows/slides-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Compilar presentación
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Descargar fuentes
+        uses: actions/checkout@v4
+
+      - name: Instalar Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.11.9"
+
+      # Los CSV y SVG están versionados. R y Python se ejecutan en el navegador;
+      # esta compilación usa engine: markdown y la extensión Quarto Live local.
+      - name: Preparar sitio y recursos
+        run: bash slides/publicar.sh
+
+      - name: Guardar sitio para Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: slides/_site
+
+  deploy:
+    name: Publicar sitio
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Consultar configuración de Pages
+        uses: actions/configure-pages@v5
+
+      - name: Publicar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -67,6 +67,10 @@ con código R y Python ejecutable en el navegador, código Stata copiable para
 ejecución local y animaciones explicativas. Usa datos sintéticos sobre cuentas
 de depósito a la vista, transferencias SPEI y pagos con débito, con entradas y salidas por canal.
 
+**Slides en GitHub Pages:** [abrir presentación](https://raulabcastro.github.io/talleres_garyc/).
+La publicación se actualiza desde `main` mediante GitHub Actions tras activar
+Pages. [Configuración inicial y estado](slides/README.md#publicar-en-github-pages).
+
 La carpeta [`skills/`](skills/) guarda instrucciones reutilizables para preparar
 materiales en Markdown, independientes del modelo y del proveedor de IA.
 Para crear otra sesión con el mismo enfoque, pide a tu asistente:

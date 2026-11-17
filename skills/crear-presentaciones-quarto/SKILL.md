@@ -219,3 +219,14 @@ que la primera carga de los runtimes requiere internet. Para abrir desde otra
 computadora, usar la URL reenviada del puerto en Codespaces; ese acceso depende
 de que sigan activos el Codespace y el servidor. Un enlace permanente requiere
 una publicación aparte.
+
+Para GitHub Pages en este repositorio, usar `bash slides/publicar.sh` y el
+workflow `.github/workflows/slides-pages.yml`. El sitio de participantes se
+prepara en `slides/_site/` con rutas relativas; no subir todo el repositorio como
+artefacto web ni incluir `docente/` o el PDF de referencia. Al añadir sesiones,
+ampliar explícitamente el empaquetado y los enlaces. Verificar el resultado bajo
+la ruta `/talleres_garyc/`, incluidas las descargas de CSV y los runtimes.
+Distinguir configuración preparada, compilación exitosa y despliegue realmente
+publicado; no afirmar que el enlace está activo sin comprobarlo. La activación
+inicial de Pages requiere permisos de administración y un plan compatible con
+la visibilidad del repositorio; no cambiar esa visibilidad por cuenta propia.

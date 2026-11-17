@@ -33,6 +33,12 @@ la salida del laboratorio. La guía docente registra estas dependencias.
 
 ## Abrir y presentar
 
+La publicación en GitHub Pages tiene como dirección prevista:
+[abrir las slides](https://raulabcastro.github.io/talleres_garyc/).
+Una vez activado Pages y completado el primer despliegue, ese enlace funciona
+sin mantener abierto el Codespace. Consulta la configuración inicial y el estado
+en la sección **Publicar en GitHub Pages** de este documento.
+
 Desde la raíz del repositorio, con el entorno del Codespace ya instalado:
 
 ```bash
@@ -62,6 +68,43 @@ directamente con `file://` impide cargar módulos y datos.
 Para presentar desde otra computadora, copia la URL reenviada del puerto 4200
 en **Ports**. Ese enlace requiere que el Codespace y el servidor sigan activos
 y que tu cuenta tenga acceso al puerto. No es una publicación permanente.
+
+## Publicar en GitHub Pages
+
+El workflow [slides-pages.yml](../.github/workflows/slides-pages.yml) compila
+la presentación con Quarto **1.11.9** y publica al cambiar `slides/` en `main`.
+También puede ejecutarse desde **Actions → Publicar slides en GitHub Pages →
+Run workflow**. La extensión Quarto Live, los datos sintéticos y las figuras se
+leen del repositorio; R y Python se ejecutan en el navegador de cada participante.
+
+La activación inicial requiere que una persona con permisos para administrar
+Pages abra [Settings → Pages](https://github.com/RaulAbCastro/talleres_garyc/settings/pages)
+y elija **Build and deployment → Source → GitHub Actions**. Después puede ejecutar
+el workflow o volver a ejecutar el despliegue que estuviera pendiente. El estado
+se consulta en [Actions](https://github.com/RaulAbCastro/talleres_garyc/actions/workflows/slides-pages.yml).
+El repositorio es privado: GitHub debe permitir Pages con el plan de la cuenta.
+Este workflow no cambia la visibilidad del repositorio.
+
+Para preparar exactamente los archivos que se publicarán:
+
+```bash
+bash slides/publicar.sh
+python3 -m http.server 8000 --directory slides/_site
+```
+
+El script reconstruye `slides/_site/`, una carpeta ignorada por Git. Copia el
+HTML, sus dependencias, animaciones, figuras, los dos CSV de participantes y
+los scripts R/Python/Stata. No publica `docente/`, los generadores, el PDF externo
+ni documentos de Overleaf. Las notas del expositor integradas en el HTML sí
+acompañan a la presentación. Las rutas relativas permiten alojarla dentro de
+`/talleres_garyc/`.
+
+La dirección raíz abre la sesión 1 y también puede usarse el
+[enlace directo a la sesión](https://raulabcastro.github.io/talleres_garyc/taller-1/sesion-1/).
+La carga inicial de webR/Pyodide y KaTeX continúa requiriendo acceso a sus CDNs.
+Referencia de configuración: [workflows de GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+
+## Navegación y actividades
 
 Las flechas navegan, `Esc` abre la vista general y `S` las notas del expositor.
 Las notas contienen tiempos, preguntas sugeridas y resultados de referencia.
