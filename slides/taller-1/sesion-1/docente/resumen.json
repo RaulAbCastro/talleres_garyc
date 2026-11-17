@@ -1,101 +1,132 @@
 {
   "diseno": {
-    "semilla": 203101,
+    "semilla": 202609,
+    "semillas": {
+      "poblacion": 202609,
+      "muestra": 202610,
+      "actividad": 202611
+    },
     "N": 12000,
     "n": 480,
-    "periodo": "2031 T1",
-    "regiones": [
-      "Capital",
-      "Valle"
-    ],
-    "poblacion_objetivo": "Clientes ficticios con crédito activo elegibles para el piloto en Capital y Valle",
-    "muestreo": "Aleatorio simple sin reemplazo; no representa a todo Marginalia",
-    "asignacion": "Adopción voluntaria endógena a sofisticación financiera latente",
-    "unidades_tasa": "Porcentaje anual; diferencias en puntos porcentuales",
-    "unidades_ingreso": "Miles de áureos por mes",
-    "inferencia": "Bilateral al 5%; aproximación independiente; sin corrección por población finita",
-    "origen": "Simulación pedagógica; parámetros y regiones del piloto son supuestos añadidos"
+    "periodo": "2026-09",
+    "grano": "Una cuenta de depósito a la vista por cliente, en un único mes (corte transversal)",
+    "alcance": "Débito y movimientos de la cuenta; sin crédito ni libro diario conciliado",
+    "canales": "Catálogo didáctico de entradas y salidas, con categorías residuales; no exhaustivo",
+    "poblacion_objetivo": "Marco didáctico de clientes con cuenta de depósito a la vista y tarjeta de débito",
+    "muestreo": "Aleatorio simple sin reemplazo; no representa a una institución ni al sistema financiero",
+    "comparacion": "Recibe nómina=1 menos recibe nómina=0; grupos observados, sin asignación aleatoria",
+    "unidades_montos": "Miles de pesos mexicanos (MXN)",
+    "unidades_conteos": "Número de operaciones durante septiembre de 2026",
+    "inferencia": "Bilateral al 5%; independencia aproximada; sin corrección por población finita",
+    "origen": "Datos enteramente sintéticos; sin calibración a estadísticas observadas"
+  },
+  "diccionario": {
+    "id_cliente": "Identificador sintético único, sin datos personales reales",
+    "recibe_nomina": "1 si recibió un abono identificado como nómina durante el mes, 0 si no",
+    "abonos_miles": "Suma de abonos durante el mes, de cualquier canal, en miles de MXN",
+    "saldo_promedio_miles": "Saldo promedio del mes en la cuenta de depósito, en miles de MXN",
+    "pago_debito": "1 si n_pagos_debito > 0, 0 en otro caso; no incluye retiros",
+    "n_entradas": "Suma de los conteos de entradas por canal durante el mes",
+    "n_salidas": "Suma de los conteos de salidas por tipo/canal durante el mes",
+    "n_spei_entrada": "Número de transferencias SPEI recibidas durante el mes",
+    "n_abonos_ventanilla": "Número de depósitos en ventanilla durante el mes",
+    "n_abonos_cajero": "Número de depósitos en cajeros receptores durante el mes",
+    "n_abonos_comisionista": "Número de depósitos por comisionistas durante el mes",
+    "n_otros_abonos": "Número de otros abonos; incluye traspasos internos",
+    "n_spei_salida": "Número de transferencias SPEI enviadas durante el mes",
+    "n_pagos_debito": "Número de pagos con la tarjeta de débito asociada a la cuenta",
+    "n_retiros_cajero": "Número de retiros de efectivo en cajero durante el mes",
+    "n_retiros_ventanilla": "Número de retiros de efectivo en ventanilla durante el mes",
+    "n_retiros_comisionista": "Número de retiros de efectivo por comisionistas durante el mes",
+    "n_otros_cargos": "Número de otros cargos; p. ej., domiciliaciones, comisiones y traspasos internos"
   },
   "poblacion": {
-    "media_tasa_observada": 21.01914515,
-    "desviacion_tasa_observada": 3.742002614145908,
-    "proporcion_uso": 0.44133333333333336,
-    "efecto_causal_tasa_pp": -1.5,
-    "diferencia_observada_tasa_pp": -3.4991797005350094,
-    "sesgo_seleccion_tasa_pp": -1.9991797005350094
+    "media_saldo": 13.18480155,
+    "desviacion_saldo": 4.621784210988681,
+    "proporcion_nomina": 0.5438333333333333,
+    "ecuacion_saldo": "saldo = 6 + 0.30*abonos + 3*estabilidad_ingreso + ruido_saldo (redondeado a 4 decimales)",
+    "interpretacion": "Receta de simulación; no identifica efecto causal de recibir nómina"
   },
   "muestra": {
-    "media_tasa": 21.153603958333335,
-    "desviacion_tasa": 3.851400272829359,
-    "ee_media_sin_correccion_finita": 0.17579156728418258,
-    "sin_agente": {
-      "n": 264,
-      "media_tasa": 22.684127651515148,
-      "desviacion_tasa": 3.4560303315258105,
-      "cambios_banco": 23,
-      "proporcion_cambio": 0.08712121212121213,
-      "ingreso_medio_miles": 19.282742424242425
+    "media_saldo": 13.275583750000003,
+    "desviacion_saldo": 4.73725462915907,
+    "ee_media_sin_correccion_finita": 0.21622510175301607,
+    "sin_nomina": {
+      "n": 206,
+      "media_saldo": 11.822830582524272,
+      "desviacion_saldo": 4.13620448172248,
+      "media_abonos": 21.853995145631067,
+      "clientes_pago_debito": 90,
+      "proporcion_pago_debito": 0.4368932038834951
     },
-    "con_agente": {
-      "n": 216,
-      "media_tasa": 19.282963888888887,
-      "desviacion_tasa": 3.4705166588077367,
-      "cambios_banco": 60,
-      "proporcion_cambio": 0.2777777777777778,
-      "ingreso_medio_miles": 24.46352314814815
-    }
+    "con_nomina": {
+      "n": 274,
+      "media_saldo": 14.367799635036496,
+      "desviacion_saldo": 4.872255842227952,
+      "media_abonos": 26.166306569343064,
+      "clientes_pago_debito": 220,
+      "proporcion_pago_debito": 0.8029197080291971
+    },
+    "rango_abonos_miles": [
+      5.863,
+      72.113
+    ],
+    "rango_saldo_miles": [
+      3.4393,
+      31.0799
+    ]
   },
   "welch": {
-    "contraste": "Media con agente menos media sin agente",
-    "diferencia_pp": -3.401163762626261,
-    "ee_pp": 0.31781202723547425,
-    "gl": 458.6143319509159,
-    "t": -10.701809469615386,
-    "p_bilateral": 5.20581154214603e-24,
-    "ic95_pp": [
-      -4.025712107301554,
-      -2.7766154179509686
+    "contraste": "Saldo con nómina menos saldo sin nómina",
+    "diferencia_miles": 2.544969052512224,
+    "ee_miles": 0.4119316583512438,
+    "gl": 470.94959223295433,
+    "t": 6.178134165988749,
+    "p_bilateral": 1.4044207750458478e-09,
+    "ic95_miles": [
+      1.7355176002022767,
+      3.354420504822171
     ]
   },
   "proporciones": {
-    "contraste": "Cambio de banco: con agente menos sin agente",
-    "p_sin_agente": 0.08712121212121213,
-    "p_con_agente": 0.2777777777777778,
-    "diferencia": 0.19065656565656566,
-    "diferencia_pp": 19.065656565656568,
-    "ee_h0_agrupado": 0.034696434026246455,
-    "z": 5.494990220388114,
-    "p_bilateral": 3.907320670205825e-08,
-    "metodo_prueba": "z de dos proporciones, H0 agrupada, sin corrección de continuidad",
-    "ee_ic_no_agrupado": 0.03507189634673696,
+    "contraste": "Pago con débito: con nómina menos sin nómina",
+    "p_sin_nomina": 0.4368932038834951,
+    "p_con_nomina": 0.8029197080291971,
+    "diferencia": 0.366026504145702,
+    "diferencia_pp": 36.6026504145702,
+    "ee_h0_agrupado": 0.04410377839646663,
+    "z": 8.299209669868697,
+    "p_bilateral": 1.0480625973434843e-16,
+    "ee_ic_no_agrupado": 0.04209247959004092,
     "ic95": [
-      0.12191691194743934,
-      0.259396219365692
+      0.2835267601292345,
+      0.44852624816216946
     ],
-    "metodo_ic": "Wald no agrupado, sin corrección de continuidad; equivale a prop.test de dos proporciones con correct=FALSE"
+    "metodo_prueba": "z agrupada bilateral sin corrección de continuidad",
+    "metodo_ic": "Wald no agrupado"
   },
   "correlacion": {
     "variables": [
-      "ingreso_miles",
-      "tasa_anual"
+      "abonos_miles",
+      "saldo_promedio_miles"
     ],
-    "r_pearson": -0.6271544252714985,
-    "p_bilateral": 7.765074250801336e-54
+    "r_pearson": 0.8879127289568212,
+    "p_bilateral": 2.612272234771392e-163
   },
   "regresion": {
-    "formula": "tasa_anual ~ ingreso_miles",
-    "intercepto": 27.162729061416567,
-    "pendiente": -0.27801883218366397,
-    "ee_pendiente": 0.015793000810407073,
+    "formula": "saldo_promedio_miles ~ abonos_miles",
+    "intercepto": 3.915755603804792,
+    "pendiente": 0.3849308978753187,
+    "ee_pendiente": 0.00912152909105073,
     "gl": 478,
-    "t": -17.60392692441696,
-    "p_bilateral": 7.765074250799983e-54,
+    "p_bilateral": 2.61227223477136e-163,
+    "r2": 0.7883890142435493,
     "ic95_pendiente": [
-      -0.3090511196932745,
-      -0.24698654467405343
+      0.3670076471467913,
+      0.4028541486038461
     ],
-    "r2": 0.393322673137624,
-    "inferencia": "OLS convencional homocedástica; interpretación descriptiva"
+    "suma_cuadrados_residuos": 2274.7159947702394,
+    "inferencia": "OLS convencional homocedástica como repaso; interpretación descriptiva"
   },
-  "sha256_muestra_csv": "0b29129c78cf5c646bb57e59838c841b579c1e75e028fc2e4a74e40863bae307"
+  "sha256_muestra_csv": "a03dbf48bbda1d82e17b0e906641f7069c57f5574281b866d8f0b04bc9e1ccd2"
 }

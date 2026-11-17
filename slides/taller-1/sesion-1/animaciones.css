@@ -1,0 +1,38 @@
+.reveal .concept-demo {
+  border: 1px solid #ccd6de;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.25;
+  box-sizing: border-box;
+  max-height: 420px;
+  overflow: auto;
+}
+.reveal .concept-demo p { margin: 4px 0; }
+.reveal .concept-demo .demo-caption { color: #5d6d7e; font-size: 15px; }
+.reveal .concept-demo .demo-controls {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+  margin: 9px 0 3px;
+}
+.reveal .concept-demo label { display: inline-flex; align-items: center; gap: 7px; font-size: 16px; }
+.reveal .concept-demo button, .reveal .concept-demo select {
+  font: inherit; font-size: 16px; border: 1px solid #90b9ba;
+  border-radius: 5px; padding: 5px 10px; color: #005c62; background: #edf7f6;
+  cursor: pointer;
+}
+.reveal .concept-demo button[aria-pressed="true"] { background: #007279; color: white; }
+.reveal .concept-demo input[type="range"] { width: 135px; accent-color: #007279; cursor: pointer; }
+.reveal .concept-demo input[type="checkbox"] { width: 17px; height: 17px; accent-color: #007279; }
+.reveal .concept-demo output { min-width: 42px; font-variant-numeric: tabular-nums; }
+.reveal .concept-demo :is(button, input, select):focus-visible { outline: 3px solid #b26a00; outline-offset: 2px; }
+.reveal .concept-demo .demo-chart { display: block; width: 100%; height: 250px; margin: 0; overflow: visible; }
+.reveal .concept-demo .demo-metrics { font-size: 17px; color: #1b2a4a; font-weight: 650; font-variant-numeric: tabular-nums; }
+.reveal .concept-demo .demo-note { font-size: 14px; color: #5d6d7e; line-height: 1.25; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal .concept-demo * { animation: none !important; transition: none !important; }
+}
+@media print {
+  .reveal .concept-demo { max-height: none; overflow: visible; }
+  .reveal .concept-demo .demo-controls { display: none; }
+}

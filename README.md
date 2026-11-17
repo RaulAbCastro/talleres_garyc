@@ -63,15 +63,17 @@ elige por separado con **Select Kernel**.
 La presentación interactiva de la primera sesión está en
 [`slides/`](slides/README.md). Para abrir **De la muestra a la inferencia**,
 ejecuta `bash slides/render.sh preview` y abre el puerto 4200. Incluye pestañas
-con código R y Python ejecutable en el navegador sobre datos sintéticos de
-Marginalia.
+con código R y Python ejecutable en el navegador, código Stata copiable para
+ejecución local y animaciones explicativas. Usa datos sintéticos sobre cuentas
+de depósito a la vista, transferencias SPEI y pagos con débito, con entradas y salidas por canal.
 
 La carpeta [`skills/`](skills/) guarda instrucciones reutilizables para preparar
 materiales en Markdown, independientes del modelo y del proveedor de IA.
 Para crear otra sesión con el mismo enfoque, pide a tu asistente:
 “Lee y aplica [`skills/crear-presentaciones-quarto/SKILL.md`](skills/crear-presentaciones-quarto/SKILL.md)
 para generar la sesión N del taller M”. La skill incluye el flujo didáctico,
-los datos sintéticos, las pestañas ejecutables R/Python y su validación.
+los casos bancarios cotidianos, los datos sintéticos, las animaciones y las
+pestañas R/Python/Stata, con sus formas de ejecución y validación.
 Si la herramienta no carga skills o no accede al repositorio, comparte el texto
 de la guía y los archivos que referencia. La ejecución de comandos y las pruebas
 en navegador dependerán de las herramientas disponibles en ese entorno.

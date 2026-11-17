@@ -3,8 +3,33 @@
 La primera sesión del Taller 1, **De la muestra a la inferencia**, está en
 [`taller-1/sesion-1/index.qmd`](taller-1/sesion-1/index.qmd). Es una presentación
 Quarto **reveal.js**, en español, para una sesión de aproximadamente una hora.
-Toma la historia de Marginalia de `documents_overleaf/caso.tex` y el alcance de
-la sesión 1 de `documents_overleaf/temario.tex`.
+Usa cuentas de depósito a la vista, transferencias SPEI y pagos con débito
+como contexto cotidiano, con **datos completamente sintéticos**. Conserva el
+alcance de la sesión 1 de `documents_overleaf/temario.tex`; sustituye la historia
+futurista de la primera versión.
+
+La secuencia explicativa se inspira en Angus Foulis, *Introduction: Econometrics
+With Microdata*, Centre for Central Banking Studies, Bank of England,
+10 de noviembre de 2026, [diapositivas 1–17 del PDF de referencia](../referencias/slides-de-referencia/10_11_26_Causal_Econometrics_Intro.pdf).
+Parte de preguntas concretas, distingue población y muestra, introduce errores
+y residuos y visualiza el criterio de MCO antes de discutir sus supuestos.
+Los textos, datos y gráficos de esta sesión son propios.
+El temario define el alcance: hipótesis, comparación de medias y proporciones,
+correlación y regresión lineal simple. La referencia externa guía la pedagogía;
+se conserva cada tema en una progresión de lo simple a lo complejo.
+
+El guion actual tiene 38 diapositivas y sigue este orden: **pruebas de hipótesis,
+comparación de medias y proporciones, correlación y regresión lineal simple**.
+Muestreo, error estándar e intervalos se introducen dentro del primer bloque.
+Cada explicación conecta pregunta, parámetro, método, supuestos e interpretación;
+las fórmulas se traducen al caso y a la salida del código. La guía docente contiene
+la cobertura y los tiempos. Para la ruta de una hora, el laboratorio 2 es práctica
+complementaria: su intuición se trabaja con la animación en clase.
+
+Cada concepto se explica antes de usarse en fórmulas, animaciones o laboratorios.
+La elección de una recta se explora antes de nombrar mínimos cuadrados ordinarios
+(MCO); sus supuestos se explican antes de la inferencia y R² antes de aparecer en
+la salida del laboratorio. La guía docente registra estas dependencias.
 
 ## Abrir y presentar
 
@@ -14,8 +39,9 @@ Desde la raíz del repositorio, con el entorno del Codespace ya instalado:
 bash slides/render.sh preview
 ```
 
-Abre el puerto **4200** en la pestaña **Ports** de Codespaces y entra en
-`/taller-1/sesion-1/`. El proceso queda ejecutándose hasta pulsar `Ctrl+C`.
+Abre el puerto **4200** en la pestaña **Ports** de Codespaces: la dirección raíz
+redirige automáticamente a `/taller-1/sesion-1/`. El proceso queda ejecutándose
+hasta pulsar `Ctrl+C`.
 También está disponible la tarea **Slides: vista previa sesión 1** de VS Code.
 
 Para compilar sin dejar abierto un servidor:
@@ -25,23 +51,35 @@ bash slides/render.sh
 ```
 
 Se genera `slides/taller-1/sesion-1/index.html` con su carpeta de dependencias.
-El HTML generado y sus dependencias no se versionan. No es un HTML autocontenido:
+El HTML generado y sus dependencias no se versionan. `slides/index.html` es una
+entrada escrita a mano que sí se versiona y permite abrir las slides desde la raíz.
+La presentación no es un HTML autocontenido:
 conserva las carpetas acompañantes, los CSV, `codigo/`, `assets/` e
-`interacciones.js`. Para abrirlo usa Quarto Preview o un servidor HTTP; abrirlo
+`interacciones.js`, además de `animaciones.js` y `animaciones.css`. Para abrirlo
+usa Quarto Preview o un servidor HTTP; abrirlo
 directamente con `file://` impide cargar módulos y datos.
+
+Para presentar desde otra computadora, copia la URL reenviada del puerto 4200
+en **Ports**. Ese enlace requiere que el Codespace y el servidor sigan activos
+y que tu cuenta tenga acceso al puerto. No es una publicación permanente.
 
 Las flechas navegan, `Esc` abre la vista general y `S` las notas del expositor.
 Las notas contienen tiempos, preguntas sugeridas y resultados de referencia.
-Hay tres preguntas de opción múltiple con retroalimentación y seis laboratorios:
+Hay dos preguntas de opción múltiple con retroalimentación y seis laboratorios:
 
 1. Explorar la muestra.
 2. Repetir muestreo y cambiar tamaño muestral.
 3. Comparar medias con Welch.
 4. Comparar proporciones.
-5. Calcular correlación y graficar.
-6. Estimar regresión lineal simple.
+5. Calcular correlación y visualizar la nube de puntos.
+6. Estimar la recta y examinar sus residuos.
 
-## Pestañas R y Python ejecutables
+Las animaciones permiten repetir muestras, observar la cobertura de intervalos
+y cambiar una recta para comparar sus residuos. Tienen controles explícitos,
+reinicio y soporte para movimiento reducido. Las poblaciones ilustrativas de
+las animaciones se identifican por separado del CSV de los laboratorios.
+
+## Pestañas R, Python y Stata
 
 Cada laboratorio tiene pestañas **R** y **Python** con un editor, **Run Code** y
 **Start Over**. Los chunks `{webr}` y `{pyodide}` de
@@ -51,6 +89,12 @@ R/Python ni envían el código a un kernel remoto. Cada celda vuelve a leer el
 mismo CSV, de modo que no depende de haber ejecutado una celda anterior.
 `Ctrl/Cmd+Enter` también ejecuta; Start Over restaura el código de la celda,
 no reinicia todo el entorno de ejecución.
+
+La pestaña **Stata** muestra código copiable con el mismo CSV y una descarga
+[`codigo/sesion-1.do`](taller-1/sesion-1/codigo/sesion-1.do). Se ejecuta en una
+instalación local de Stata; **no se ejecuta en el navegador**. La sintaxis se
+revisa contra los manuales oficiales, pero sin una instalación de Stata no se
+puede afirmar que el `.do` se haya ejecutado o validado en ese programa.
 
 La primera carga **requiere internet** para descargar webR, Pyodide y los
 paquetes Python NumPy, pandas, SciPy y Matplotlib. Espera a que se habilite
@@ -68,27 +112,77 @@ Quarto 1.11.9 del entorno del repositorio. `assets/live-bootstrap.js` resuelve
 la inicialización OJS en Quarto reciente mediante un import local explícito;
 véase el [issue de compatibilidad](https://github.com/r-wasm/quarto-live/issues/134).
 
-## Datos y continuidad del caso
+## Datos y continuidad de los talleres
 
-Esta sesión agrega **supuestos didácticos** al caso: un marco de 12,000 clientes
-elegibles con crédito activo de Capital y Valle y una muestra aleatoria simple
-de 480 personas sin reemplazo. No representa a todo Marginalia. El caso describe
-un piloto/invitaciones aleatorios; aquí se compara **uso observado**, no
-asignación. La adopción depende de sofisticación financiera latente. Una
-diferencia estadísticamente significativa no identifica por sí sola impacto.
+El ejercicio tiene un marco sintético de **12,000 clientes** con cuenta de
+depósito a la vista y tarjeta de débito, y una muestra aleatoria simple de
+**480 clientes sin reemplazo**. La observación corresponde a un cliente durante
+septiembre de 2026: es un corte transversal de un mes. Ni el tamaño del marco
+ni los importes representan cifras de una institución o del sistema financiero.
 
-- `datos/muestra.csv`: siete variables observadas para participantes.
-- `datos/poblacion_tasas.csv`: tasas del marco sintético para simular muestreo.
-- `generar_datos.py`: mecanismo reproducible, semilla **203101** y validaciones.
-- `docente/`: potenciales, latente, resultados esperados y guía. No se incluyen
+La comparación entre clientes con y sin abonos de nómina es observacional.
+Una variable latente de estabilidad financiera interviene en el mecanismo de
+simulación y puede explicar diferencias entre grupos y la relación entre
+abonos y saldos. Una diferencia significativa o una pendiente positiva no
+identifican por sí solas un efecto causal.
+
+- `datos/muestra.csv`: variables observadas para participantes.
+- `datos/poblacion_saldos.csv`: saldos del marco sintético para simular muestreo.
+- `generar_datos.py`: mecanismo reproducible, semilla raíz **202609** (población 202609, muestra 202610 y actividad 202611) y validaciones.
+- `docente/`: población, latentes, errores, resultados esperados y guía. No se incluyen
   en los recursos que los runtimes descargan. La separación es didáctica,
   no un control de acceso al repositorio.
 
-La tasa anual se guarda en porcentaje (`18 = 18%`); sus diferencias van en
-**puntos porcentuales**. El ingreso se guarda en miles de áureos al mes y cambio
-de banco es 0/1. Ambos lenguajes leen el mismo archivo y producen las mismas
-estimaciones deterministas. Una semilla igual no hace iguales las muestras
-Monte Carlo de los dos lenguajes.
+| Variable | Interpretación |
+|---|---|
+| `id_cliente` | Identificador sintético único, sin datos personales reales. |
+| `recibe_nomina` | 1 si recibió un abono identificado como nómina durante el mes, 0 si no. |
+| `abonos_miles` | Suma de abonos durante el mes, de cualquier canal, en miles de MXN. |
+| `saldo_promedio_miles` | Saldo promedio del mes en la cuenta de depósito, en miles de MXN. |
+| `pago_debito` | 1 si n_pagos_debito > 0, 0 en otro caso; no incluye retiros. |
+| `n_entradas` | Suma de los conteos de entradas por canal durante el mes. |
+| `n_salidas` | Suma de los conteos de salidas por tipo/canal durante el mes. |
+| `n_spei_entrada` | Número de transferencias SPEI recibidas durante el mes. |
+| `n_abonos_ventanilla` | Número de depósitos en ventanilla durante el mes. |
+| `n_abonos_cajero` | Número de depósitos en cajeros receptores durante el mes. |
+| `n_abonos_comisionista` | Número de depósitos por comisionistas durante el mes. |
+| `n_otros_abonos` | Número de otros abonos; incluye traspasos internos. |
+| `n_spei_salida` | Número de transferencias SPEI enviadas durante el mes. |
+| `n_pagos_debito` | Número de pagos con la tarjeta de débito asociada a la cuenta. |
+| `n_retiros_cajero` | Número de retiros de efectivo en cajero durante el mes. |
+| `n_retiros_ventanilla` | Número de retiros de efectivo en ventanilla durante el mes. |
+| `n_retiros_comisionista` | Número de retiros de efectivo por comisionistas durante el mes. |
+| `n_otros_cargos` | Número de otros cargos; p. ej., domiciliaciones, comisiones y traspasos internos. |
+
+
+El objeto es la **cuenta de depósito a la vista**, no un conjunto de productos
+financieros. El marco supone una cuenta por cliente y una tarjeta de débito
+asociada; no se modelan crédito ni sus saldos, compras o pagos.
+
+Las entradas y salidas se clasifican por sentido y tipo/canal. SPEI puede ser
+recibido o enviado; ventanilla, cajero y comisionista pueden registrar depósitos
+y retiros. Un retiro se cuenta en su canal, no también como pago con débito.
+`n_entradas` y `n_salidas` son totales derivados: no deben sumarse otra vez junto
+con sus componentes. «Otros» permite incluir traspasos internos, domiciliaciones
+y comisiones sin presentar el catálogo como exhaustivo.
+
+`recibe_nomina` identifica el origen de algún abono; no es un canal adicional.
+En la simulación una nómina se registra en SPEI o en otros abonos internos, sin
+duplicarla. La asignación entre canales es una decisión sintética, no una cuota
+estimada para México. `pago_debito = 1` únicamente cuando `n_pagos_debito > 0`.
+
+Los conteos miden operaciones, `abonos_miles` mide su importe total de entrada
+y `saldo_promedio_miles` es un stock promediado. No hay importes por canal ni un
+libro diario conciliado: no se puede reconstruir el saldo final o el promedio
+restando conteos. Los grupos con y sin nómina son observados; el muestreo no
+asigna aleatoriamente la recepción de nómina.
+
+Los tres lenguajes leen el mismo archivo. Los contrastes mantienen el orden
+**con nómina menos sin nómina**, confianza de 95% y las mismas convenciones de
+inferencia. Las diferencias de proporciones se expresan en **puntos porcentuales**.
+Para Welch, Stata usa `unequal` (Satterthwaite), no su opción `welch`, que cambia
+los grados de libertad. Las simulaciones Monte Carlo no producen las mismas
+realizaciones entre lenguajes por compartir una semilla.
 
 ## Regenerar y trabajar localmente
 
@@ -120,11 +214,14 @@ La ruta correcta de Python desde esa carpeta es `../../..` hasta la raíz.
 Si el entorno se instaló en otro sitio, usa su ejecutable Python. Los scripts
 locales permiten impartir la sesión cuando la red bloquea los runtimes del
 navegador. Para figuras reproducibles usa los generadores, que guardan SVG.
+Para Stata, abre `codigo/sesion-1.do` en el editor de do-files con la carpeta de
+la sesión como directorio de trabajo y ejecútalo desde tu instalación local.
 
 ## Editar la siguiente versión
 
 El guion está en `index.qmd`, el diseño en `tema.scss` y las preguntas en HTML
-con comportamiento en `interacciones.js`. Cada laboratorio se escribe una sola
+con comportamiento en `interacciones.js`. Las animaciones están en
+`animaciones.js` y `animaciones.css`. Cada laboratorio se escribe una sola
 vez por lenguaje, dentro de un `.panel-tabset`. Las figuras de respaldo leen
 solo los datos observados. Al modificar parámetros, actualiza las cifras
 narradas y la guía docente; las estadísticas de referencia se recalculan en

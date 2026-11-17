@@ -40,7 +40,7 @@ webr:
   resources: [datos/muestra.csv]
   cell-options:
     autorun: false
-    max-lines: 7
+    max-lines: 6
     fig-width: 9
     fig-height: 3.2
     timelimit: 30
@@ -49,7 +49,7 @@ pyodide:
   resources: [datos/muestra.csv]
   cell-options:
     autorun: false
-    max-lines: 7
+    max-lines: 6
     fig-width: 9
     fig-height: 3.2
     timelimit: 30
@@ -80,7 +80,7 @@ URL de MathJax 4 con un plugin que esperaba la API de MathJax 2. En KaTeX,
 `url` es el **directorio** con barra final: Quarto agrega `katex.min.js` y
 `katex.min.css`. Las fórmulas también dependen de la descarga inicial del CDN.
 
-## Pestañas ejecutables
+## Pestañas R/Python ejecutables y Stata para uso local
 
 Usar `{webr}` y `{pyodide}` para ejecutar en el navegador. Los chunks `{r}` y
 `{python}` convencionales ejecutados al compilar no ofrecen por sí solos este
@@ -106,12 +106,25 @@ import pandas as pd
 d = pd.read_csv("datos/muestra.csv")
 print(d.head(4).to_string(index=False))
 ```
+
+### Stata
+
+Para ejecutar en Stata; no se ejecuta en el navegador.
+
+```stata
+import delimited "datos/muestra.csv", clear
+list in 1/4
+```
 :::
 ````
 
 Cada `exercise` debe ser único en todo el documento, incluidos ambos lenguajes.
 Usar celdas autocontenidas: importar paquetes y leer los datos en cada una.
 No depender del orden de ejecución de celdas ocultas de setup global.
+El bloque `stata` es estático: no usar `{stata}`, que sugeriría un motor de
+ejecución de Quarto. Mantener disponible copiar código y exportar los bloques a
+un `.do` mediante `exportar_codigo.py`; el QMD sigue siendo la única fuente.
+Documentar el directorio de trabajo local para que funcionen las rutas al CSV.
 
 Declarar explícitamente los mismos CSV en `webr.resources` y `pyodide.resources`
 además de los recursos de entrega. Esos archivos se copian a los sistemas de
@@ -126,6 +139,52 @@ Codespace y los del navegador son entornos distintos.
 Run Code y Ctrl/Cmd+Enter ejecutan. Start Over restaura el código inicial de esa
 celda; no promete reiniciar todo el runtime. Conservar `autorun: false` cuando
 el objetivo sea que el auditorio prediga y ejecute deliberadamente.
+
+## Hacer comparables los métodos
+
+Usar el mismo CSV, nivel de confianza y orden del contraste. En la sesión 1,
+la diferencia se expresa como **con nómina menos sin nómina**. Por defecto,
+Stata resta el segundo grupo del primero; una variable `sin_nomina =
+1 - recibe_nomina` pone primero a quienes sí reciben nómina.
+
+```stata
+import delimited "datos/muestra.csv", clear
+generate byte sin_nomina = 1 - recibe_nomina
+ttest saldo_promedio_miles, by(sin_nomina) unequal level(95)
+prtest pago_debito, by(sin_nomina) level(95)
+```
+
+En Stata, `unequal` usa los grados de libertad de Satterthwaite, correspondientes
+a `t.test(..., var.equal=FALSE)` de R y `ttest_ind(..., equal_var=False)` de
+SciPy. La opción Stata `welch` cambia la fórmula de grados de libertad: no
+añadirla por el nombre coloquial de la prueba. Consultar el
+[manual de ttest](https://www.stata.com/manuals/rttest.pdf).
+
+`prtest` utiliza el error estándar combinado bajo la hipótesis nula para el
+contraste bilateral y el no combinado para el intervalo normal de la diferencia.
+Igualar esa convención en R/Python y expresar diferencias de proporciones en
+puntos porcentuales cuando se multipliquen por 100. Consultar el
+[manual de prtest](https://www.stata.com/manuals/rprtest.pdf).
+
+Para la regresión simple, `regress saldo_promedio_miles abonos_miles` incluye
+intercepto; `predict double saldo_ajustado, xb` obtiene los valores ajustados y
+`predict double residuo, residuals` obtiene los residuos. Mantener la misma
+convención de errores estándar e intervalos en los tres lenguajes. Referencia:
+[postestimación de regress](https://www.stata.com/manuals/rregresspostestimation.pdf).
+Revisar estos comandos contra los manuales no equivale a haberlos ejecutado en
+Stata: indicar por separado esa limitación si no está instalado.
+
+## Animaciones didácticas
+
+Reutilizar `animaciones.js` y `animaciones.css` si la sesión necesita muestreo,
+cobertura de intervalos o elección de una recta. Declarar los archivos en los
+recursos de entrega y cargar sus estilos y scripts desde el QMD. El estado de
+la animación debe ser independiente del runtime R/Python y conservarse al
+cambiar de pestaña. Usar botones y controles etiquetados, sin arrancar
+animaciones al entrar a la slide; pausar al salir y respetar
+`prefers-reduced-motion`. Mostrar las unidades y distinguir las poblaciones
+ilustrativas del CSV de laboratorio. Para revisar nuevas animaciones, comprobar
+avance, pausa, reinicio y valores extremos de sus controles.
 
 ## Renderizado y comprobación
 

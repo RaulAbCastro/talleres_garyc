@@ -1,4 +1,4 @@
-/* Local interactions for the Marginalia workshop. No state leaves the browser. */
+/* Local interactions for the banking statistics workshop. No state leaves the browser. */
 (() => {
   "use strict";
 
@@ -47,7 +47,7 @@
 
   function configureKeyboard() {
     if (!window.Reveal || typeof window.Reveal.configure !== "function") return;
-    if (window.Reveal.__marginaliaKeyboardConfigured) return;
+    if (window.Reveal.__tallerKeyboardConfigured) return;
     const previous = typeof window.Reveal.getConfig === "function"
       ? window.Reveal.getConfig().keyboardCondition : null;
     window.Reveal.configure({
@@ -57,7 +57,7 @@
         return typeof previous === "function" ? previous(event) : true;
       }
     });
-    window.Reveal.__marginaliaKeyboardConfigured = true;
+    window.Reveal.__tallerKeyboardConfigured = true;
   }
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") return;
