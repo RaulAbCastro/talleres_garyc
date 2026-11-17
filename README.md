@@ -1,10 +1,53 @@
-# talleres_garyc
+<div align="center">
+  <img src="slides/taller-1/sesion-1/assets/logo-banxico-azul.png" alt="Banco de México" width="225">
+  <h1>Talleres GARyC</h1>
+  <p><strong>Análisis económico y computacional</strong></p>
+  <p><strong><a href="https://raulabcastro.github.io/talleres_garyc/">Abrir el menú de presentaciones</a></strong></p>
+  <p>
+    <a href="https://github.com/RaulAbCastro/talleres_garyc/actions/workflows/slides-pages.yml"><img alt="Estado de publicación en GitHub Pages" src="https://github.com/RaulAbCastro/talleres_garyc/actions/workflows/slides-pages.yml/badge.svg?branch=main"></a>
+    <a href="slides/README.md"><img alt="Presentaciones en Quarto y reveal.js" src="https://img.shields.io/badge/diapositivas-Quarto%20%2B%20reveal.js-007279?style=flat-square"></a>
+    <a href="#inicio-rápido-en-codespaces"><img alt="Entorno de GitHub Codespaces" src="https://img.shields.io/badge/entorno-Codespaces-652F6C?style=flat-square"></a>
+  </p>
+  <p>
+    <a href="#programa">Programa</a> ·
+    <a href="#materiales">Materiales</a> ·
+    <a href="#inicio-rápido-en-codespaces">Inicio rápido</a>
+  </p>
+</div>
 
-Materiales, diapositivas y código para el taller. El entorno de GitHub Codespaces
-incluye R, Python, Jupyter, Quarto y LaTeX. Los archivos Stata se editan aquí y se
-ejecutan mediante Conexión a Escritorio remoto en el Windows del banco.
+Los talleres reúnen presentaciones interactivas, datos sintéticos y ejercicios
+reproducibles con casos bancarios. Las diapositivas se consultan desde cualquier
+navegador y los materiales de este repositorio permiten correr el código, preparar
+sesiones y compilar los documentos.
 
-## Empezar en Codespaces
+> [!TIP]
+> **Taller 1 · Sesión 1.** La presentación incluye animaciones y laboratorios
+> con R y Python ejecutables en el navegador, además de código Stata para uso
+> local. El caso trabaja con cuentas de depósito a la vista, transferencias SPEI
+> y pagos con débito. [Abrir «De la muestra a la inferencia»](https://raulabcastro.github.io/talleres_garyc/taller-1/sesion-1/).
+
+## Programa
+
+| Taller | Tema | Sesiones previstas |
+| --- | --- | ---: |
+| **1** | Evaluación de impacto: fundamentos y diseños principales | 20 |
+| **2** | Econometría aplicada y diseños complementarios | 20 |
+| **3** | Análisis geoespacial y actividad de aplicación | 13 |
+
+## Materiales
+
+| Carpeta | Contenido |
+| --- | --- |
+| [`slides/`](slides/README.md) | Presentaciones Quarto, datos sintéticos y scripts de los laboratorios |
+| [`website/`](website/README.md) | Menú de sesiones e instrucciones para añadir presentaciones |
+| [`code/examples/`](code/examples/) | Ejemplos para comprobar el entorno de Python, R, Stata, Jupyter, Quarto y LaTeX |
+| `documents_overleaf/` | Submódulo con el temario, los recursos y el caso del taller. [Conectar Overleaf](#overleaf) |
+| [`skills/`](skills/) | Guías reutilizables para preparar materiales con distintos asistentes de IA |
+
+GitHub Actions publica el menú y las diapositivas cada vez que se actualizan sus
+fuentes en `main`. [Configuración de GitHub Pages](slides/README.md#publicar-en-github-pages).
+
+## Inicio rápido en Codespaces
 
 1. Al crear un Codespace, espera a que termine `.devcontainer/setup.sh`.
 2. Si acabas de añadir esta configuración a un Codespace existente, espera a que
@@ -58,29 +101,7 @@ continúa, abre `Ctrl+Shift+P` > **Python: Select Interpreter** y selecciona
 `/workspaces/talleres_garyc/.venv/bin/python`. El intérprete de los notebooks se
 elige por separado con **Select Kernel**.
 
-## Primeras pruebas
-
-La presentación interactiva de la primera sesión está en
-[`slides/`](slides/README.md). Para abrir **De la muestra a la inferencia**,
-ejecuta `bash slides/render.sh preview` y abre el puerto 4200. Incluye pestañas
-con código R y Python ejecutable en el navegador, código Stata copiable para
-ejecución local y animaciones explicativas. Usa datos sintéticos sobre cuentas
-de depósito a la vista, transferencias SPEI y pagos con débito, con entradas y salidas por canal.
-
-**GitHub Pages:** [menú de presentaciones](https://raulabcastro.github.io/talleres_garyc/).
-La publicación se actualiza desde `main` mediante GitHub Actions tras activar
-Pages. [Configuración inicial y estado](slides/README.md#publicar-en-github-pages).
-
-La carpeta [`skills/`](skills/) guarda instrucciones reutilizables para preparar
-materiales en Markdown, independientes del modelo y del proveedor de IA.
-Para crear otra sesión con el mismo enfoque, pide a tu asistente:
-“Lee y aplica [`skills/crear-presentaciones-quarto/SKILL.md`](skills/crear-presentaciones-quarto/SKILL.md)
-para generar la sesión N del taller M”. La skill incluye el flujo didáctico,
-los casos bancarios cotidianos, los datos sintéticos, las animaciones y las
-pestañas R/Python/Stata, con sus formas de ejecución y validación.
-Si la herramienta no carga skills o no accede al repositorio, comparte el texto
-de la guía y los archivos que referencia. La ejecución de comandos y las pruebas
-en navegador dependerán de las herramientas disponibles en ese entorno.
+## Ejemplos y vistas previas
 
 Desde la raíz del repositorio:
 
@@ -144,7 +165,18 @@ Cada servidor permanece ejecutándose en su terminal hasta pulsar `Ctrl+C`.
 En **Terminal > Run Task** también encontrarás las tareas de comprobación,
 JupyterLab, HTML y renderizado de ejemplos de Quarto.
 
-## Conectar el puntero de Overleaf
+Para previsualizar directamente la primera sesión, ejecuta
+`bash slides/render.sh preview` y abre el puerto 4200.
+
+## Preparar otra sesión
+
+La [guía para crear presentaciones Quarto](skills/crear-presentaciones-quarto/SKILL.md)
+describe cómo combinar casos bancarios, datos sintéticos, animaciones y
+laboratorios en R, Python y Stata. Indica a tu asistente qué taller y sesión
+quieres preparar y pídele que aplique la guía. Si la herramienta no puede leer
+el repositorio, comparte el texto de la guía y los archivos que referencia.
+
+## Overleaf
 
 El submódulo `documents_overleaf/` ya apunta al proyecto correcto. GitHub guarda
 el identificador de un commit; los documentos viven en Overleaf, que sigue
