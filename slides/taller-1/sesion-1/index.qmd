@@ -28,7 +28,7 @@ format:
     html-math-method:
       method: katex
       url: https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/
-    footer: "GARyC · Taller 1 / Sesión 1 · Datos sintéticos"
+    footer: "GARyC · Taller 1 / Sesión 1"
     include-after-body:
       text: |
         <script src="interacciones.js"></script>
@@ -89,7 +89,7 @@ Cuentas de depósito a la vista y pagos con débito como contexto. Todos los reg
 :::
 
 ::: {.notes}
-0–3 min · Caso y ruta. Presentar la pregunta que conecta la sesión: qué parte de una diferencia observada podemos distinguir de la variabilidad de muestreo. Mantener el orden del temario: pruebas de hipótesis, comparación de medias y proporciones, correlación y regresión simple. La inspiración pedagógica de Foulis consiste en construir cada explicación antes de formalizarla; no reemplaza el syllabus.
+0 a 3 min · Caso y ruta. Presentar la pregunta que conecta la sesión: qué parte de una diferencia observada podemos distinguir de la variabilidad de muestreo. Mantener el orden del temario: pruebas de hipótesis, comparación de medias y proporciones, correlación y regresión simple. La inspiración pedagógica de Foulis consiste en construir cada explicación antes de formalizarla; no reemplaza el syllabus.
 :::
 
 ## Una pregunta bancaria que requiere inferencia
@@ -140,7 +140,7 @@ Una cuenta de depósito a la vista por cliente. Los conteos miden operaciones; l
 :::
 
 ::: {.notes}
-3–18 min · De las variables a las pruebas de hipótesis. El objeto de estudio es la cuenta; la tarjeta de débito es un medio para disponer de sus fondos. No se modelan compras con crédito. El indicador pago_debito incluye únicamente pagos; los retiros se registran aparte, aunque utilicen la misma tarjeta. La nómina clasifica el origen de un abono, no un canal adicional. El saldo medio mensual no equivale a un saldo final ni se obtiene restando conteos. Una cuenta por cliente es una simplificación explícita del marco sintético, no una descripción de la tenencia real de productos.
+3 a 18 min · De las variables a las pruebas de hipótesis. El objeto de estudio es la cuenta; la tarjeta de débito es un medio para disponer de sus fondos. No se modelan compras con crédito. El indicador pago_debito incluye únicamente pagos; los retiros se registran aparte, aunque utilicen la misma tarjeta. La nómina clasifica el origen de un abono, no un canal adicional. El saldo medio mensual no equivale a un saldo final ni se obtiene restando conteos. Una cuenta por cliente es una simplificación explícita del marco sintético, no una descripción de la tenencia real de productos.
 :::
 
 ## Entradas y salidas de una cuenta de depósito a la vista
@@ -153,7 +153,7 @@ Cada operación se cuenta **una vez en su tipo/canal y sentido**. Los totales `n
 | Ventanilla | `n_abonos_ventanilla` | `n_retiros_ventanilla` |
 | Cajero | `n_abonos_cajero` | `n_retiros_cajero` |
 | Comisionista | `n_abonos_comisionista` | `n_retiros_comisionista` |
-| Compras con débito | — | `n_pagos_debito` |
+| Compras con débito | (No aplica) | `n_pagos_debito` |
 | Otros movimientos | `n_otros_abonos` | `n_otros_cargos` |
 
 ::: {.small}
@@ -368,7 +368,7 @@ histogram media, frequency xline(`mu') xscale(range(10 16)) ///
 :::
 
 ::: {.notes}
-Práctica individual de simulación. La animación anterior cubre la intuición necesaria para continuar. El código usa el marco de 12,000 clientes y mantiene el eje 10–16 para comparar dispersión. Al pasar de n = 40 a 200, la DE de medias cae aproximadamente por un factor de raíz de 5, con pequeña corrección finita. Las semillas no producen realizaciones idénticas entre lenguajes. En Stata cambiar sample 40 por sample 200 dentro del programa y ejecutar todo el bloque.
+Práctica individual de simulación. La animación anterior cubre la intuición necesaria para continuar. El código usa el marco de 12,000 clientes y mantiene el eje 10 a 16 para comparar dispersión. Al pasar de n = 40 a 200, la DE de medias cae aproximadamente por un factor de raíz de 5, con pequeña corrección finita. Las semillas no producen realizaciones idénticas entre lenguajes. En Stata cambiar sample 40 por sample 200 dentro del programa y ejecutar todo el bloque.
 :::
 
 ## ¿Qué tan lejos de cero quedó la estimación?
@@ -513,27 +513,30 @@ La pregunta pendiente es de magnitud. Con las 274 cuentas con nómina y las 206 
 ![Medias del saldo e intervalos individuales del 95% por recepción de nómina. Datos sintéticos.](assets/saldos-python.svg){width=80%}
 
 ::: {.small}
-Cada barra muestra la incertidumbre de una media. La nota necesita el intervalo de **la resta**, que reúne la incertidumbre de ambas.
+Cada barra muestra la incertidumbre de una media. Para comparar los grupos necesitamos el intervalo de **la resta**, que reúne la incertidumbre de ambas.
 :::
 
 ::: {.notes}
-18–24 min · Dos medias. Con nómina: n = 274, media 14.367800, DE 4.872256. Sin nómina: n = 206, media 11.822831, DE 4.136204. Los grupos son clientes distintos y se tratan como aproximadamente independientes. No usar el traslape de intervalos individuales como prueba de la diferencia. Tampoco interpretar los intervalos como la distribución de saldos dentro de cada grupo.
+18 a 24 min · Dos medias. Con nómina: n = 274, media 14.367800, DE 4.872256. Sin nómina: n = 206, media 11.822831, DE 4.136204. Los grupos son clientes distintos y se tratan como aproximadamente independientes. No usar el traslape de intervalos individuales como prueba de la diferencia. Tampoco interpretar los intervalos como la distribución de saldos dentro de cada grupo.
 :::
 
 ## Welch: combinar la incertidumbre de las dos medias
 
-Las medias de la figura son 14.37 y 11.82 mil MXN. ¿Cuánto podría variar su resta entre muestras? Como cada cliente pertenece a un solo grupo y tratamos sus saldos como independientes, **sumamos las varianzas de las medias**. Para cada una usamos su propia desviación estándar $s_g$ y tamaño $n_g$.
+Las medias de saldo difieren en 2.545 mil MXN. ¿Cuánto podría variar su resta entre muestras? Para cada grupo calculamos $v_g=s_g^2/n_g$ (la varianza estimada de su media). Las DE son 4.8723 mil MXN con nómina y 4.1362 mil MXN sin nómina.
 
 ::: {.equation}
-$$\widehat{SE}(\widehat\Delta)=\sqrt{\frac{s_1^2}{n_1}+\frac{s_0^2}{n_0}}
-=\sqrt{\frac{4.872^2}{274}+\frac{4.136^2}{206}}\approx0.412.$$
-$$t_{\mathrm{obs}}=\frac{14.3678-11.8228}{0.4119}\approx6.18.$$
+$$v_1=\frac{s_1^2}{274}\approx0.0866382,\qquad
+v_0=\frac{s_0^2}{206}\approx0.0830495.$$
 :::
 
-La diferencia observada queda a **6.18 errores estándar de cero**. La prueba de **Welch** la contrasta usando una distribución t con $\nu\approx470.9$ grados de libertad y permite que los grupos tengan varianzas distintas.
+Como los grupos son independientes, el EE de la diferencia es $\sqrt{v_1+v_0}\approx0.412$. La diferencia observada queda a $t=2.545/0.412\approx6.18$ errores estándar de cero.
+
+¿Con qué distribución t comparamos ese 6.18? Cada grupo aporta sus propios grados de libertad (274 menos 1 y 206 menos 1). **Welch** los combina según la contribución de cada grupo a la varianza. El resultado es aproximado y puede ser decimal.
+
+$$\nu=\frac{(v_1+v_0)^2}{v_1^2/273+v_0^2/205}\approx470.9496\quad\text{(470.9 a un decimal).}$$
 
 ::: {.notes}
-Cálculos sin redondear: diferencia 2.54496905, EE 0.4119316584, t = 6.17813417, grados de libertad 470.949592. Al restar variables independientes, sus varianzas se suman; con mediciones pareadas importa la covarianza y cambia el método. Revisar tamaños y valores extremos si se filtran los grupos. Omitimos la corrección finita pequeña. R, SciPy y Stata con unequal emplean Satterthwaite; no derivar sus grados de libertad en plenaria.
+Cálculos con los datos del CSV antes de redondear (diferencia 2.54496905, EE 0.4119316584, t = 6.17813417 y 470.949592 grados de libertad). La aproximación de Satterthwaite permite que cada grupo tenga su propia varianza. Los grados de libertad efectivos determinan la curva t para el valor p y el intervalo. Con mediciones pareadas importa la covarianza y cambia el método. Omitimos la corrección finita pequeña. R, SciPy y Stata con la opción unequal reproducen el cálculo. [Fórmula en el manual del NIST](https://www.itl.nist.gov/div898/handbook/prc/section3/prc31.htm).
 :::
 
 ## Laboratorio 3 · Comparación de medias {.lab}
@@ -551,6 +554,7 @@ d <- read.csv("datos/muestra.csv")
 y1 <- d$saldo_promedio_miles[d$recibe_nomina == 1]
 y0 <- d$saldo_promedio_miles[d$recibe_nomina == 0]
 prueba <- t.test(y1, y0, alternative = "two.sided", var.equal = FALSE)
+cat("Grados de libertad de Welch:", round(unname(prueba$parameter), 4), "\n")
 cat("Diferencia (miles de MXN):", mean(y1) - mean(y0), "\n")
 cat("IC 95%:", prueba$conf.int, "\n")
 t_obs <- unname(prueba$statistic)
@@ -570,6 +574,7 @@ d = pd.read_csv("datos/muestra.csv")
 y1 = d.loc[d.recibe_nomina == 1, "saldo_promedio_miles"]
 y0 = d.loc[d.recibe_nomina == 0, "saldo_promedio_miles"]
 prueba = stats.ttest_ind(y1, y0, equal_var=False, alternative="two-sided")
+print(f"Grados de libertad de Welch: {prueba.df:.4f}")
 ic = prueba.confidence_interval(confidence_level=0.95)
 print(f"Diferencia (miles de MXN): {y1.mean() - y0.mean():.4f}")
 print(f"IC 95%: [{ic.low:.4f}, {ic.high:.4f}]")
@@ -608,7 +613,7 @@ IC_{95\%}(\Delta)\approx[1{,}736,\,3{,}354]\ \text{MXN}.$$
 :::
 
 ::: {.prompt}
-Ubiquen **0 MXN** y **3,000 MXN** respecto del intervalo. Antes de avanzar, escriban una frase para el equipo. ¿Qué pueden afirmar sobre la dirección de la diferencia? ¿Y sobre el umbral que fijó el equipo?
+Ubiquen **0 MXN** y **3,000 MXN** respecto del intervalo. Comenten en parejas qué representa cada valor. ¿Qué pueden afirmar sobre la dirección de la diferencia? ¿Y sobre el umbral que fijó el equipo?
 :::
 
 ::: {.fragment}
@@ -616,7 +621,7 @@ Ubiquen **0 MXN** y **3,000 MXN** respecto del intervalo. Antes de avanzar, escr
 :::
 
 ::: {.notes}
-Dar 30 segundos por pareja para decidir y conservar su frase para el memo. Revelar la lectura y pedir que cotejen grupo de referencia, moneda y alcance. El umbral de 3,000 MXN es hipotético. El valor p corresponde al contraste bilateral frente a cero. La regla de Welch para ese contraste coincide con examinar si su IC de 95% excluye cero. Los datos comparan grupos observados en el mismo mes. La estabilidad del ingreso es una posible explicación alternativa.
+Dar 30 segundos por pareja para interpretar ambos valores. Revelar la lectura y pedir que cotejen grupo de referencia, moneda y alcance. El umbral de 3,000 MXN es hipotético. El valor p corresponde al contraste bilateral frente a cero. La regla de Welch para ese contraste coincide con examinar si su IC de 95% excluye cero. Los datos comparan grupos observados en el mismo mes. La estabilidad del ingreso es una posible explicación alternativa.
 :::
 
 ## De dos medias a tres grupos de clientes {#anova}
@@ -638,7 +643,7 @@ Las medias muestrales pueden diferir por azar. El **análisis de varianza (ANOVA
 :::
 
 ::: {.notes}
-24–35 min · Tres medias y dispersión. Los tres grupos son disjuntos y corresponden al mismo mes. Pedir al grupo que señale la DE y los tamaños antes de revelar el método. Si las respuestas se centran solo en el orden de las medias, preguntar si las mismas diferencias entre medias serían igual de convincentes con el doble de dispersión dentro de cada grupo. Comparar tres pares por separado al 5% aumenta la probabilidad de al menos un falso rechazo bajo la nula global.
+24 a 35 min · Tres medias y dispersión. Los tres grupos son disjuntos y corresponden al mismo mes. Pedir al grupo que señale la DE y los tamaños antes de revelar el método. Si las respuestas se centran solo en el orden de las medias, preguntar si las mismas diferencias entre medias serían igual de convincentes con el doble de dispersión dentro de cada grupo. Comparar tres pares por separado al 5% aumenta la probabilidad de al menos un falso rechazo bajo la nula global.
 :::
 
 ## Las mismas medias con distinta dispersión {#misma-media-distinta-dispersion}
@@ -656,7 +661,7 @@ El segundo panel conserva las medias y el número de clientes, pero cada saldo q
 :::
 
 ::: {.notes}
-Pedir que identifiquen qué se mantiene (medias y tamaños) y qué cambia (DE). Si interpretan las barras como intervalos de confianza, recordar que describen a clientes individuales. La figura de la derecha es un escenario didáctico que transforma cada saldo en media de su tramo + 0.5 × (saldo − media de su tramo). Esto divide la varianza interna entre cuatro. En los saldos del CSV el cociente F vale 2.3317 y p = 0.0982. En el escenario vale 9.3269 y p ≈ 0.000106. Usar los resultados del CSV en el memo. El contraste gráfico de variación entre grupos y dentro de ellos se inspira en las figuras 5.2.2 y 5.2.3 de [University of Wisconsin–Madison, Biocore, cap. 5](https://wisc.pb.unizin.org/biocorestatistics/chapter/statistical-inference-comparing-more-than-2-groups/).
+Pedir que identifiquen qué se mantiene (medias y tamaños) y qué cambia (DE). Si interpretan las barras como intervalos de confianza, recordar que describen a clientes individuales. La figura de la derecha es un escenario didáctico que transforma cada saldo en media de su tramo + 0.5 × (saldo − media de su tramo). Esto divide la varianza interna entre cuatro. En los saldos del CSV el cociente F vale 2.3317 y p = 0.0982. En el escenario vale 9.3269 y p ≈ 0.000106. Para interpretar las cuentas de septiembre, usar los resultados del CSV. El contraste gráfico de variación entre grupos y dentro de ellos se inspira en las figuras 5.2.2 y 5.2.3 de [Universidad de Wisconsin (Madison), Biocore, cap. 5](https://wisc.pb.unizin.org/biocorestatistics/chapter/statistical-inference-comparing-more-than-2-groups/).
 :::
 
 ## ANOVA contrasta medias con dos medidas de variación
@@ -704,7 +709,7 @@ $$D_{ig}=\lvert Y_{ig}-\operatorname{mediana}_g\rvert.$$
 El cliente 36 hizo cinco pagos. Su saldo fue de 8.21 mil MXN y la mediana de su tramo fue 13.25 mil. Aporta una **distancia de 5.04 mil MXN**. Un saldo igual de lejos por encima aportaría esa misma distancia.
 
 ::: {.takeaway}
-La prueba de **Levene centrada en la mediana** (Brown–Forsythe) aplica el ANOVA a esas distancias. Si un grupo reúne saldos más dispersos, sus distancias tenderán a ser mayores.
+La prueba de **Levene centrada en la mediana** (Brown y Forsythe) aplica el ANOVA a esas distancias. Si un grupo reúne saldos más dispersos, sus distancias tenderán a ser mayores.
 :::
 
 ::: {.notes}
@@ -714,7 +719,7 @@ Formular H0 de varianzas iguales y explicar la referencia F aproximada. Esta var
 ## Laboratorio 4 · ¿Media o dispersión? {.lab}
 
 ::: {.prompt}
-Conserva los tres tramos y sigue qué entra a cada cálculo. ¿Qué salida usarás en la nota para comparar los **saldos medios**? ¿Cuál usa las **distancias a la mediana**? Ejecuta el código y escribe la conclusión sobre las medias al 5%.
+Conserva los tres tramos y sigue qué entra a cada cálculo. ¿Qué salida compara los **saldos medios**? ¿Cuál usa las **distancias a la mediana**? Ejecuta el código. Al 5%, ¿qué puedes concluir sobre las tres medias?
 :::
 
 ::: {.panel-tabset group="lenguaje"}
@@ -792,7 +797,7 @@ Ejecutar un lenguaje en plenaria. El ANOVA toma el saldo en miles de MXN. Levene
 
 ## ¿Qué contraste responde al equipo? {#elegir-contraste}
 
-Ya escribiste la frase sobre las medias. Una colega pregunta si las cuentas de los tres tramos también **difieren en la dispersión de sus saldos**. ¿Qué respuesta respaldan los resultados al 5%?
+Ya comparaste las medias de los tres tramos. Al nivel del 5%, ¿hay evidencia de que los tramos **difieren en la dispersión de sus saldos**? Elige el contraste que responde a esa pregunta.
 
 | Salida del laboratorio | ANOVA | Levene (mediana) | DE frente a 4 mil | Varianzas de 5+ y 0 pagos |
 |---|---:|---:|---:|---:|
@@ -806,7 +811,7 @@ Ya escribiste la frase sobre las medias. Una colega pregunta si las cuentas de l
 </div>
 
 ::: {.notes}
-Pedir a cada pareja su decisión antes de pulsar. Al 5%, ANOVA y Levene no rechazan sus respectivas nulas. Si confunden sus objetivos, volver al código y señalar qué se entrega al ANOVA en cada caso: saldos o distancias a la mediana. Preguntar de nuevo cambiando «dispersión» por «media». La prueba clásica de una DE frente a 4 mil sí rechazaría bajo normalidad; los saldos son asimétricos. Al reunirse el grupo, recuperar para el memo la conclusión sobre las tres medias.
+Pedir a cada pareja su decisión antes de pulsar. Al 5%, ANOVA y Levene no rechazan sus respectivas nulas. Si confunden sus objetivos, volver al código y señalar qué se entrega al ANOVA en cada caso: saldos o distancias a la mediana. Preguntar de nuevo cambiando «dispersión» por «media». La prueba clásica de una DE frente a 4 mil sí rechazaría bajo normalidad; los saldos son asimétricos. Pedir que expliquen por qué hace falta un contraste distinto para responder a cada pregunta.
 :::
 
 ## Comparar proporciones: el resultado ahora es binario
@@ -832,7 +837,7 @@ Al codificar «pagó» como 1 y «no pagó» como 0, la media por grupo es su **
 :::
 
 ::: {.notes}
-35–41 min · Proporciones. Pedir que completen «de cada 100 clientes que…» para cada denominador antes de hacer la resta. Si eligen 310, invitarles a leer el título de esa columna y nombrar quién queda fuera. Si alguien dice «36.60% más», pedir el grupo base de su comparación. La práctica 6 de la Universidad de Granada trabaja los conteos de casos y los tamaños de grupo. Nuestra tabla usa los clientes del CSV.
+35 a 41 min · Proporciones. Pedir que completen «de cada 100 clientes que…» para cada denominador antes de hacer la resta. Si eligen 310, invitarles a leer el título de esa columna y nombrar quién queda fuera. Si alguien dice «36.60% más», pedir el grupo base de su comparación. La práctica 6 de la Universidad de Granada trabaja los conteos de casos y los tamaños de grupo. Nuestra tabla usa los clientes del CSV.
 :::
 
 ## Proporciones: dos errores estándar para dos preguntas
@@ -857,7 +862,7 @@ Proporción agrupada 0.6458333; EE bajo H0 0.0441037784; z = 8.29920967. EE del 
 ## Laboratorio 5 · Comparación de proporciones {.lab}
 
 ::: {.prompt}
-Completa la frase sobre pagos junto a la de saldos. Conserva el orden **con nómina menos sin nómina**. Ahora expresa la diferencia y su IC en puntos porcentuales. ¿Qué valores admite el intervalo?
+Conserva el orden **con nómina menos sin nómina**. ¿En cuántos puntos porcentuales difieren las proporciones de clientes que pagaron con débito? ¿Qué valores admite el intervalo?
 :::
 
 ::: {.panel-tabset group="lenguaje"}
@@ -936,7 +941,7 @@ Sigue los puntos de izquierda a derecha. ¿En qué dirección cambia el saldo t�
 :::
 
 ::: {.notes}
-41–46 min · Correlación. Describir dirección, dispersión y observaciones extremas antes de calcular. Un punto es un cliente. Comparamos clientes en un mes; no seguimos cambios individuales a través del tiempo. Los colores muestran nómina, pero no equivalen a controlar por ella. La nube no lleva recta todavía: primero motivamos la asociación lineal.
+41 a 46 min · Correlación. Describir dirección, dispersión y observaciones extremas antes de calcular. Un punto es un cliente. Comparamos clientes en un mes; no seguimos cambios individuales a través del tiempo. Los colores muestran nómina, pero no equivalen a controlar por ella. La nube no lleva recta todavía: primero motivamos la asociación lineal.
 :::
 
 ## Pearson: covariación en una escala comparable
@@ -963,7 +968,7 @@ Pearson requiere variación en ambas variables. En los productos centrados, sign
 ## Laboratorio 6 · Correlación y nube de puntos {.lab}
 
 ::: {.prompt}
-¿Qué signo tendrá $r$ para estas 480 cuentas? Comprueba tu lectura de la nube. Si la nota expresara los abonos en pesos en vez de miles de pesos, ¿cambiaría la correlación?
+¿Qué signo tendrá $r$ para estas 480 cuentas? Comprueba tu lectura de la nube. Si expresaras los abonos en pesos en vez de miles de pesos, ¿cambiaría la correlación?
 :::
 
 ::: {.panel-tabset group="lenguaje"}
@@ -1034,7 +1039,7 @@ Los **coeficientes** definen la recta. El **intercepto**, $\beta_0$, es su valor
 El **error**, $u_i$, recoge lo que la recta poblacional deja por explicar del saldo de la cuenta $i$. Para estimar los coeficientes tenemos los 480 pares de septiembre.
 
 ::: {.notes}
-46–56 min · Regresión. Traducir cada pieza de la ecuación al problema bancario. La especificación por sí sola no verifica E[u|X] = 0 ni identifica causalidad. Regresar Y sobre X y X sobre Y son problemas distintos; Pearson sí es simétrico. La CEF se desarrolla en el módulo correspondiente. No confundir un parámetro estructural con la pendiente descriptiva de una regresión que omite factores relevantes.
+46 a 56 min · Regresión. Traducir cada pieza de la ecuación al problema bancario. La especificación por sí sola no verifica E[u|X] = 0 ni identifica causalidad. Regresar Y sobre X y X sobre Y son problemas distintos; Pearson sí es simétrico. La CEF se desarrolla en el módulo correspondiente. No confundir un parámetro estructural con la pendiente descriptiva de una regresión que omite factores relevantes.
 :::
 
 ## La muestra produce una recta y residuos calculables
@@ -1165,7 +1170,7 @@ Con los cuatro supuestos, la referencia t es exacta dados los abonos. Si la nube
 :::
 
 ::: {.notes}
-Recuperar la lógica estimación/EE, p e intervalo. Pedir que distingan una nube de residuos en abanico (varianza que cambia) de una curva en sus centros (media no lineal). El gráfico Q–Q de residuos sirve como diagnóstico de normalidad; el diseño y el orden de observación informan sobre dependencia. Bajo varianza no constante, los errores estándar robustos se estudian después. Aquí n−2 = 478, EE = 0.00912153 y t = 42.2003.
+Recuperar la lógica estimación/EE, p e intervalo. Pedir que distingan una nube de residuos en abanico (varianza que cambia) de una curva en sus centros (media no lineal). El gráfico de cuantiles (Q-Q) de residuos sirve como diagnóstico de normalidad; el diseño y el orden de observación informan sobre dependencia. Bajo varianza no constante, los errores estándar robustos se estudian después. Aquí n−2 = 478, EE = 0.00912153 y t = 42.2003.
 :::
 
 ## Pendiente, precisión y ajuste
@@ -1175,7 +1180,7 @@ $$\widehat{\text{saldo}}=3.916+0.385\times\text{abonos},\qquad
 IC_{95\%}(\beta_1)=[0.367,\,0.403].$$
 :::
 
-La nota ya tiene una magnitud en pesos. Entre clientes de septiembre, **1,000 MXN más de abonos se asocian con 385 MXN más de saldo promedio**. El intervalo va de 367 a 403 MXN bajo los supuestos anteriores. El valor p contrasta pendiente cero.
+Entre clientes de septiembre, **1,000 MXN más de abonos se asocian con 385 MXN más de saldo promedio**. El intervalo va de 367 a 403 MXN bajo los supuestos anteriores. El valor p contrasta pendiente cero.
 
 El **coeficiente de determinación**, $R^2$ («R cuadrada»), mide la reducción proporcional de errores cuadrados al predecir con la recta, comparado con usar la media para todos:
 
@@ -1184,7 +1189,7 @@ $$R^2=1-\frac{\sum_i\hat u_i^2}{\sum_i(Y_i-\bar Y)^2}=0.788.$$
 La reducción es 78.8% en esta muestra. Con regresión simple e intercepto, $R^2=r^2$; describe ajuste, no un efecto de aumentar los abonos.
 
 ::: {.small}
-Interpretar el intercepto en abonos cero extrapola fuera del rango observado: 5.9–72.1 miles de MXN.
+Interpretar el intercepto en abonos cero extrapola fuera del rango observado (de 5.9 a 72.1 miles de MXN).
 :::
 
 ::: {.notes}
@@ -1194,7 +1199,7 @@ Distinguir tres preguntas: pendiente para magnitud y unidades, EE/IC para precis
 ## Laboratorio 7 · Estimar e interpretar la recta {.lab}
 
 ::: {.prompt}
-Antes de cerrar la nota, compara dos cuentas con **20,000 y 22,000 MXN** de abonos. ¿En cuánto difieren sus saldos ajustados? Revisa si en los residuos de septiembre aparece alguno de los patrones de las carteras ilustrativas.
+Usa la pendiente para comparar dos cuentas con **20,000 y 22,000 MXN** de abonos. ¿En cuánto difieren sus saldos ajustados? Revisa si en los residuos de septiembre aparece alguno de los patrones de las carteras ilustrativas.
 :::
 
 ::: {.panel-tabset group="lenguaje"}
@@ -1265,16 +1270,16 @@ scatter residuo ajustado, yline(0, lpattern(dash)) ///
 :::
 
 ::: {.small .fragment}
-La recta asigna unos **770 MXN más** a la segunda cuenta. En septiembre los residuos quedan a ambos lados de cero, sin curva ni abanico claros. Hay pocas cuentas con abonos muy altos. Para la nota, describe esta diferencia **entre cuentas** y considera qué papel podría tener la estabilidad del ingreso.
+La recta asigna unos **770 MXN más** a la segunda cuenta. En septiembre los residuos quedan a ambos lados de cero, sin curva ni abanico claros. Hay pocas cuentas con abonos muy altos. ¿Cómo podría influir la estabilidad del ingreso en esta diferencia **entre cuentas**?
 :::
 
 ::: {.notes}
 Trabajar con la pendiente visible y la respuesta al avanzar. La ejecución queda para práctica. Intercepto 3.915756; pendiente 0.3849309; EE 0.00912153; IC [0.367008, 0.402854]; p = 2.6123e−163; R² = 0.788389. R² ya se definió en la slide anterior, antes de aparecer en la salida. R lm, SciPy linregress y Stata regress comparten estas convenciones. Comprobar observado = ajustado + residuo en una fila. Si surgen lecturas distintas del gráfico, ordenar las cuentas por ajustado y formar cuatro grupos de 120. Las medias de residuos son −0.20, +0.22, +0.05 y −0.07 miles de MXN. Sus DE son 1.97, 2.33, 2.32 y 2.09. El diagnóstico visual orienta la discusión de la forma y la dispersión. Los IC del laboratorio son convencionales. Stata no está ejecutado en este entorno. Si se introducen faltantes, homologar su tratamiento entre lenguajes.
 :::
 
-## Comunicar un argumento completo en cuatro frases
+## ¿Qué conclusiones respaldan las 480 cuentas? {#comunicar-un-argumento-completo-en-cuatro-frases}
 
-El equipo necesita un memo sobre las 480 cuentas de septiembre. Recuperen las conclusiones que escribieron durante la sesión.
+Volvamos a las preguntas sobre las cuentas de septiembre. Discutan en parejas qué resultado respalda cada respuesta.
 
 1. **Saldo y nómina.** ¿Qué diferencias en pesos admite el intervalo? ¿Podemos afirmar que la diferencia supera los 3,000 MXN?
 2. **Saldo y frecuencia de pago.** ¿Qué permite concluir el ANOVA sobre las tres medias al nivel del 5%?
@@ -1282,20 +1287,20 @@ El equipo necesita un memo sobre las 480 cuentas de septiembre. Recuperen las co
 4. **Abonos y saldo.** Traduzcan la pendiente a pesos y propongan una característica del cliente que pueda explicar parte de esa asociación.
 
 ::: {.prompt}
-Intercambien el memo con otra pareja. Subrayen la cifra que respalda cada frase. Si alguna conclusión va más allá de los datos, señálenla para que la pareja pueda revisarla.
+¿En cuál de estas comparaciones sería más fácil confundir una asociación con un efecto causal? Expliquen por qué.
 :::
 
 ::: {.small}
-Si usan IA para una segunda lectura, pídanle que señale qué cifra o supuesto respalda cada frase y cotejen la respuesta con su código.
+Si consultan un asistente de IA, cotejen las cifras y los supuestos que mencione con los del laboratorio.
 :::
 
 ::: {.notes}
-56–60 min · Síntesis y transferencia. Recoger las frases de Welch, ANOVA y proporciones. Pedir una cuarta sobre la pendiente y una característica omitida. En la revisión por parejas, comprobar especialmente que un p grande en ANOVA no se lea como prueba de igualdad. La guía docente incluye un memo posible.
+56 a 60 min · Síntesis y transferencia. Poner en común una respuesta por pregunta. Para la pendiente, pedir que sugieran una característica omitida. Si alguien interpreta el p del ANOVA como prueba de igualdad, volver al resultado del laboratorio 4. La guía docente incluye respuestas de referencia.
 :::
 
 ## Antes de salir: qué podemos concluir {.checkpoint}
 
-Revisen la última frase de su memo. La pendiente estimada equivale a **385 MXN más de saldo por cada 1,000 MXN más de abonos**. Con un valor p pequeño y un $R^2$ alto, ¿qué interpretación de esa cifra pueden defender?
+En la comparación entre clientes, la pendiente estimada equivale a **385 MXN más de saldo por cada 1,000 MXN más de abonos**. Con un valor p pequeño y un $R^2$ alto, ¿qué interpretación de esa cifra pueden defender?
 
 <div class="quiz">
 <button type="button" data-correct="false" data-feedback="La pendiente compara clientes con distintos abonos. Para predecir un efecto de intervenir necesitamos justificar que los factores omitidos no explican la relación.">Aumentar los abonos de un cliente elevará su saldo exactamente según la pendiente estimada.</button>
@@ -1321,7 +1326,7 @@ Descarga la [muestra de clientes](datos/muestra.csv) y el [marco de saldos](dato
 :::
 
 ::: {.small .muted}
-**Referencia pedagógica:** Angus Foulis, *Introduction: Econometrics With Microdata*, Centre for Central Banking Studies, Bank of England, 10 de noviembre de 2026, diapositivas 1–17. PDF en `referencias/slides-de-referencia/`. Se retoma la construcción gradual de conceptos; textos, datos y figuras son propios.
+**Referencia pedagógica:** Angus Foulis, *Introduction: Econometrics With Microdata*, Centre for Central Banking Studies, Bank of England, 10 de noviembre de 2026, diapositivas 1 a 17. PDF en `referencias/slides-de-referencia/`. Se retoma la construcción gradual de conceptos; textos, datos y figuras son propios.
 
 **Stata:** [ttest](https://www.stata.com/manuals/rttest.pdf) · [prtest](https://www.stata.com/manuals/rprtest.pdf). Código de referencia no ejecutado en este entorno. R/Python requieren internet para su primera carga en el navegador.
 

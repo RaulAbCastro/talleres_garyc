@@ -37,6 +37,7 @@ d = pd.read_csv("datos/muestra.csv")
 y1 = d.loc[d.recibe_nomina == 1, "saldo_promedio_miles"]
 y0 = d.loc[d.recibe_nomina == 0, "saldo_promedio_miles"]
 prueba = stats.ttest_ind(y1, y0, equal_var=False, alternative="two-sided")
+print(f"Grados de libertad de Welch: {prueba.df:.4f}")
 ic = prueba.confidence_interval(confidence_level=0.95)
 print(f"Diferencia (miles de MXN): {y1.mean() - y0.mean():.4f}")
 print(f"IC 95%: [{ic.low:.4f}, {ic.high:.4f}]")

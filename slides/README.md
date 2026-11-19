@@ -10,7 +10,7 @@ futurista de la primera versión.
 
 La secuencia explicativa se inspira en Angus Foulis, *Introduction: Econometrics
 With Microdata*, Centre for Central Banking Studies, Bank of England,
-10 de noviembre de 2026, [diapositivas 1–17 del PDF de referencia](../referencias/slides-de-referencia/10_11_26_Causal_Econometrics_Intro.pdf).
+10 de noviembre de 2026, [diapositivas 1 a 17 del PDF de referencia](../referencias/slides-de-referencia/10_11_26_Causal_Econometrics_Intro.pdf).
 Parte de preguntas concretas, distingue población y muestra, introduce errores
 y residuos y visualiza el criterio de MCO antes de discutir sus supuestos.
 Los textos, datos y gráficos de esta sesión son propios.

@@ -28,6 +28,7 @@ d <- read.csv("datos/muestra.csv")
 y1 <- d$saldo_promedio_miles[d$recibe_nomina == 1]
 y0 <- d$saldo_promedio_miles[d$recibe_nomina == 0]
 prueba <- t.test(y1, y0, alternative = "two.sided", var.equal = FALSE)
+cat("Grados de libertad de Welch:", round(unname(prueba$parameter), 4), "\n")
 cat("Diferencia (miles de MXN):", mean(y1) - mean(y0), "\n")
 cat("IC 95%:", prueba$conf.int, "\n")
 t_obs <- unname(prueba$statistic)

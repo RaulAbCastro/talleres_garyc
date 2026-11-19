@@ -1,4 +1,4 @@
-# Guía docente — Taller 1, sesión 1
+# Guía docente (taller 1, sesión 1)
 
 Esta versión estudia exclusivamente cuentas de depósito a la vista, pagos con débito y sus movimientos de entrada y salida.
 Todos los registros son sintéticos; no describen a un banco ni al sistema
@@ -11,7 +11,7 @@ corresponden a la semilla **202609** y al CSV distribuido.
 
 Inspiración: Angus Foulis, *Introduction: Econometrics With Microdata*, Centre
 for Central Banking Studies, Bank of England, 10 de noviembre de 2026,
-diapositivas 1–17, en
+diapositivas 1 a 17, en
 [`referencias/slides-de-referencia/10_11_26_Causal_Econometrics_Intro.pdf`](../../../../referencias/slides-de-referencia/10_11_26_Causal_Econometrics_Intro.pdf).
 Se retoma la secuencia de intuiciones: población y muestra, relación entre dos
 variables, recta estimada, error frente a residuo y supuestos de regresión. Los
@@ -28,9 +28,9 @@ retiros en ventanilla permite comprobarlo. [Lesson Plan Builder de SkillMedev](h
 ### Cuatro actividades adaptadas de cursos universitarios
 
 - **Elegir la cola.** En Data 8 el grupo anticipa el signo que favorecería la alternativa antes de calcular la diferencia. Para el encargo sobre nómina del mes siguiente, recoger el signo y la cola que propone cada pareja. Después de revelar el estadístico, invertir la resta y pedirles que expliquen por qué se conserva el valor p de la misma pregunta. [UC Berkeley, Data 8, lección 18](https://data8.org/materials-sp26/lec18/)
-- **Separar dos fuentes de variación.** Biocore presenta grupos con distinta separación en relación con su dispersión. En nuestra figura, ambos paneles conservan exactamente las tres medias y los tamaños. Pedir al grupo que señale qué se movió y prediga en qué panel resultaría más fácil distinguir medias. Las barras representan una desviación estándar a cada lado de la media. [Universidad de Wisconsin–Madison, Biocore, capítulo 5, sección 5.2](https://wisc.pb.unizin.org/biocorestatistics/chapter/statistical-inference-comparing-more-than-2-groups/)
+- **Separar dos fuentes de variación.** Biocore presenta grupos con distinta separación en relación con su dispersión. En nuestra figura, ambos paneles conservan exactamente las tres medias y los tamaños. Pedir al grupo que señale qué se movió y prediga en qué panel resultaría más fácil distinguir medias. Las barras representan una desviación estándar a cada lado de la media. [Universidad de Wisconsin (Madison), Biocore, capítulo 5, sección 5.2](https://wisc.pb.unizin.org/biocorestatistics/chapter/statistical-inference-comparing-more-than-2-groups/)
 - **Elegir el denominador.** En la práctica de Granada, los estudiantes distinguen cuántas personas presentan la característica y cuántas integran cada grupo antes de ejecutar una prueba de dos proporciones. Con nuestros datos, pedir una oración para 220/274 y otra para 220/310. El mismo numerador permite contestar dos preguntas distintas. Si la pareja duda, que lea en voz alta el encabezado de la fila o columna que suma el denominador. [Universidad de Granada, Práctica 6 de Estadística, contraste de dos proporciones](https://wpd.ugr.es/~bioestad/guia-r-studio/practica-6/)
-- **Leer el ajuste.** Edimburgo transforma la nube original en una gráfica de residuos para identificar patrones. En los dos paneles del taller, pedir primero que sigan el centro de los residuos y después su amplitud vertical. En el laboratorio 7, cada participante puede contrastar su descripción con las 480 cuentas y señalar qué información sobre el diseño necesitaría para evaluar independencia. [Universidad de Edimburgo, Foundations of Data Science, sección 10.3, pp. 78–80](https://opencourse.inf.ed.ac.uk/sites/default/files/2024-01/FDS-lecture-notes-2024-01-28.pdf#page=88)
+- **Leer el ajuste.** Edimburgo transforma la nube original en una gráfica de residuos para identificar patrones. En los dos paneles del taller, pedir primero que sigan el centro de los residuos y después su amplitud vertical. En el laboratorio 7, cada participante puede contrastar su descripción con las 480 cuentas y señalar qué información sobre el diseño necesitaría para evaluar independencia. [Universidad de Edimburgo, Foundations of Data Science, sección 10.3, pp. 78 a 80](https://opencourse.inf.ed.ac.uk/sites/default/files/2024-01/FDS-lecture-notes-2024-01-28.pdf#page=88)
 
 ## Marco, muestra y unidades
 
@@ -109,14 +109,14 @@ estudiar conjuntamente sus abonos y su saldo.
 
 | Minutos | Desarrollo y actividad del alumnado |
 |---|---|
-| 0–3 | Identificar la unidad cliente-mes y precisar qué quiere saber el equipo. |
-| 3–18 | Formular hipótesis sobre el saldo. Usar la animación de muestreo para explicar el error estándar, elegir la cola según la alternativa y discutir el valor p, los errores de decisión y el intervalo. |
-| 18–24 | Ejecutar Welch en el laboratorio 3. Situar cero y el umbral de 3,000 MXN dentro o fuera del intervalo antes de redactar una frase. |
-| 24–35 | Pasar a tres tramos de pagos. Comparar los dos paneles de dispersión antes de calcular F. Ejecutar el laboratorio 4 y emparejar cada valor p con su hipótesis. |
-| 35–41 | Construir el indicador de pago, elegir el denominador de cada grupo y explicar en puntos porcentuales el intervalo del laboratorio 5. |
-| 41–46 | Describir la nube del laboratorio 6 y relacionar la dirección y la fuerza de la asociación con el signo y la magnitud de la correlación. |
-| 46–56 | Explorar la recta de mínimos cuadrados y sus distribuciones condicionales. Identificar la curva y el abanico en parejas. Traducir la pendiente y su intervalo a pesos con el resultado visible del laboratorio 7. |
-| 56–60 | Revisar el memo en parejas y comprobar qué conclusión admite la pendiente. Plantear el caso de retiros en ventanilla y recoger el parámetro y el método elegidos antes de mostrar la solución. |
+| 0 a 3 | Identificar la unidad cliente-mes y precisar qué quiere saber el equipo. |
+| 3 a 18 | Formular hipótesis sobre el saldo. Usar la animación de muestreo para explicar el error estándar, elegir la cola según la alternativa y discutir el valor p, los errores de decisión y el intervalo. |
+| 18 a 24 | Ejecutar Welch en el laboratorio 3. Situar cero y el umbral de 3,000 MXN respecto del intervalo para interpretar la diferencia. |
+| 24 a 35 | Pasar a tres tramos de pagos. Comparar los dos paneles de dispersión antes de calcular F. Ejecutar el laboratorio 4 y emparejar cada valor p con su hipótesis. |
+| 35 a 41 | Construir el indicador de pago, elegir el denominador de cada grupo y explicar en puntos porcentuales el intervalo del laboratorio 5. |
+| 41 a 46 | Describir la nube del laboratorio 6 y relacionar la dirección y la fuerza de la asociación con el signo y la magnitud de la correlación. |
+| 46 a 56 | Explorar la recta de mínimos cuadrados y sus distribuciones condicionales. Identificar la curva y el abanico en parejas. Traducir la pendiente y su intervalo a pesos con el resultado visible del laboratorio 7. |
+| 56 a 60 | Discutir en parejas qué resultado respalda cada conclusión y qué interpretación admite la pendiente. Plantear el caso de retiros en ventanilla y recoger el parámetro y el método elegidos antes de mostrar la solución. |
 
 En el recorrido de una hora se ejecutan en plenaria los **laboratorios 3 y 4**
 en R o Python. Para los **laboratorios 1, 2, 5, 6 y 7** se interpretan la
@@ -151,9 +151,8 @@ Para el mismo z = +2, comparar p = 0.9772, 0.0455 y 0.0228 bajo las alternativas
 izquierda, bilateral y derecha, respectivamente. La dirección se fija antes de
 observar el resultado.
 
-Antes de empezar con proporciones, pedir que cada pareja complete por escrito
-«El ANOVA compara…» y «La prueba de Levene centrada en la mediana compara…».
-Leer dos respuestas. Si confunden las preguntas, retomar un saldo y calcular su distancia a la
+Antes de empezar con proporciones, preguntar qué compara el ANOVA y qué compara
+la prueba de Levene centrada en la mediana. Escuchar a dos parejas. Si confunden las preguntas, retomar un saldo y calcular su distancia a la
 mediana de su grupo. Pedirles que vuelvan a nombrar qué variable analiza cada
 prueba y qué hipótesis corresponde a cada valor p antes de avanzar.
 
@@ -180,10 +179,12 @@ proporciones por contenidos de regresión avanzada.
   Alfa controla rechazos bajo H0 verdadera, mientras p es una probabilidad de
   resultados al menos tan extremos bajo H0 y los supuestos. No rechazar no
   demuestra equivalencia.
-- **Welch:** para medias independientes, la varianza de su diferencia es la
-  suma de sus varianzas. EE = 0.411932 y diferencia = 2.544969 producen
-  t = 6.178134 y aproximadamente 470.950 grados de libertad. La independencia
-  importa: las mediciones pareadas requieren otro cálculo.
+- **Welch.** Para medias independientes, la varianza de su diferencia es la
+  suma de sus varianzas. Al dividir la diferencia (2.544969) entre su EE
+  (0.411932) obtenemos $t=6.178134$. Para elegir la curva t, la aproximación
+  de Satterthwaite combina las dos contribuciones $v_g=s_g^2/n_g$ con los
+  grados de libertad de cada grupo (273 y 205). El resultado, 470.9496, se
+  reproduce en el laboratorio 3. Las mediciones pareadas requieren otro cálculo.
 - **Intervalos:** el IC t de la media global es [12.850717, 13.700451] miles
   de MXN. El IC de un parámetro no contiene al 95% de los datos individuales.
   Prueba e IC son duales cuando usan el mismo procedimiento; no extender esa
@@ -218,7 +219,7 @@ es el número de pagos con débito.
 | Diferencia de proporciones | 36.602650 puntos porcentuales |
 | IC95 Wald no agrupado de la diferencia | [28.352676, 44.852625] puntos porcentuales |
 | Valor p z agrupada, bilateral, sin corrección | 1.048063e−16 |
-| Correlación Pearson abonos–saldo | 0.887913 |
+| Correlación de Pearson (abonos y saldo) | 0.887913 |
 | Intercepto / pendiente OLS | 3.915756 / 0.384931 |
 | IC95 de la pendiente, OLS convencional | [0.367008, 0.402854] |
 | R² | 0.788389 |
@@ -243,16 +244,14 @@ En el laboratorio de muestreo, aumentar n de 40 a 200 reduce aproximadamente la
 DE de las medias por un factor de √5. El muestreo sin reemplazo añade una pequeña
 corrección finita. R y Python no producen las mismas selecciones con una semilla
 numéricamente idéntica: usan generadores distintos, pero deben mostrar el mismo
-comportamiento al repetir muestras. El eje fijo 10–16 miles de MXN permite
+comportamiento al repetir muestras. El eje fijo 10 a 16 miles de MXN permite
 comparar la dispersión alrededor de la media del marco (13.1848).
 
-## Un memo posible
+## Respuestas de referencia para la discusión final
 
-Pedir que cada pareja conserve sus frases de saldo por nómina, saldo por tramo
-de pagos y uso de débito. Al cerrar, añadir la frase sobre abonos y saldo.
-Intercambiar los memos y pedir que otra pareja identifique el grupo de referencia,
-las unidades y la evidencia detrás de una afirmación. Usar su comentario para
-revisarla antes de plantear el caso de retiros en ventanilla.
+Invitar a distintas parejas a responder una pregunta cada una. Pedirles que
+identifiquen las cuentas que comparan, las unidades y el resultado que respalda
+su interpretación. Estas respuestas sirven para orientar la conversación.
 
 1. En esta muestra de 480 clientes, el saldo promedio fue 2,545 MXN mayor en el grupo con nómina, y el intervalo del 95% (1,736 a 3,354 MXN) admite diferencias tanto inferiores como superiores al umbral de 3,000 MXN.
 2. Al comparar los saldos medios de quienes hicieron cero, de uno a cuatro o al menos cinco pagos con débito, la evidencia resultó insuficiente para concluir al nivel del 5% que al menos dos medias poblacionales difieren (ANOVA, p = 0.098).
@@ -314,7 +313,7 @@ Son hipótesis para discutir, no variables medidas por este CSV.
 | DE de 4 mil MXN en el grupo de cero pagos, ji cuadrada(169) | 221.971575 | 0.007791 |
 | Razón de varianzas de 5+ frente a cero pagos, F(227, 169) | 1.058666 | 0.697521 |
 
-Los grupos de 0, 1–4 y 5+ pagos tienen 170, 82 y 228 clientes. El ANOVA
+Los grupos de 0, 1 a 4 y 5+ pagos tienen 170, 82 y 228 clientes. El ANOVA
 contrasta las medias y Levene la dispersión. Los saldos de la muestra son
 asimétricos, especialmente en los grupos extremos. Los resultados de las
 pruebas clásicas ilustran el cálculo bajo su referencia normal.
@@ -360,4 +359,4 @@ ilustrativa en ambos lenguajes.
 - Ejecuta el código propuesto por cualquier asistente de IA y coteja un resultado.
 
 Si la red impide cargar los runtimes, usar scripts locales y figuras SVG. No se
-necesita una cuenta de IA para completar el taller ni redactar el memo.
+necesita una cuenta de IA para participar en las actividades.
