@@ -1,0 +1,528 @@
+---
+title: "Resultados potenciales y sesgo de selección"
+subtitle: "Taller 1 · Sesión 2 · Datos bancarios cotidianos"
+author: "Talleres GARyC"
+engine: markdown
+format:
+  revealjs:
+    theme: [default, tema.scss]
+    css: animaciones.css
+    width: 1280
+    height: 800
+    margin: 0.07
+    center: false
+    slide-number: c/t
+    show-slide-number: all
+    transition: fade
+    navigation-mode: linear
+    controls: true
+    progress: true
+    hash: true
+    history: true
+    title-slide: false
+    title-slide-attributes:
+      data-visibility: hidden
+    slide-level: 2
+    code-copy: true
+    code-overflow: scroll
+    html-math-method:
+      method: katex
+      url: https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/
+    footer: "GARyC · Taller 1 / Sesión 2 · Datos sintéticos"
+    include-after-body:
+      text: |
+        <script src="interacciones.js"></script>
+        <script src="animaciones.js"></script>
+resources:
+  - datos/muestra.csv
+  - datos/poblacion_potencial.csv
+  - codigo/sesion-2.R
+  - codigo/sesion-2.py
+  - codigo/sesion-2.do
+  - interacciones.js
+  - animaciones.js
+  - animaciones.css
+  - assets/live-bootstrap.js
+webr:
+  resources: [datos/muestra.csv, datos/poblacion_potencial.csv]
+  cell-options:
+    autorun: false
+    max-lines: 6
+    fig-width: 9
+    fig-height: 3.2
+    timelimit: 30
+pyodide:
+  packages: [numpy, pandas, scipy, matplotlib]
+  resources: [datos/muestra.csv, datos/poblacion_potencial.csv]
+  cell-options:
+    autorun: false
+    max-lines: 6
+    fig-width: 9
+    fig-height: 3.2
+    timelimit: 30
+---
+
+## Resultados potenciales y sesgo<br>de selección {.portada}
+
+<div class="logo-portada"><img src="assets/logo-banxico-azul.png" alt="Banco de México" width="1827" height="368"></div>
+
+```{ojs}
+//| echo: false
+//| output: false
+import { liveBootstrap } from './assets/live-bootstrap.js'
+```
+
+::: {.kicker}
+TALLER 1 · EVALUACIÓN DE IMPACTO · SESIÓN 02
+:::
+
+::: {.lead}
+Por qué una comparación observada entre grupos puede no medir el efecto que queremos, y cómo distinguir el verdadero impacto del ruido de la selección.
+:::
+
+::: {.pill}
+60 minutos · R y Python ejecutables · Stata para uso local
+:::
+
+::: {.small .muted}
+Tarjetas de crédito y un estado de cuenta estandarizado como contexto. Todos los registros son sintéticos; no representan cifras de una institución ni del sistema financiero.
+:::
+
+::: {.notes}
+0–0.5 min. Esta sesión introduce el concepto central de causalidad observacional: la diferencia que vemos en los datos mezcla el efecto que queremos con las diferencias preexistentes entre grupos. Aprenderemos a descomponer esa diferencia en efecto (ATT o ATE) y sesgo de selección. Los resultados potenciales permiten pensar en contrafactuales: qué hubiera pasado bajo el escenario alternativo. Mantener la narración concreta y el razonamiento paso a paso.
+:::
+
+## Una pregunta de política bancaria
+
+Un banco diseña un **estado de cuenta estandarizado (ECE)** para ayudar a clientes de tarjeta de crédito a entender cuánto cuesta pagar solo el mínimo mensual. Quiere saber:
+
+::: {.takeaway .large}
+¿Cuánto reducen los intereses que pagan los clientes cuando reciben el ECE?
+:::
+
+Nuestro resultado será medido en **pesos**: intereses cobrados en el mes. La población de referencia son clientes de tarjeta de crédito del banco. Los datos corresponden a **septiembre de 2026** y son completamente sintéticos.
+
+::: {.notes}
+0.5–2 min. El ECE es un ejemplo concreto donde la autoselección y cambios de política se mezclan naturalmente. La pregunta es operativa: si extendemos esto a más clientes, ¿qué ganancia esperamos? Mantener claro que solo vemos una versión de cada cliente: lo que sucedió. El contrafactual es lo que habría pasado en la otra rama.
+:::
+
+## Ruta de esta sesión: seis bloques, una sola pregunta
+
+| Tiempo | Bloque | Pregunta central |
+|---|---|---|
+| **0–5 min** | Gancho | ¿Cuál de estas tres comparaciones usarían? ¿Por qué podría fallar? |
+| **5–20 min** | Resultados potenciales | ¿Qué significa que solo vemos una versión de cada cliente? |
+| **20–35 min** | Tabla de Dios | ¿Cuál es la diferencia entre efecto verdadero y lo que observamos? |
+| **35–50 min** | Sesgo de selección | ¿De dónde sale el ruido? ¿Quién es responsable? |
+| **50–57 min** | Sorteador aleatorio | Si asignamos al azar, ¿desaparece el problema? |
+| **57–60 min** | Cierre | Quiz y síntesis. |
+
+::: {.takeaway}
+Seguiremos la misma estructura en todos los métodos posteriores: **pregunta → asunción → parámetro → lo que se observa → conclusión**.
+:::
+
+::: {.notes}
+2–3 min. Los primeros tres minutos presentan contexto y ruta. Los últimos tres se dedican al cierre. Las animaciones aparecen marcadas en cada bloque y deben ejecutarse en navegador. Tabla de Dios es la pieza central: una tabla donde vemos todo simultáneamente, imposible en realidad, que permite visualizar exactamente qué se pierde.
+:::
+
+## Bloque 1 · Gancho
+
+Una pregunta cotidiana del banco: ¿funciona el ECE?
+
+Tres formas de responderla con datos:
+
+1. **Comparar quién pidió contra quién no.** Clientes atentos y preocupados por su saldo lo piden más; también pagan menos intereses naturalmente.
+2. **Comparar antes y después.** Cuando se vuelve obligatorio para todos, cambian también tasas, estacionalidad y otros factores del banco.
+3. **Comparar banco a banco.** Algunos bancos ya ofrecen ECE y otros no. Pero difieren en clientes, productos y política de crédito.
+
+::: {.quiz}
+<button class="boton-quiz" data-correct="incorrecta" data-feedback="Podrían funcionar en circunstancias distintas, pero cada una trae un problema.">A. Usar la tercera</button>
+<button class="boton-quiz" data-correct="incorrecta" data-feedback="Podrían funcionar en circunstancias distintas, pero cada una trae un problema.">B. Usar la primera</button>
+<button class="boton-quiz" data-correct="correcta" data-feedback="Exacto. En la próxima diapositiva exploraremos por qué incluso intentos que parecen razonables dejan penetrar fuentes de confusión.">C. Ninguna de arriba: necesitaremos aprender a limpiar los datos mentalmente primero</button>
+</button>
+
+<div class="quiz-feedback" aria-live="polite"></div>
+:::
+
+::: {.notes}
+5–8 min. Votación a mano alzada. Escribir en el pizarrón las tres opciones y las razones que da el grupo. Mantener la tensión: no todo lo que se parece una comparación válida lo es. Introducir la idea de que lo que vemos en los datos es la suma de lo que queremos medir y lo que ya era distinto entre grupos.
+:::
+
+## Bloque 2 · Resultados potenciales
+
+Pensemos en la **Persona A**. Tiene una tarjeta de crédito y es septiembre.
+
+Versión 1
+: Los intereses que **pagaría si recibe el ECE**.
+
+Versión 2
+: Los intereses que **pagaría con su estado tradicional**.
+
+::: {.takeaway}
+Para cada persona hay dos versiones: una que ocurre y una que se queda en la imaginación. El **efecto verdadero** sería la diferencia entre ambas, pero **nunca se observa para la misma persona**.
+:::
+
+Cuando el banco ve los datos, solo tiene un número: los intereses reales de la Persona A. No sabe qué hubiera pasado en la otra rama.
+
+::: {.notes}
+8–12 min. Pausa para que el auditorio entienda la idea básica de contrafactual. Usar preguntas de sondeo: ¿cuál de las dos versiones vemos en los datos? ¿Qué información nos falta? La idea de "resultados potenciales" es anterior a cualquier ecuación; solo es pensar en "lo que pasó" frente a "lo que hubiera pasado".
+:::
+
+## Lenguaje de resultados potenciales
+
+Ahora le damos nombre a cada pieza:
+
+::: {.equation}
+$$i \quad \text{la persona}$$
+$$D_i \quad 1 \text{ si recibe ECE, } 0 \text{ si no}$$
+$$Y_{1i} \quad \text{intereses con ECE}$$
+$$Y_{0i} \quad \text{intereses sin ECE}$$
+$$\tau_i = Y_{1i} - Y_{0i} \quad \text{efecto individual}$$
+:::
+
+Cada persona tiene sus propios $Y_{1i}$ y $Y_{0i}$ fijos; en nuestros datos solo aparece uno de los dos. El banco observa:
+
+::: {.equation}
+$$Y_i = D_i \cdot Y_{1i} + (1 - D_i) \cdot Y_{0i}$$
+:::
+
+Si $D_i = 1$, se ve $Y_{1i}$ y se pierde $Y_{0i}$. Si $D_i = 0$, es al revés.
+
+::: {.notes}
+12–15 min. Introducir la notación sin abrumar. El subíndice $i$ es la persona; los subíndices de Y (1 y 0) son los escenarios. El número uno es "tratado" y cero es "control" o "contrafactual". Una vez establecida la notación, se abre la puerta a la formalización.
+:::
+
+## Dos supuestos importantes
+
+Mientras pensamos en resultados potenciales, estamos asumiendo dos cosas:
+
+**Una sola versión de cada tipo**
+: Cada cliente tiene un solo $Y_1$ y un solo $Y_0$, sin importar cómo se enteró del ECE. No hay diferencias según llegó por correo, app o papel.
+
+**Sin interferencia**
+: Que la Persona A reciba el ECE no cambia los intereses de la Persona B. Las decisiones de crédito son individuales, no contagiosas.
+
+::: {.small .muted}
+Estos supuestos son el piso donde construimos todo lo demás. No son perfectos, pero son razonables para muchas aplicaciones. Si alguno falla, discutiremos consecuencias en sesiones posteriores.
+:::
+
+::: {.notes}
+15–17 min. Pausa para validar supuestos. Invite al grupo a pensar en casos bancarios donde podrían fallar. Por ejemplo: diferencias en canales digitales que afecten conducta, o contagio en redes. Mantener la idea de que estos supuestos son herramientas, no verdades universales.
+:::
+
+## Verificación rápida: quizzes
+
+¿Cuál de estas cantidades **nunca** se observa para la misma persona?
+
+::: {.quiz}
+<button class="boton-quiz" data-correct="incorrecta" data-feedback="Se observa directamente en los datos: si la persona recibió el ECE, vemos este número.">A. Los intereses de septiembre con el ECE</button>
+<button class="boton-quiz" data-correct="correcta" data-feedback="Exacto. Es el contrafactual: lo que hubiera ocurrido si la cosa hubiera sido diferente. No está en los datos.">B. Los intereses de septiembre sin el ECE, si la persona recibió el ECE</button>
+<button class="boton-quiz" data-correct="incorrecta" data-feedback="Es un resultado que sí ocurre en la realidad; aparece en los datos de octubre.">C. Los intereses de octubre con el ECE</button>
+</button>
+
+<div class="quiz-feedback" aria-live="polite"></div>
+:::
+
+::: {.notes}
+17–18 min. Quiz para validar comprensión de contrafactual. Si falla, repetir con un ejemplo: "Si yo recibí el ECE, veo mis intereses con ECE. No veo 'mis intereses sin ECE en el mismo mes'; eso es imaginario."
+:::
+
+## Bloque 3 · La "Tabla de Dios"
+
+Supongamos un mundo en el que viéramos **todo**: tanto $Y_1$ como $Y_0$ para cada persona. Eso es imposible en la realidad, pero es un ejercicio de imaginación poderoso.
+
+| Persona | $Y_0$ (sin ECE) | $Y_1$ (con ECE) | Efecto $\tau$ |
+|---|---:|---:|---:|
+| A | 100 | 95 | -5 |
+| B | 150 | 140 | -10 |
+| C | 200 | 185 | -15 |
+| D | 250 | 230 | -20 |
+| E | 300 | 270 | -30 |
+| F | 350 | 310 | -40 |
+| G | 400 | 350 | -50 |
+| H | 450 | 390 | -60 |
+
+::: {.small .muted}
+Tabla completamente ficticia: en la realidad solo vemos una columna por persona.
+:::
+
+::: {.notes}
+20–22 min. Esta tabla es la joya central de la sesión. Todos los conceptos posteriores se entienden mejor viéndola. Préstemos atención a que los efectos varían: de -5 a -60 pesos. Esto motiva el concepto de efecto promedio.
+:::
+
+## El Efecto Promedio del Tratamiento (ATE)
+
+Si pudiéramos dar el ECE a **todas** las ocho personas, ¿cuál sería el cambio promedio en sus intereses?
+
+::: {.equation}
+$$\text{ATE} = \frac{1}{8} \sum_i (Y_{1i} - Y_{0i}) = \frac{-5 - 10 - 15 - 20 - 30 - 40 - 50 - 60}{8} = \frac{-230}{8} = -28.75$$
+:::
+
+::: {.takeaway}
+El **ATE (Average Treatment Effect)** responde: si es obligatorio para todos, ¿cuánto esperamos que bajen los intereses? Es el efecto "en promedio".
+:::
+
+::: {.notes}
+22–24 min. Mantener enfoque en palabras antes de símbolos. El número -28.75 es concreto: si cada cliente promedio viera 28.75 pesos menos en intereses, el banco los estría cediendo en su nombre.
+:::
+
+## El Efecto del Tratamiento en los Tratados (ATT)
+
+Ahora supongamos que el ECE fue **opcional**: cada cliente decidía si lo quería. Sumemos una columna que indique quién lo pidió ($D_i = 1$):
+
+| Persona | $Y_0$ | $Y_1$ | Efecto | ¿Pidió ECE? |
+|---|---:|---:|---:|:---:|
+| A | 100 | 95 | -5 | ✓ |
+| B | 150 | 140 | -10 | ✓ |
+| C | 200 | 185 | -15 | ✓ |
+| D | 250 | 230 | -20 | ✓ |
+| E | 300 | 270 | -30 | ✗ |
+| F | 350 | 310 | -40 | ✗ |
+| G | 400 | 350 | -50 | ✗ |
+| H | 450 | 390 | -60 | ✗ |
+
+Solo A, B, C y D lo pidieron. El efecto promedio **en quienes lo pidieron**:
+
+::: {.equation}
+$$\text{ATT} = \frac{1}{4} \sum_{i: D_i = 1} (Y_{1i} - Y_{0i}) = \frac{-5 - 10 - 15 - 20}{4} = \frac{-50}{4} = -12.5$$
+:::
+
+::: {.takeaway}
+El **ATT (Average Treatment Effect on the Treated)** responde: para quienes ya lo pidieron, ¿cuánto ganaron? Es casi siempre distinto del ATE.
+:::
+
+::: {.notes}
+24–26 min. Observe que el ATT (-12.5) es menor que el ATE (-28.75). Esto ocurre porque los que lo pidieron (A, B, C, D) recibirían menos beneficio que el promedio; los que no lo pidieron (E, F, G, H) ganarían más si se lo obligaran. Los atentos financieramente ya están atentos con o sin ECE.
+:::
+
+## ¿Qué ve el analista en los datos?
+
+El banco solo observa una columna: quiénes lo pidieron y cuál fue su resultado.
+
+| Persona | $Y$ observado | ¿Pidió? |
+|---|---:|:---:|
+| A | 95 | ✓ |
+| B | 140 | ✓ |
+| C | 185 | ✓ |
+| D | 230 | ✓ |
+| E | 300 | ✗ |
+| F | 350 | ✗ |
+| G | 400 | ✗ |
+| H | 450 | ✗ |
+
+**Promedio con ECE:** $(95 + 140 + 185 + 230) / 4 = 162.5$
+
+**Promedio sin ECE:** $(300 + 350 + 400 + 450) / 4 = 375$
+
+**Diferencia observada:** $162.5 - 375 = -212.5$ pesos
+
+::: {.small .muted}
+Comparamos dos grupos: quiénes pidieron el ECE contra quiénes no. ¿Mide esta diferencia el efecto verdadero?
+:::
+
+::: {.notes}
+26–28 min. No. La diferencia observada de -212.5 pesos NO es el efecto. Es una mezcla de dos cosas: quién ganó (ATT = -12.5) y quiénes eran grupos ya distintos de entrada (-200). La "tabla de Dios" reveló ambas fuentes.
+:::
+
+## Descomposición: lo que se ve es un mix
+
+La diferencia observada se descompone en dos partes:
+
+::: {.equation}
+\begin{align}
+-212.5 &= \text{ATT} + \text{Sesgo de Selección}\\
+-212.5 &= -12.5 + (-200)
+\end{align}
+:::
+
+::: {.takeaway}
+Una comparación observada es **la suma de:**
+1. **El ATT:** el efecto en quienes recibieron el tratamiento.
+2. **El sesgo de selección:** cuánto difieren los grupos incluso sin el tratamiento.
+:::
+
+En esta tabla, 94% de la diferencia que vemos es que los grupos ya eran distintos. Apenas 6% es el efecto verdadero del ECE.
+
+::: {.notes}
+28–30 min. Es una sorpresa importante: la comparación "naive" mezcla todo. El banco ve -212.5 y podría creer que el ECE ahorra eso en promedio, cuando en realidad solo genera -12.5 pesos en promedio. La selección es un problema enorme: quiénes piden el ECE ya son más atentos y naturalmente gastan menos en intereses.
+:::
+
+## Fórmula general de la descomposición
+
+Para cualquier conjunto de datos:
+
+::: {.equation}
+$$E[Y | D = 1] - E[Y | D = 0] = \underbrace{\text{ATT}}_{\text{efecto verdadero}} + \underbrace{E[Y_0 | D = 1] - E[Y_0 | D = 0]}_{\text{sesgo de selección}}$$
+:::
+
+La parte izquierda es lo que **cualquier software de hoja de cálculo calcula**: la diferencia de medias. Pero esa diferencia encierra dos cosas:
+
+- **Efecto verdadero (ATT):** ¿Cuánto cambió quien recibió el tratamiento?
+- **Sesgo de selección:** ¿Cuánto diferían los grupos ya desde antes?
+
+::: {.notes}
+30–32 min. Esta fórmula es la pieza central de toda la causalidad observacional. La próxima sesión (y las posteriores) se dedicará a métodos para "apagar" ese sesgo usando datos, supuestos o diseño.
+:::
+
+## Bloque 4 · Sesgo de selección: de dónde sale
+
+¿Por qué difieren los grupos? En nuestro caso:
+
+**Los atentos se autoseleccionan.**
+
+Hay una característica oculta: la **atención financiera**.
+
+::: {.columns}
+::: {.column width="50%"}
+**Quiénes son atentos:**
+- Monitorean su saldo
+- Comprenden intereses
+- Se preocupan por costos
+:::
+::: {.column width="50%"}
+**Dónde se ve la atención:**
+- Piden el ECE con más probabilidad
+- Pagan menos intereses naturalmente
+:::
+:::
+
+Esa característica X afecta **tanto** quién pide el ECE **como** los intereses que paga. Por eso los grupos difieren.
+
+::: {.notes}
+35–38 min. Este es el corazón del problema. No es que el ECE no funcione, es que quiénes lo usan ya eran especiales. Atención es una "causa común": influye en ambas cosas simultáneamente.
+:::
+
+## Un mapa causal mínimo
+
+Tres variables y sus conexiones:
+
+::: {.equation}
+X \rightarrow D \quad \text{Atención causa la decisión}
+:::
+::: {.equation}
+X \rightarrow Y \quad \text{Atención causa intereses bajos}
+:::
+::: {.equation}
+D \rightarrow Y \quad \text{ECE causa intereses bajos (efecto que queremos)}
+:::
+
+Ahora vemos el flujo de influencia:
+
+```
+        X (Atención financiera)
+       / \
+      /   \
+     D     Y
+      \   /
+       \ /
+      Efecto directo
+```
+
+::: {.takeaway}
+La diferencia observada mezcla dos **caminos**:
+1. **Directo:** $D \rightarrow Y$ (efecto que queremos)
+2. **Trasero:** $D \leftarrow X \rightarrow Y$ (sesgo)
+:::
+
+::: {.notes}
+38–40 min. Visualizar es crucial. Dibujar en la pizarra los nodos y flechas. Explicar que la flecha X→D es la autoselección. Mantener la idea: si cortamos la flecha X→D (p. ej., asignando al azar), desaparece el sesgo.
+:::
+
+## Dos formas de cerrar la puerta trasera
+
+Tenemos dos estrategias para limpiar la comparación:
+
+**1. Controlar por X si la observamos**
+: Si los datos incluyen medidas de atención financiera, podemos "igualar" grupos en esa dimensión. Aprenderemos esto después (matching, regresión con control).
+
+**2. Cortar la flecha $X \rightarrow D$**
+: Si decidimos quién recibe el ECE al azar, nadie puede autoseleccionarse. Todos tienen la misma probabilidad, independientemente de su atención.
+
+::: {.small .muted}
+La segunda estrategia es un **experimento aleatorio**. La primera es **control estadístico** en observaciones. Ambas sirven; el contexto dictará cuál es factible.
+:::
+
+::: {.notes}
+40–42 min. Mantener enfoque en la lógica: identificar y bloquear las fuentes de confusión. Un experimento aleatorio es exquisito pero caro. Control estadístico es factible pero exige que midamos X.
+:::
+
+## Bloque 5 · La solución: sorteador aleatorio
+
+¿Qué pasa si el banco asigna el ECE al azar?
+
+Supongamos que sortean: cuatro de las ocho personas lo reciben, elegidas como voltear una moneda.
+
+| Persona | $Y_0$ | $Y_1$ | Efecto | ¿Sorteado? |
+|---|---:|---:|---:|:---:|
+| A | 100 | 95 | -5 | ✓ |
+| B | 150 | 140 | -10 | ✗ |
+| C | 200 | 185 | -15 | ✓ |
+| D | 250 | 230 | -20 | ✗ |
+| E | 300 | 270 | -30 | ✓ |
+| F | 350 | 310 | -40 | ✗ |
+| G | 400 | 350 | -50 | ✓ |
+| H | 450 | 390 | -60 | ✗ |
+
+::: {.small .muted}
+Con asignación al azar, el grupo de tratados (A, C, E, G) tiene una mezcla de tipos: algunos atentos, otros no.
+:::
+
+::: {.notes}
+44–46 min. La asignación al azar **desacopla** atención de asignación. Ya no es verdad que X → D.
+:::
+
+## Ahora sí, la diferencia mide el efecto
+
+Con asignación aleatoria:
+
+**Promedio con ECE (sorteados):** $(95 + 185 + 270 + 350) / 4 = 225$
+
+**Promedio sin ECE (no sorteados):** $(150 + 250 + 310 + 450) / 4 = 290$
+
+**Diferencia:** $225 - 290 = -65$ pesos
+
+Esto es **mucho más cercano al ATE verdadero (-28.75)** que lo que veíamos antes (-212.5).
+
+::: {.takeaway}
+La aleatorización:
+1. **Corta la puerta trasera:** X ya no afecta quién recibe el tratamiento.
+2. **Equilibra grupos:** ambos grupos tienen la misma mezcla de tipos.
+3. **Hace observable lo que queremos:** la diferencia es el efecto.
+:::
+
+::: {.small .muted}
+Con suficientes sujetos, el azar garantiza que grupos similares reciben y no reciben; así, la diferencia mide el impacto.
+:::
+
+::: {.notes}
+46–48 min. Notar que -65 no es exacto igual a -28.75 porque es una sola muestra. Con muchas más personas y el mismo sorteo, caeríamos más cerca. Este es el primer sabor de un experimento.
+:::
+
+## Bloque 6 · Cierre
+
+### Lo que aprendimos en 60 minutos
+
+1. **Resultados potenciales:** cada persona tiene una versión de cada escenario, pero solo una ocurre.
+2. **El problema fundamental:** no podemos ver el contrafactual para la misma persona.
+3. **Descomposición:** la diferencia observada = efecto verdadero + sesgo.
+4. **Sesgo de selección:** grupos que eligen diferente también son distintos de entrada.
+5. **Aleatorización:** cortar las flechas de confusión hace que la diferencia mida el efecto.
+
+### Próxima sesión
+
+Aprenderemos a usar datos, supuestos y regresión para "recuperar" el efecto en estudios observacionales donde no podemos sortear.
+
+::: {.quiz}
+¿Cuál de estos enfoques requiere que midamos la atención financiera ($X$)?
+
+<button class="boton-quiz" data-correct="incorrecta" data-feedback="La aleatorización desacopla X de D; no necesita medir X.">A. Usar un experimento aleatorio</button>
+<button class="boton-quiz" data-correct="correcta" data-feedback="Exacto. Si controlas por X, necesitas que esté en tus datos.">B. Usar un control estadístico (regresión) sobre la diferencia observada</button>
+<button class="boton-quiz" data-correct="incorrecta" data-feedback="No es un método; es una descripción de lo que falla.">C. Nada; usamos la diferencia observada sin más</button>
+</button>
+
+<div class="quiz-feedback" aria-live="polite"></div>
+:::
+
+::: {.notes}
+57–60 min. Quiz de consolidación. Cierre con una pregunta de reflexión: "Si fueran ustedes quiénes diseñan este estudio, ¿cómo lo harían? ¿Sortearían, controlarían o harían otra cosa?" Escribir respuestas breves en papel.
+:::

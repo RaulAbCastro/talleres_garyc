@@ -2,6 +2,7 @@ project:
   type: default
   render:
     - taller-1/sesion-1/index.qmd
+    - taller-1/sesion-2/index.qmd
 
 lang: es
 date-format: long
