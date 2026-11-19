@@ -1,4 +1,4 @@
-"""Figuras de respaldo en Python; solo leen el CSV observado de participantes."""
+"""Figuras en Python del caso bancario y de los escenarios didácticos."""
 from pathlib import Path
 
 import matplotlib
@@ -19,6 +19,25 @@ plt.rcParams.update({
     "axes.labelcolor": "#253347", "text.color": "#1B2A4A",
     "figure.facecolor": "#F7F8FA", "axes.facecolor": "#F7F8FA",
 })
+
+# Comparar los mismos grupos manteniendo sus tamaños y medias.
+pagos = pd.cut(d.n_pagos_debito, [-1, 0, 4, np.inf],
+               labels=["0 pagos", "1 a 4 pagos", "5 o más pagos"])
+grupos = d.groupby(pagos, observed=True).saldo_promedio_miles
+medias, desvios = grupos.mean(), grupos.std()
+fig, ejes = plt.subplots(1, 2, figsize=(11, 2.95), sharex=True, sharey=True)
+escenarios = [("Muestra del taller", 1), ("Distancias a la mitad", 0.5)]
+for eje, (titulo, escala) in zip(ejes, escenarios):
+    eje.errorbar(medias, [2, 1, 0], xerr=escala * desvios, fmt="o", markersize=8,
+                 color="#1B2A4A", ecolor="#007279", elinewidth=3, capsize=5)
+    eje.set(title=titulo, xlim=(7, 20), ylim=(-0.5, 2.5), xticks=[8, 10, 12, 14, 16, 18],
+            yticks=[2, 1, 0], yticklabels=medias.index)
+    eje.set_axisbelow(True)
+    eje.grid(axis="x", color="#D9DDE5")
+fig.supxlabel("Saldo promedio del mes (miles de MXN)", y=0.06, fontsize=14)
+fig.tight_layout(rect=(0, 0.13, 1, 1))
+fig.savefig(ASSETS / "dispersion-anova-python.svg", metadata={"Date": None})
+plt.close(fig)
 
 fig, ax = plt.subplots(figsize=(11, 4))
 for nomina, color in ((0, "#5D6D7E"), (1, "#007279")):
@@ -73,8 +92,54 @@ fig.tight_layout()
 fig.savefig(ASSETS / "colas-python.svg", metadata={"Date": None})
 plt.close(fig)
 
-for nombre in ("saldos-python.svg", "abonos-python.svg", "colas-python.svg"):
+# La extensión horizontal del perfil representa densidad, no un cambio en X.
+fig, ax = plt.subplots(figsize=(11, 3.15))
+abonos = np.array([10, 25, 40])
+centros = 5 + 0.4 * abonos
+desvios = np.linspace(-3.2, 3.2, 129)
+ax.plot([2, 51], [5.8, 25.4], color="#1B2A4A", lw=2,
+        label="Saldo medio condicional")
+for x, media in zip(abonos, centros):
+    saldos = media + 2.2 * desvios
+    densidad_horizontal = x + 7 * np.exp(-0.5 * desvios**2)
+    ax.vlines(x, saldos[0], saldos[-1], color="#5D6D7E", lw=1, linestyles="dashed")
+    ax.fill_betweenx(saldos, x, densidad_horizontal, color="#D4EBE8", zorder=2)
+    ax.plot(densidad_horizontal, saldos, color="#007279", lw=2)
+    ax.scatter(x, media, color="#1B2A4A", zorder=4)
+ax.set(xlim=(2, 51), ylim=(0, 30), xticks=abonos,
+       xlabel="Abonos del mes (miles de MXN)", ylabel="Saldo promedio\n(miles de MXN)")
+ax.legend(loc="upper left", frameon=False)
+fig.tight_layout()
+fig.savefig(ASSETS / "supuestos-regresion-python.svg", metadata={"Date": None})
+plt.close(fig)
+
+# Seis saldos por nivel ajustado. El centro y la amplitud cambian por separado.
+niveles = np.arange(8, 27, 3)
+perfil = ((niveles - niveles.mean()) / 9) ** 2
+centro_curvo = 5.4 * (perfil - perfil.mean())
+abanico = np.linspace(0.5, 4.1, len(niveles))
+desvios_relativos = np.array([-1, -0.6, -0.25, 0.25, 0.6, 1])
+fig, ejes = plt.subplots(1, 2, figsize=(11.5, 3.5), sharey=True)
+for eje, nombre, centros, amplitudes in (
+    (ejes[0], "Cartera A", centro_curvo, np.ones_like(niveles)),
+    (ejes[1], "Cartera B", np.zeros_like(niveles), abanico),
+):
+    residuos = centros[:, None] + amplitudes[:, None] * desvios_relativos
+    eje.axhline(0, linestyle="--", color="#667788", linewidth=1)
+    eje.scatter(np.repeat(niveles, len(desvios_relativos)), residuos.ravel(),
+                c="#007279", s=23, zorder=3)
+    eje.plot(niveles, centros, color="#A05A00", marker="D", markersize=5, linewidth=1.6)
+    eje.set(title=nombre, xlabel="Saldo ajustado (miles de MXN)",
+            xlim=(6, 28), ylim=(-5, 5), xticks=niveles[::2], yticks=[-4, -2, 0, 2, 4])
+ejes[0].set_ylabel("Residuo (miles de MXN)")
+fig.tight_layout()
+fig.savefig(ASSETS / "lectura-residuos-python.svg", metadata={"Date": None})
+plt.close(fig)
+
+figuras = ("saldos-python.svg", "abonos-python.svg", "colas-python.svg",
+           "supuestos-regresion-python.svg", "dispersion-anova-python.svg", "lectura-residuos-python.svg")
+for nombre in figuras:
     archivo = ASSETS / nombre
     contenido = archivo.read_text(encoding="utf-8")
     archivo.write_text("\n".join(linea.rstrip() for linea in contenido.splitlines()) + "\n", encoding="utf-8")
-print("Figuras Python: saldos-python.svg, abonos-python.svg y colas-python.svg en assets/")
+print("Figuras Python en assets/:", ", ".join(figuras))

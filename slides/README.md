@@ -18,18 +18,27 @@ El temario define el alcance: hipótesis, comparación de medias y proporciones,
 correlación y regresión lineal simple. La referencia externa guía la pedagogía;
 se conserva cada tema en una progresión de lo simple a lo complejo.
 
-El guion actual tiene 38 diapositivas y sigue este orden: **pruebas de hipótesis,
-comparación de medias y proporciones, correlación y regresión lineal simple**.
-Muestreo, error estándar e intervalos se introducen dentro del primer bloque.
-Cada explicación conecta pregunta, parámetro, método, supuestos e interpretación;
-las fórmulas se traducen al caso y a la salida del código. La guía docente contiene
-la cobertura y los tiempos. Para la ruta de una hora, el laboratorio 2 es práctica
-complementaria: su intuición se trabaja con la animación en clase.
+Las **48 diapositivas** parten de una pregunta sobre la diferencia de saldo
+entre clientes con y sin nómina. Esta pregunta da pie a explicar el muestreo,
+el error estándar, los intervalos y las pruebas de una y dos colas. Después de
+comparar dos medias con Welch, el grupo compara tres medias por tramo de pagos
+con ANOVA y estudia la dispersión de los saldos dentro de esos mismos tramos.
+Al cambiar el resultado a «pagó con débito al menos una vez», pasa a comparar
+proporciones. Finalmente usa la correlación y la regresión para estudiar cómo
+se relacionan los abonos con el saldo.
+
+El alumnado elige un método a partir de la pregunta y justifica su conclusión
+con las cifras y los supuestos del caso. Para una clase de **60 minutos** se
+ejecutan en plenaria los laboratorios 3 y 4 en un lenguaje. En los laboratorios
+1, 2, 5, 6 y 7 se interpretan las cifras, animaciones y figuras disponibles y
+se puede ejecutar el código después. El ritmo por tema y las preguntas de
+seguimiento se detallan en la [guía docente](taller-1/sesion-1/docente/guia.md).
 
 Cada concepto se explica antes de usarse en fórmulas, animaciones o laboratorios.
 La elección de una recta se explora antes de nombrar mínimos cuadrados ordinarios
-(MCO); sus supuestos se explican antes de la inferencia y R² antes de aparecer en
-la salida del laboratorio. La guía docente registra estas dependencias.
+(MCO). Una figura de distribuciones condicionales ilustra la linealidad, la
+normalidad y la varianza igual. La independencia se discute a partir del
+muestreo. La guía docente registra estas dependencias.
 
 ## Abrir y presentar
 
@@ -103,14 +112,15 @@ Referencia de configuración: [workflows de GitHub Pages](https://docs.github.co
 
 Las flechas navegan, `Esc` abre la vista general y `S` las notas del expositor.
 Las notas contienen tiempos, preguntas sugeridas y resultados de referencia.
-Hay dos preguntas de opción múltiple con retroalimentación y seis laboratorios:
+Hay tres preguntas de opción múltiple con retroalimentación y siete laboratorios:
 
 1. Explorar la muestra.
 2. Repetir muestreo y cambiar tamaño muestral.
 3. Comparar medias con Welch.
-4. Comparar proporciones.
-5. Calcular correlación y visualizar la nube de puntos.
-6. Estimar la recta y examinar sus residuos.
+4. Comparar tres medias con ANOVA y contrastar hipótesis sobre la dispersión.
+5. Comparar proporciones.
+6. Calcular la correlación y visualizar la nube de puntos.
+7. Estimar la recta y graficar sus residuos frente al saldo ajustado de las 480 cuentas.
 
 Las animaciones permiten repetir muestras, observar la cobertura de intervalos
 y cambiar una recta para comparar sus residuos. Tienen controles explícitos,
@@ -215,7 +225,7 @@ libro diario conciliado: no se puede reconstruir el saldo final o el promedio
 restando conteos. Los grupos con y sin nómina son observados; el muestreo no
 asigna aleatoriamente la recepción de nómina.
 
-Los tres lenguajes leen el mismo archivo. Los contrastes mantienen el orden
+Los tres lenguajes leen el mismo archivo. Las diferencias por nómina mantienen el orden
 **con nómina menos sin nómina**, confianza de 95% y las mismas convenciones de
 inferencia. Las diferencias de proporciones se expresan en **puntos porcentuales**.
 Para Welch, Stata usa `unequal` (Satterthwaite), no su opción `welch`, que cambia
@@ -260,7 +270,7 @@ la sesión como directorio de trabajo y ejecútalo desde tu instalación local.
 El guion está en `index.qmd`, el diseño en `tema.scss` y las preguntas en HTML
 con comportamiento en `interacciones.js`. Las animaciones están en
 `animaciones.js` y `animaciones.css`. Cada laboratorio se escribe una sola
-vez por lenguaje, dentro de un `.panel-tabset`. Las figuras de respaldo leen
-solo los datos observados. Al modificar parámetros, actualiza las cifras
+vez por lenguaje, dentro de un `.panel-tabset`. Las figuras reproducen datos
+observados o modelos ilustrativos identificados en el guion. Al modificar parámetros, actualiza las cifras
 narradas y la guía docente; las estadísticas de referencia se recalculan en
 `docente/resumen.json`.

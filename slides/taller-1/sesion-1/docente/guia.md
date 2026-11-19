@@ -2,8 +2,9 @@
 
 Esta versión estudia exclusivamente cuentas de depósito a la vista, pagos con débito y sus movimientos de entrada y salida.
 Todos los registros son sintéticos; no describen a un banco ni al sistema
-financiero mexicano. La duración orientativa es de 60 minutos. Las notas del QMD
-contienen las preguntas y el ritmo de presentación. Los resultados de esta guía
+financiero mexicano. El recorrido dura aproximadamente 60 minutos e integra
+ANOVA y los contrastes de varianzas en el bloque de comparaciones. Las notas
+del QMD contienen las preguntas y el ritmo de presentación. Los resultados de esta guía
 corresponden a la semilla **202609** y al CSV distribuido.
 
 ## Referencia pedagógica
@@ -16,6 +17,20 @@ Se retoma la secuencia de intuiciones: población y muestra, relación entre dos
 variables, recta estimada, error frente a residuo y supuestos de regresión. Los
 ejemplos, los datos, las animaciones y el código se construyen para este taller.
 La referencia no aporta ni avala cifras del caso bancario.
+
+La pauta *Lesson Plan Builder* propone formular un objetivo observable, diseñar
+una tarea final que lo evalúe y usar las respuestas durante la clase para decidir
+qué explicación retomar. En esta sesión el objetivo es que, ante una pregunta
+bancaria nueva, cada participante **elija un método y justifique una conclusión
+con el parámetro que estudia, las unidades y la incertidumbre**. El reto de
+retiros en ventanilla permite comprobarlo. [Lesson Plan Builder de SkillMedev](https://github.com/SkillMedev/skills/blob/main/skills/lesson-plan-builder/SKILL.md).
+
+### Cuatro actividades adaptadas de cursos universitarios
+
+- **Elegir la cola.** En Data 8 el grupo anticipa el signo que favorecería la alternativa antes de calcular la diferencia. Para el encargo sobre nómina del mes siguiente, recoger el signo y la cola que propone cada pareja. Después de revelar el estadístico, invertir la resta y pedirles que expliquen por qué se conserva el valor p de la misma pregunta. [UC Berkeley, Data 8, lección 18](https://data8.org/materials-sp26/lec18/)
+- **Separar dos fuentes de variación.** Biocore presenta grupos con distinta separación en relación con su dispersión. En nuestra figura, ambos paneles conservan exactamente las tres medias y los tamaños. Pedir al grupo que señale qué se movió y prediga en qué panel resultaría más fácil distinguir medias. Las barras representan una desviación estándar a cada lado de la media. [Universidad de Wisconsin–Madison, Biocore, capítulo 5, sección 5.2](https://wisc.pb.unizin.org/biocorestatistics/chapter/statistical-inference-comparing-more-than-2-groups/)
+- **Elegir el denominador.** En la práctica de Granada, los estudiantes distinguen cuántas personas presentan la característica y cuántas integran cada grupo antes de ejecutar una prueba de dos proporciones. Con nuestros datos, pedir una oración para 220/274 y otra para 220/310. El mismo numerador permite contestar dos preguntas distintas. Si la pareja duda, que lea en voz alta el encabezado de la fila o columna que suma el denominador. [Universidad de Granada, Práctica 6 de Estadística, contraste de dos proporciones](https://wpd.ugr.es/~bioestad/guia-r-studio/practica-6/)
+- **Leer el ajuste.** Edimburgo transforma la nube original en una gráfica de residuos para identificar patrones. En los dos paneles del taller, pedir primero que sigan el centro de los residuos y después su amplitud vertical. En el laboratorio 7, cada participante puede contrastar su descripción con las 480 cuentas y señalar qué información sobre el diseño necesitaría para evaluar independencia. [Universidad de Edimburgo, Foundations of Data Science, sección 10.3, pp. 78–80](https://opencourse.inf.ed.ac.uk/sites/default/files/2024-01/FDS-lecture-notes-2024-01-28.pdf#page=88)
 
 ## Marco, muestra y unidades
 
@@ -85,32 +100,29 @@ la inferencia requiere discutir los supuestos, no solo ejecutar el comando.
 
 ## Secuencia didáctica y ritmo
 
-La sesión sigue el orden de `temario.tex`: **pruebas de hipótesis → comparación
-de medias y proporciones → correlación → regresión lineal simple**. La pregunta
-sobre saldos aparece desde el inicio; población, muestreo, error estándar e
-intervalos se introducen dentro del primer bloque porque explican cómo funciona
-un contraste, no como un repaso separado que retrase la pregunta principal.
+Las **48 diapositivas** siguen el orden de `temario.tex`. Después del contraste
+de dos medias por nómina, formular una pregunta nueva sobre el mismo saldo en
+tres grupos de clientes. Conservar esos grupos para estudiar su dispersión.
+Luego volver a los grupos de nómina y cambiar el resultado a un indicador de
+pago. Para correlación y regresión, conservar los importes de cada cliente y
+estudiar conjuntamente sus abonos y su saldo.
 
-El guion tiene 38 diapositivas. Cada explicación conecta la afirmación o pregunta
-con el parámetro, el estimador, su incertidumbre y una conclusión con unidades.
-Las fórmulas se traducen al caso y luego se reconocen en el código; no se presentan
-como una lista de definiciones desconectadas.
-
-| Minutos | Tema y desarrollo |
+| Minutos | Desarrollo y actividad del alumnado |
 |---|---|
-| 0–3 | Pregunta bancaria, unidad de análisis y ruta de trabajo. |
-| 3–22 | Pruebas de hipótesis: parámetro, H0/H1, distribución muestral, EE, estadístico, p, alfa, errores de decisión e IC. |
-| 22–37 | Medias: EE de la diferencia y Welch; proporciones: media de 0/1, prueba agrupada e IC no agrupado. |
-| 37–43 | Correlación: nube de puntos, covarianza estandarizada, dirección, escala y límites. |
-| 43–56 | Regresión simple: ecuación, error/residuo, criterio y nombre de MCO, supuestos, EE de la pendiente, prueba, IC, R² y laboratorio. |
-| 56–60 | Memo argumentado y comprobación final de interpretación. |
+| 0–3 | Identificar la unidad cliente-mes y precisar qué quiere saber el equipo. |
+| 3–18 | Formular hipótesis sobre el saldo. Usar la animación de muestreo para explicar el error estándar, elegir la cola según la alternativa y discutir el valor p, los errores de decisión y el intervalo. |
+| 18–24 | Ejecutar Welch en el laboratorio 3. Situar cero y el umbral de 3,000 MXN dentro o fuera del intervalo antes de redactar una frase. |
+| 24–35 | Pasar a tres tramos de pagos. Comparar los dos paneles de dispersión antes de calcular F. Ejecutar el laboratorio 4 y emparejar cada valor p con su hipótesis. |
+| 35–41 | Construir el indicador de pago, elegir el denominador de cada grupo y explicar en puntos porcentuales el intervalo del laboratorio 5. |
+| 41–46 | Describir la nube del laboratorio 6 y relacionar la dirección y la fuerza de la asociación con el signo y la magnitud de la correlación. |
+| 46–56 | Explorar la recta de mínimos cuadrados y sus distribuciones condicionales. Identificar la curva y el abanico en parejas. Traducir la pendiente y su intervalo a pesos con el resultado visible del laboratorio 7. |
+| 56–60 | Revisar el memo en parejas y comprobar qué conclusión admite la pendiente. Plantear el caso de retiros en ventanilla y recoger el parámetro y el método elegidos antes de mostrar la solución. |
 
-Ejecutar **un lenguaje por laboratorio** en plenaria. El laboratorio 2, con 300
-muestras repetidas, se mantiene como **práctica complementaria**; la animación
-explica su intuición durante la hora de clase. Los otros cinco laboratorios
-están incluidos en los tiempos. Ejecutar también el laboratorio 2 con discusión,
-o comparar los tres lenguajes durante la clase, requiere ampliar la duración.
-R y Python se ejecutan en el navegador; Stata se copia a una instalación local.
+En el recorrido de una hora se ejecutan en plenaria los **laboratorios 3 y 4**
+en R o Python. Para los **laboratorios 1, 2, 5, 6 y 7** se interpretan la
+muestra, la animación de muestreo, las cifras de pago, la nube de puntos y el
+ajuste ya visibles. Su código queda disponible para práctica individual.
+Para trabajar en Stata se usa la instalación local.
 
 ### Dependencias conceptuales
 
@@ -124,31 +136,37 @@ amplían la explicación para el docente; no son un prerrequisito oculto del gru
 | Leer una fórmula de estimación | Regla frente a valor calculado; índices, suma, barra de media y sombrero de estimación. |
 | Usar DE/EE en el laboratorio 2 | Dispersión entre saldos, varianza y dispersión de un estimador entre muestras. La animación previa muestra un rango, sin adelantar DE. |
 | Calcular p e intervalos | Estadístico; distribución de referencia normal/t; colas, grados de libertad, valor crítico e IC. |
+| Interpretar los valores F del laboratorio 4 | Comparar variación entre los promedios y dentro de cada grupo para ANOVA. Para la dispersión identificar la DE de referencia, el cociente de varianzas o las distancias a la mediana, según la pregunta. |
 | Promediar una variable binaria | Por qué sumar unos y dividir entre clientes produce una proporción. Se hace en el bloque de proporciones, no en el laboratorio 1. |
 | Usar una covarianza o Pearson | Desviaciones respecto a las medias, producto conjunto y división entre las DE para quitar unidades. |
 | Usar la sigla MCO | Recta, coeficientes y residuos; cuadrados y su suma; nombre completo «mínimos cuadrados ordinarios». La animación previa dice «Encontrar la recta». |
 | Usar E[u\|X] o homocedasticidad | Promedio del error entre clientes con los mismos abonos; después, misma dispersión del error a cada nivel de abonos. |
-| Leer R² o la inferencia del laboratorio 6 | Condiciones de los EE convencionales, precisión de la pendiente y reducción de errores cuadrados respecto a predecir con la media. |
+| Leer R² o la inferencia del laboratorio 7 | Condiciones de los EE convencionales, precisión de la pendiente y reducción de errores cuadrados respecto a predecir con la media. |
 
-El bloque de regresión conserva sus 13 minutos: ecuación (43–44), valores
-ajustados y residuos (44–46), animación (46–48), nombre y fórmula de MCO (48–49),
-supuestos sobre el error (49–51), inferencia (51–52), interpretación y R² (52–54),
-laboratorio 6 (54–56). El ejemplo de 1,000 MXN con un EE de 500 introduce el
-estadístico y su distribución de referencia (13–14). Pedir que el grupo elija
+El ejemplo de 1,000 MXN con un EE de 500 introduce el estadístico y su
+distribución de referencia. Pedir que el grupo elija
 cuáles de −2.3, +1.8 y +2.4 están al menos a dos EE del cero. Al avanzar, las
-dos colas de la normal muestran qué probabilidades suma el valor p (14–15).
-Este es un ritmo de repaso; una introducción
-desde cero o ejecutar todos los lenguajes requiere más tiempo.
+dos colas de la normal muestran qué probabilidades suma el valor p.
+Para el mismo z = +2, comparar p = 0.9772, 0.0455 y 0.0228 bajo las alternativas
+izquierda, bilateral y derecha, respectivamente. La dirección se fija antes de
+observar el resultado.
+
+Antes de empezar con proporciones, pedir que cada pareja complete por escrito
+«El ANOVA compara…» y «La prueba de Levene centrada en la mediana compara…».
+Leer dos respuestas. Si confunden las preguntas, retomar un saldo y calcular su distancia a la
+mediana de su grupo. Pedirles que vuelvan a nombrar qué variable analiza cada
+prueba y qué hipótesis corresponde a cada valor p antes de avanzar.
 
 ## Cobertura del syllabus y conexiones que debe poder explicar el grupo
 
 | Tema de la sesión 1 | Desarrollo y verificación |
 |---|---|
-| Pruebas de hipótesis | Distinguir H0/H1 sobre parámetros de las estimaciones observadas; explicar cómo el EE permite construir un estadístico y obtener un p bajo H0. Separar alfa, p, error tipo I, error tipo II e intervalo. |
-| Comparación de medias | Reconstruir SE(Delta) a partir de las varianzas de las medias independientes; usar Welch, interpretar signo, MXN, IC y decisión. Laboratorio 3. |
-| Comparación de proporciones | Explicar la media de una variable 0/1 y sus denominadores; distinguir el EE agrupado bajo H0 del EE no agrupado del IC; comunicar en pp. Laboratorio 4. |
-| Correlación | Explicar los productos centrados de la covarianza y la estandarización de Pearson; verificar forma y valores extremos en la nube. Laboratorio 5. |
-| Regresión lineal simple | Separar parámetro/estimación y error/residuo; explicar la elección MCO, b1 = r sY/sX, EE y contraste de la pendiente, R² y límites causales. Laboratorio 6. |
+| Pruebas de hipótesis | Distinguir H0/H1 sobre parámetros de las estimaciones observadas. Elegir la cola según la alternativa y calcular p bajo H0. Separar alfa, p, error tipo I, error tipo II e intervalo. |
+| Comparación de medias | Reconstruir el EE de la diferencia de medias, aplicar Welch e interpretar signo, MXN e IC en el laboratorio 3. En el laboratorio 4 formular la hipótesis global de igualdad de tres medias para ANOVA y justificar la conclusión. |
+| Comparación de dispersiones | Cambiar la pregunta sobre el saldo a una sobre su DE o varianza. Identificar la referencia fija para ji cuadrada, los dos grupos de la razón F y las distancias a las medianas para Levene. Laboratorio 4. |
+| Comparación de proporciones | Explicar la media de un indicador 0/1 y sus denominadores. Distinguir el EE agrupado de la prueba del EE no agrupado del IC y comunicar el resultado en pp. Laboratorio 5. |
+| Correlación | Explicar los productos centrados de la covarianza y la estandarización de Pearson. Verificar forma y valores extremos en la nube. Laboratorio 6. |
+| Regresión lineal simple | Distinguir parámetro y estimación, error y residuo. Explicar el criterio de MCO, b1 = r sY/sX, el EE y el contraste de la pendiente, R² y los límites de la interpretación causal. Laboratorio 7. |
 
 El laboratorio 1 identifica los insumos de los contrastes. El laboratorio 2
 refuerza la variabilidad muestral, que también se muestra mediante animación.
@@ -184,7 +202,9 @@ proporciones por contenidos de regresión avanzada.
 
 ## Resultados de referencia
 
-La comparación mantiene siempre el orden **con nómina menos sin nómina**.
+Las diferencias entre los dos grupos de nómina mantienen el orden **con nómina
+menos sin nómina**. En el laboratorio 4, el factor que define los tres grupos
+es el número de pagos con débito.
 
 | Cantidad | Resultado |
 |---|---:|
@@ -209,12 +229,15 @@ El intervalo que acompaña a cada media en la figura está calculado por separad
 el intervalo de la **diferencia** es el de Welch. No sustituir la prueba de la
 diferencia por una regla visual sobre el traslape de dos intervalos.
 
-En la práctica final con retiros en ventanilla, usar un indicador de al menos
-un retiro por cliente. Los conteos son 25/274 con nómina y 26/206 sin nómina;
-la diferencia es −3.50 pp y su IC de Wald del 95% va de −9.17 a +2.18 pp.
-Pedir una lectura de ambos extremos y de cero. Si alguien concluye que los grupos
-son iguales, invitarle a identificar una diferencia distinta de cero que siga
-dentro del intervalo.
+En el reto final, preguntar «¿Difiere por nómina la proporción de clientes
+que retiró en ventanilla?». Antes de dar una pista sobre el código, pedir a cada
+participante que nombre el parámetro y el método, y que indique qué cuenta en
+el numerador y en el denominador. Después cotejar la respuesta con el
+laboratorio 5. El indicador vale uno por cliente con al menos un retiro.
+Retiraron 25/274 con nómina y 26/206 sin nómina. La diferencia es −3.50 pp y
+su IC de Wald del 95% va de −9.17 a +2.18 pp. Si alguien concluye que los
+grupos son iguales, pedirle que identifique una diferencia distinta de cero
+compatible con ese intervalo.
 
 En el laboratorio de muestreo, aumentar n de 40 a 200 reduce aproximadamente la
 DE de las medias por un factor de √5. El muestreo sin reemplazo añade una pequeña
@@ -225,22 +248,16 @@ comparar la dispersión alrededor de la media del marco (13.1848).
 
 ## Un memo posible
 
-Pedir que cada pareja conserve su frase de saldos y su frase de uso de débito
-al terminar esos bloques. En la primera, el intervalo de la diferencia excluye
-cero e incluye el umbral hipotético de 3,000 MXN que fijó el equipo. En la
-segunda, comprobar qué denominador eligieron para cada grupo. Al cerrar,
-reservar 90 segundos para reunir las frases y completar el memo, un minuto
-para intercambiarlo y 30 segundos para revisar una afirmación con los datos.
+Pedir que cada pareja conserve sus frases de saldo por nómina, saldo por tramo
+de pagos y uso de débito. Al cerrar, añadir la frase sobre abonos y saldo.
+Intercambiar los memos y pedir que otra pareja identifique el grupo de referencia,
+las unidades y la evidencia detrás de una afirmación. Usar su comentario para
+revisarla antes de plantear el caso de retiros en ventanilla.
 
-En esta muestra sintética de 480 clientes, quienes recibieron nómina tienen un
-saldo promedio mensual de aproximadamente 2,545 MXN más que quienes no la recibieron (IC95
-Welch: 1.74 a 3.35 mil MXN; p<0.001). Pagaron con débito 220 de 274 clientes con
-nómina (80.3%) y 90 de 206 sin nómina (43.7%): diferencia de 36.6 puntos
-porcentuales (IC95: 28.4 a 44.9). Abonos y saldo tienen correlación 0.888; la recta
-descriptiva asocia 1000 MXN adicionales de abonos mensuales con unos 385 MXN más
-de saldo promedio. Estas asociaciones no identifican qué ocurriría si un cliente
-empezara a recibir nómina. Antes de proponer una intervención, conviene estudiar
-las diferencias previas entre los grupos y definir el diseño de identificación.
+1. En esta muestra de 480 clientes, el saldo promedio fue 2,545 MXN mayor en el grupo con nómina, y el intervalo del 95% (1,736 a 3,354 MXN) admite diferencias tanto inferiores como superiores al umbral de 3,000 MXN.
+2. Al comparar los saldos medios de quienes hicieron cero, de uno a cuatro o al menos cinco pagos con débito, la evidencia resultó insuficiente para concluir al nivel del 5% que al menos dos medias poblacionales difieren (ANOVA, p = 0.098).
+3. La proporción que pagó con débito fue 36.6 puntos porcentuales mayor entre clientes con nómina que entre clientes sin ella (220/274 frente a 90/206, IC del 95% de 28.4 a 44.9 pp).
+4. Por cada 1,000 MXN adicionales de abonos mensuales, la recta estima un saldo promedio 385 MXN mayor entre clientes (r = 0.888), una asociación que podría reflejar en parte diferencias en la estabilidad de sus ingresos.
 
 ## Lo que sabe el simulador
 
@@ -288,6 +305,27 @@ Son hipótesis para discutir, no variables medidas por este CSV.
 
 ## Comprobación y reproducción
 
+### Resultados del laboratorio 4 y fuentes técnicas
+
+| Contraste | Estadístico | Valor p |
+| --- | ---: | ---: |
+| ANOVA clásico de saldo por tramo de pagos, F(2, 477) | 2.331737 | 0.098233 |
+| Levene centrado en la mediana, F(2, 477) | 0.659251 | 0.517709 |
+| DE de 4 mil MXN en el grupo de cero pagos, ji cuadrada(169) | 221.971575 | 0.007791 |
+| Razón de varianzas de 5+ frente a cero pagos, F(227, 169) | 1.058666 | 0.697521 |
+
+Los grupos de 0, 1–4 y 5+ pagos tienen 170, 82 y 228 clientes. El ANOVA
+contrasta las medias y Levene la dispersión. Los saldos de la muestra son
+asimétricos, especialmente en los grupos extremos. Los resultados de las
+pruebas clásicas ilustran el cálculo bajo su referencia normal.
+
+- ANOVA de un factor y contraste global de medias. [NIST, tabla de ANOVA](https://itl.nist.gov/div898/handbook/prc/section4/prc433.htm).
+- Contrastes clásicos de dispersión. [NIST, una varianza](https://www.itl.nist.gov/div898/handbook/eda/section3/eda358.htm), [NIST, razón de dos varianzas](https://itl.nist.gov/div898/handbook/eda/section3/eda359.htm) y [NIST, Levene](https://www.itl.nist.gov/div898/handbook/eda/section3/eda35a.htm).
+- Condiciones LINE para regresión simple. Los perfiles de la diapositiva ilustran la distribución $Y\mid X=x$ con media $5+0.4x$ y DE de 2.2 mil MXN. La independencia se discute a partir del diseño. [Penn State, STAT 501](https://online.stat.psu.edu/stat501/Lesson04).
+- Sintaxis de referencia para Stata. [oneway](https://www.stata.com/manuals/roneway.pdf), [sdtest y robvar](https://www.stata.com/manuals/rsdtest.pdf).
+
+### Generar datos y figuras
+
 Desde la raíz del repositorio:
 
 ```bash
@@ -304,7 +342,9 @@ Rscript generar_figuras.R
 `resumen.json` guarda las cifras completas, las unidades, el contraste y el hash
 SHA-256 del CSV observado. El generador valida identificadores únicos, valores
 no faltantes, conteos enteros no negativos y consistencia del indicador de pagos.
-Las figuras R y Python leen el mismo CSV y calculan los mismos resúmenes.
+Las figuras basadas en datos leen el mismo CSV y calculan los mismos resúmenes
+en R y Python. Los perfiles condicionales se generan con la misma distribución
+ilustrativa en ambos lenguajes.
 
 ## Criterios para retroalimentación
 
@@ -312,6 +352,7 @@ Las figuras R y Python leen el mismo CSV y calculan los mismos resúmenes.
 - Conserva el orden con nómina menos sin nómina y las unidades de cada variable.
 - Distingue puntos porcentuales de variaciones relativas porcentuales.
 - Distingue dispersión de saldos individuales de incertidumbre de una media.
+- Formula la igualdad que contrasta ANOVA y reconoce qué cambia al estudiar dispersión.
 - No interpreta p como probabilidad de que H0 sea cierta.
 - No usa “no rechazar” para demostrar equivalencia.
 - Distingue error no observado de residuo calculado y estimación de supuesto.

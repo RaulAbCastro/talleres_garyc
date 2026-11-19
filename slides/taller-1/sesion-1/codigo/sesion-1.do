@@ -44,6 +44,18 @@ ttest saldo_promedio_miles, by(sin_nomina) unequal level(95)
 
 * Laboratorio 4
 import delimited "datos/muestra.csv", clear
+generate byte grupo = cond(n_pagos_debito == 0, 0, cond(n_pagos_debito <= 4, 1, 2))
+oneway saldo_promedio_miles grupo
+robvar saldo_promedio_miles, by(grupo)
+* Leer W50, centrado en la mediana.
+sdtest saldo_promedio_miles == 4 if grupo == 0
+generate byte orden = 2 - grupo
+* Primer grupo: 5 o más pagos; segundo: 0 pagos.
+sdtest saldo_promedio_miles if inlist(grupo, 0, 2), by(orden)
+
+
+* Laboratorio 5
+import delimited "datos/muestra.csv", clear
 generate byte sin_nomina = 1 - recibe_nomina
 label define grupos_nomina 0 "Con nomina" 1 "Sin nomina", replace
 label values sin_nomina grupos_nomina
@@ -52,7 +64,7 @@ prtest pago_debito, by(sin_nomina) level(95)
 * La prueba usa una proporción común bajo H0; el IC conserva una por grupo.
 
 
-* Laboratorio 5
+* Laboratorio 6
 import delimited "datos/muestra.csv", clear
 correlate abonos_miles saldo_promedio_miles
 twoway (scatter saldo_promedio_miles abonos_miles if recibe_nomina==0) ///
@@ -62,10 +74,12 @@ twoway (scatter saldo_promedio_miles abonos_miles if recibe_nomina==0) ///
        legend(order(1 "Sin nomina" 2 "Con nomina"))
 
 
-* Laboratorio 6
+* Laboratorio 7
 import delimited "datos/muestra.csv", clear
 regress saldo_promedio_miles abonos_miles, level(95)
 predict double ajustado, xb
 predict double residuo, residuals
 list saldo_promedio_miles ajustado residuo in 1/3
+scatter residuo ajustado, yline(0, lpattern(dash)) ///
+    xtitle("Saldo ajustado (miles de MXN)") ytitle("Residuo (miles de MXN)")
 * H0: pendiente=0. IC y p convencionales; sin vce(robust) en este repaso.
